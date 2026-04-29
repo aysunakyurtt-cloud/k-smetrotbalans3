@@ -10,34 +10,30 @@
 :root{
   --primary:#111;
   --bg:#f6f7fb;
-  --card:#ffffff;
-  --text:#1a1a1a;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
-body{background:var(--bg);color:var(--text);}
+body{background:var(--bg);}
 
 /* HEADER */
 .header{
   position:sticky;
   top:0;
   background:white;
+  padding:15px 25px;
   display:flex;
   justify-content:space-between;
-  padding:15px 25px;
   border-bottom:1px solid #eee;
-  z-index:999;
 }
 
 /* HERO */
 .hero{
   text-align:center;
-  padding:70px 20px;
+  padding:60px 20px;
 }
 
-.hero h1{font-size:40px;}
-
+/* BUTTON */
 .btn{
   display:inline-block;
   padding:12px 18px;
@@ -51,31 +47,47 @@ body{background:var(--bg);color:var(--text);}
 .primary{background:var(--primary);color:white;}
 
 /* SECTION */
-.section{padding:60px 20px;text-align:center;}
+.section{text-align:center;padding:50px 20px;}
 
 .cards{
   display:flex;
   justify-content:center;
-  flex-wrap:wrap;
   gap:15px;
+  flex-wrap:wrap;
 }
 
 .card{
   background:white;
   padding:20px;
   border-radius:12px;
-  width:260px;
+  width:250px;
   border:1px solid #eee;
   cursor:pointer;
 }
 
-.card.active{
-  border:2px solid var(--primary);
-}
+.card.active{border:2px solid var(--primary);}
 
 .price{margin-top:10px;font-weight:bold;color:var(--primary);}
 
-/* PANEL */
+/* FORM */
+.form{
+  background:white;
+  max-width:400px;
+  margin:auto;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #eee;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+/* COLOR PANEL */
 .panel{
   position:fixed;
   top:20px;
@@ -83,7 +95,6 @@ body{background:var(--bg);color:var(--text);}
   background:white;
   padding:10px;
   border-radius:10px;
-  border:1px solid #ddd;
 }
 
 /* WP */
@@ -97,8 +108,6 @@ body{background:var(--bg);color:var(--text);}
   border-radius:50px;
   text-decoration:none;
 }
-
-footer{text-align:center;padding:20px;font-size:12px;color:#777;}
 </style>
 </head>
 
@@ -106,24 +115,22 @@ footer{text-align:center;padding:20px;font-size:12px;color:#777;}
 
 <!-- RENK -->
 <div class="panel">
-  🎨 <input type="color" id="color">
+🎨 <input type="color" id="color">
 </div>
 
 <!-- HEADER -->
 <div class="header">
-  <b>🚗 Kısmet Rot Balans</b>
-  <div>
-    <a href="#hizmet">Hizmet</a>
-    <a href="#randevu">Randevu</a>
-  </div>
+<b>🚗 Kısmet Rot Balans</b>
+<div>
+<a href="#hizmet">Hizmet</a>
+<a href="#randevu">Randevu</a>
+</div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>Profesyonel Oto Servis</h1>
-  <p>Rot • Balans • Yağ</p>
-
-  <a class="btn primary" href="#randevu">Randevu Al</a>
+<h1>Profesyonel Oto Servis</h1>
+<p>Rot • Balans • Yağ</p>
 </div>
 
 <!-- HİZMET -->
@@ -133,17 +140,17 @@ footer{text-align:center;padding:20px;font-size:12px;color:#777;}
 
 <div class="cards">
 
-<div class="card" onclick="selectService(this,'Rot Ayarı - 700 TL')">
+<div class="card" onclick="sec(this,'Rot Ayarı - 700 TL')">
 Rot Ayarı
 <div class="price">700 TL</div>
 </div>
 
-<div class="card" onclick="selectService(this,'Balans - 500 TL')">
+<div class="card" onclick="sec(this,'Balans - 500 TL')">
 Balans
 <div class="price">500 TL</div>
 </div>
 
-<div class="card" onclick="selectService(this,'Yağ Değişimi - 200 TL')">
+<div class="card" onclick="sec(this,'Yağ Değişimi - 200 TL')">
 Yağ Değişimi
 <div class="price">200 TL</div>
 </div>
@@ -155,40 +162,63 @@ Yağ Değişimi
 <!-- RANDEVU -->
 <div id="randevu" class="section">
 
-<h2>Randevu</h2>
+<h2>Randevu Oluştur</h2>
 
-<p id="secili">Seçilen hizmet: Yok</p>
+<div class="form">
 
-<br>
+<p id="yazi">Hizmet seçilmedi</p>
 
-<a id="randevuBtn" class="btn primary" target="_blank">
-📅 Randevu Oluştur
-</a>
+<input type="date" id="tarih">
+
+<select id="saat">
+<option value="">Saat seç</option>
+<option>09:00</option>
+<option>10:00</option>
+<option>11:00</option>
+<option>12:00</option>
+<option>13:00</option>
+<option>14:00</option>
+<option>15:00</option>
+<option>16:00</option>
+<option>17:00</option>
+</select>
+
+<a class="btn primary" onclick="gonder()">Randevu Gönder</a>
 
 </div>
 
-<footer>© 2026</footer>
+</div>
 
 <a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
 
 <script>
 // RENK
-document.getElementById("color").addEventListener("input", e=>{
-  document.documentElement.style.setProperty("--primary", e.target.value);
-});
+document.getElementById("color").oninput=e=>{
+document.documentElement.style.setProperty("--primary",e.target.value);
+}
 
-// HİZMET SEÇ
-let seciliHizmet="";
+// HİZMET
+let hizmet="";
+function sec(el,h){
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+el.classList.add("active");
+hizmet=h;
+document.getElementById("yazi").innerText="Seçilen: "+h;
+}
 
-function selectService(el, hizmet){
-  document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
+// GÖNDER
+function gonder(){
+let tarih=document.getElementById("tarih").value;
+let saat=document.getElementById("saat").value;
 
-  seciliHizmet=hizmet;
-  document.getElementById("secili").innerText="Seçilen hizmet: "+hizmet;
+if(!hizmet || !tarih || !saat){
+alert("Tüm alanları doldur");
+return;
+}
 
-  document.getElementById("randevuBtn").href=
-  "https://wa.me/905319724508?text=Randevu almak istiyorum: "+hizmet;
+let mesaj=`Randevu Talebi:%0A${hizmet}%0ATarih: ${tarih}%0ASaat: ${saat}`;
+
+window.open("https://wa.me/905319724508?text="+mesaj);
 }
 </script>
 
