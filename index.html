@@ -7,220 +7,27 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-:root{
-  --primary:#111;
-  --bg:#f6f7fb;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-
-body{background:var(--bg);}
-
-/* HEADER */
-.header{
-  position:sticky;
-  top:0;
-  background:white;
-  padding:15px 25px;
-  display:flex;
-  justify-content:space-between;
-  border-bottom:1px solid #eee;
-}
-
-/* HERO */
-.hero{
+body{
+  font-family:Arial;
+  background:#f6f7fb;
   text-align:center;
-  padding:60px 20px;
 }
 
-/* BUTTON */
-.btn{
-  display:inline-block;
-  padding:12px 18px;
-  margin:10px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.primary{background:var(--primary);color:white;}
-
-/* SECTION */
-.section{text-align:center;padding:50px 20px;}
-
-.cards{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.card{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  width:250px;
-  border:1px solid #eee;
-  cursor:pointer;
-}
-
-.card.active{border:2px solid var(--primary);}
-
-.price{margin-top:10px;font-weight:bold;color:var(--primary);}
-
-/* FORM */
-.form{
-  background:white;
-  max-width:400px;
-  margin:auto;
-  padding:20px;
-  border-radius:12px;
-  border:1px solid #eee;
-}
-
-input, select{
+iframe{
   width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
-
-/* COLOR PANEL */
-.panel{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:white;
-  padding:10px;
-  border-radius:10px;
-}
-
-/* WP */
-.wp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:14px;
-  border-radius:50px;
-  text-decoration:none;
+  max-width:700px;
+  height:650px;
+  border:none;
+  border-radius:12px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- RENK -->
-<div class="panel">
-🎨 <input type="color" id="color">
-</div>
+<h2>🚗 Online Randevu</h2>
 
-<!-- HEADER -->
-<div class="header">
-<b>🚗 Kısmet Rot Balans</b>
-<div>
-<a href="#hizmet">Hizmet</a>
-<a href="#randevu">Randevu</a>
-</div>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-<h1>Profesyonel Oto Servis</h1>
-<p>Rot • Balans • Yağ</p>
-</div>
-
-<!-- HİZMET -->
-<div id="hizmet" class="section">
-
-<h2>Hizmet Seç</h2>
-
-<div class="cards">
-
-<div class="card" onclick="sec(this,'Rot Ayarı - 700 TL')">
-Rot Ayarı
-<div class="price">700 TL</div>
-</div>
-
-<div class="card" onclick="sec(this,'Balans - 500 TL')">
-Balans
-<div class="price">500 TL</div>
-</div>
-
-<div class="card" onclick="sec(this,'Yağ Değişimi - 200 TL')">
-Yağ Değişimi
-<div class="price">200 TL</div>
-</div>
-
-</div>
-
-</div>
-
-<!-- RANDEVU -->
-<div id="randevu" class="section">
-
-<h2>Randevu Oluştur</h2>
-
-<div class="form">
-
-<p id="yazi">Hizmet seçilmedi</p>
-
-<input type="date" id="tarih">
-
-<select id="saat">
-<option value="">Saat seç</option>
-<option>09:00</option>
-<option>10:00</option>
-<option>11:00</option>
-<option>12:00</option>
-<option>13:00</option>
-<option>14:00</option>
-<option>15:00</option>
-<option>16:00</option>
-<option>17:00</option>
-</select>
-
-<a class="btn primary" onclick="gonder()">Randevu Gönder</a>
-
-</div>
-
-</div>
-
-<a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
-
-<script>
-// RENK
-document.getElementById("color").oninput=e=>{
-document.documentElement.style.setProperty("--primary",e.target.value);
-}
-
-// HİZMET
-let hizmet="";
-function sec(el,h){
-document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
-el.classList.add("active");
-hizmet=h;
-document.getElementById("yazi").innerText="Seçilen: "+h;
-}
-
-// GÖNDER
-function gonder(){
-let tarih=document.getElementById("tarih").value;
-let saat=document.getElementById("saat").value;
-
-if(!hizmet || !tarih || !saat){
-alert("Tüm alanları doldur");
-return;
-}
-
-let mesaj=`Randevu Talebi:%0A${hizmet}%0ATarih: ${tarih}%0ASaat: ${saat}`;
-
-window.open("https://wa.me/905319724508?text="+mesaj);
-}
-</script>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
 
 </body>
 </html>
