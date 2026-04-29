@@ -8,9 +8,9 @@
 
 <style>
 :root{
-  --bg:#f7f8fa;
+  --bg:#f6f7fb;
   --card:#ffffff;
-  --text:#1f2937;
+  --text:#111827;
   --muted:#6b7280;
   --border:#e5e7eb;
   --accent:#111827;
@@ -29,104 +29,115 @@ body{
 }
 
 /* HEADER */
-.header{
+header{
+  position:sticky;
+  top:0;
   background:white;
-  padding:18px 25px;
   border-bottom:1px solid var(--border);
   display:flex;
   justify-content:space-between;
   align-items:center;
+  padding:15px 25px;
+  z-index:10;
 }
 
-.header b{
+header b{
   font-size:18px;
 }
 
-.header nav a{
+header nav a{
   margin-left:15px;
   text-decoration:none;
   color:var(--muted);
   font-weight:500;
 }
 
-.header nav a:hover{
+header nav a:hover{
   color:var(--text);
 }
 
 /* HERO */
 .hero{
+  padding:100px 20px;
   text-align:center;
-  padding:80px 20px;
   background:white;
 }
 
 .hero h1{
-  font-size:40px;
+  font-size:46px;
   letter-spacing:-1px;
 }
 
 .hero p{
   color:var(--muted);
   margin-top:10px;
+  font-size:16px;
 }
 
 .btn{
-  margin-top:20px;
+  margin-top:25px;
   display:inline-block;
-  padding:12px 18px;
+  padding:13px 20px;
   background:var(--accent);
   color:white;
-  border-radius:10px;
+  border-radius:12px;
   text-decoration:none;
+  transition:0.2s;
+}
+
+.btn:hover{
+  transform:scale(1.03);
 }
 
 /* SECTION */
-.section{
-  padding:60px 20px;
+section{
+  padding:70px 20px;
   text-align:center;
 }
 
-.section h2{
-  margin-bottom:25px;
-  font-size:24px;
+h2{
+  font-size:26px;
+  margin-bottom:30px;
 }
 
-/* CARDS */
-.cards{
-  display:flex;
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
-  justify-content:center;
-  flex-wrap:wrap;
+  max-width:900px;
+  margin:auto;
 }
 
 .card{
   background:var(--card);
   border:1px solid var(--border);
-  padding:20px;
-  width:250px;
-  border-radius:14px;
-  transition:0.2s;
+  padding:22px;
+  border-radius:16px;
+  transition:0.25s;
+  text-align:left;
 }
 
 .card:hover{
-  transform:translateY(-4px);
-  border-color:#d1d5db;
+  transform:translateY(-6px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.06);
 }
 
 .price{
   margin-top:10px;
-  font-weight:bold;
+  font-weight:600;
 }
 
-/* INFO BOX */
+/* INFO */
 .info{
-  max-width:800px;
+  max-width:750px;
   margin:auto;
-  background:white;
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:14px;
   color:var(--muted);
+  line-height:1.6;
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  border:1px solid var(--border);
 }
 
 /* MAP */
@@ -135,12 +146,12 @@ iframe{
   max-width:800px;
   height:320px;
   border:none;
-  border-radius:14px;
+  border-radius:16px;
 }
 
 /* FORM */
 .form iframe{
-  height:650px;
+  height:680px;
 }
 
 /* FOOTER */
@@ -167,78 +178,80 @@ footer{
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
+<header>
   <b>🚗 Kısmet Rot Balans</b>
-
   <nav>
-    <a href="#hizmet">Hizmet</a>
+    <a href="#hizmet">Hizmetler</a>
+    <a href="#neden">Neden Biz</a>
     <a href="#konum">Konum</a>
     <a href="#randevu">Randevu</a>
   </nav>
-</div>
+</header>
 
 <!-- HERO -->
 <div class="hero">
   <h1>Profesyonel Oto Servis</h1>
-  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmeti</p>
+  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmetleri</p>
   <a class="btn" href="#randevu">Online Randevu Al</a>
 </div>
 
-<!-- HİZMET -->
-<div id="hizmet" class="section">
+<!-- HİZMETLER -->
+<section id="hizmet">
 
-<h2>Hizmetler</h2>
+<h2>Hizmetler & Fiyatlar</h2>
 
-<div class="cards">
+<div class="grid">
 
 <div class="card">
-Rot Ayarı
+<h3>Rot Ayarı</h3>
 <div class="price">700 TL</div>
 </div>
 
 <div class="card">
-Balans
+<h3>Balans</h3>
 <div class="price">500 TL</div>
 </div>
 
 <div class="card">
-Yağ Değişimi
+<h3>Yağ Değişimi</h3>
 <div class="price">200 TL</div>
 </div>
 
 </div>
-</div>
 
-<!-- NEDEN -->
-<div class="section">
+</section>
+
+<!-- NEDEN BİZ -->
+<section id="neden">
 
 <h2>Neden Biz?</h2>
 
 <div class="info">
-20 yılı aşkın tecrübe ile İstanbul’da profesyonel oto servis hizmeti veriyoruz.  
-Uygun fiyat, hızlı işlem ve güvenli sürüş garantisi.
+✔ 20+ yıl deneyim  
+✔ Profesyonel ekip  
+✔ Uygun fiyat politikası  
+✔ Hızlı ve güvenli servis  
 </div>
 
-</div>
+</section>
 
 <!-- KONUM -->
-<div id="konum" class="section">
+<section id="konum">
 
 <h2>Konum</h2>
 
 <iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
 
-</div>
+</section>
 
 <!-- RANDEVU -->
-<div id="randevu" class="section form">
+<section id="randevu" class="form">
 
 <h2>Online Randevu</h2>
 
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
 
-</div>
+</section>
 
 <footer>
 © 2026 Kısmet Rot Balans
