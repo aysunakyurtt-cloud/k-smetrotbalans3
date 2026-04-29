@@ -10,7 +10,29 @@
 body{
   font-family:Arial;
   background:#f6f7fb;
+  margin:0;
+}
+
+/* HEADER */
+.header{
+  background:white;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #eee;
+}
+
+.hero{
   text-align:center;
+  padding:50px 20px;
+}
+
+.hero h1{
+  font-size:32px;
+}
+
+.hero p{
+  color:#666;
 }
 
 iframe{
@@ -20,14 +42,31 @@ iframe{
   border:none;
   border-radius:12px;
 }
+
+.box{
+  text-align:center;
+  padding:30px;
+}
 </style>
 </head>
 
 <body>
 
-<h2>🚗 Online Randevu</h2>
+<div class="header">
+  🚗 Kısmet Rot Balans
+  <div>📞 0531 972 45 08</div>
+</div>
+
+<div class="hero">
+  <h1>Online Randevu</h1>
+  <p>Hızlı ve kolay randevu oluştur</p>
+</div>
+
+<div class="box">
 
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+
+</div>
 
 </body>
 </html>
