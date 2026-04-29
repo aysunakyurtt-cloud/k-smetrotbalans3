@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kısmet Rot Balans | İstanbul Oto Servis</title>
+<title>Kısmet Rot Balans | Profesyonel Sistem</title>
 
 <style>
 *{
@@ -15,51 +15,50 @@
 }
 
 body{
-  background:#f7f8fa;
+  background:#f6f7fb;
   color:#1a1a1a;
 }
 
 /* HEADER */
 .header{
-  background:white;
+  background:#fff;
+  padding:15px 25px;
   display:flex;
   justify-content:space-between;
-  padding:15px 25px;
   border-bottom:1px solid #eee;
 }
 
 .logo{
   font-weight:bold;
-  font-size:18px;
 }
 
-.header a{
+.menu a{
   margin-left:15px;
   text-decoration:none;
-  color:#333;
+  color:#444;
 }
 
 /* HERO */
 .hero{
-  background:linear-gradient(120deg,#ffffff,#f1f5f9);
-  padding:90px 20px;
   text-align:center;
+  padding:80px 20px;
+  background:white;
 }
 
 .hero h1{
-  font-size:44px;
+  font-size:42px;
 }
 
 .hero p{
   color:#666;
   margin-top:10px;
-  font-size:16px;
 }
 
+/* BUTTONS */
 .btn{
   display:inline-block;
-  padding:13px 20px;
-  margin:10px;
+  padding:12px 18px;
+  margin:8px;
   border-radius:10px;
   text-decoration:none;
   font-weight:bold;
@@ -69,7 +68,7 @@ body{
 .dark{background:#111;color:white;}
 .blue{background:#2563eb;color:white;}
 
-/* SECTION */
+/* SECTIONS */
 .section{
   padding:60px 20px;
   text-align:center;
@@ -97,71 +96,59 @@ body{
 }
 
 .price{
-  font-size:18px;
+  margin-top:10px;
   font-weight:bold;
   color:#16a34a;
-  margin-top:10px;
+  font-size:18px;
 }
 
-/* WHY US */
-.why{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:15px;
-}
-
-.box{
+/* INFO BOX */
+.info{
   background:white;
+  max-width:600px;
+  margin:auto;
   padding:20px;
-  width:280px;
   border-radius:14px;
   border:1px solid #eee;
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  color:#888;
-}
-
-/* FLOAT WHATSAPP */
+/* FLOAT WP */
 .wp{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#25D366;
   color:white;
-  padding:14px 16px;
+  padding:14px;
   border-radius:50px;
   text-decoration:none;
   font-weight:bold;
 }
 
-@media(max-width:600px){
-  .hero h1{font-size:30px;}
+footer{
+  text-align:center;
+  padding:20px;
+  font-size:12px;
+  color:#888;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo">🚗 Kısmet Rot Balans</div>
-  <div>
+  <div class="menu">
     <a href="#hizmet">Hizmet</a>
-    <a href="#neden">Neden Biz</a>
+    <a href="#urun">Ürün</a>
     <a href="#randevu">Randevu</a>
   </div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>Güvenli Sürüş İçin Profesyonel Servis</h1>
-  <p>Rot • Balans • Lastik • Yağ Değişimi</p>
+  <h1>Profesyonel Oto Servis</h1>
+  <p>Rot • Balans • Yağ • Lastik</p>
 
   <a class="btn green" href="#randevu">Randevu Al</a>
   <a class="btn dark" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
@@ -169,51 +156,47 @@ footer{
 
 <!-- HİZMET -->
 <div class="section" id="hizmet">
-  <div class="title">Hizmetlerimiz</div>
+  <div class="title">Hizmetler</div>
 
   <div class="cards">
 
     <div class="card">
-      <h3>Rot Ayarı</h3>
-      <p>Direksiyon hassasiyeti</p>
+      Rot Ayarı
       <div class="price">700 TL</div>
     </div>
 
     <div class="card">
-      <h3>Balans</h3>
-      <p>Titreşimsiz sürüş</p>
+      Balans
       <div class="price">500 TL</div>
     </div>
 
     <div class="card">
-      <h3>Yağ Değişimi</h3>
-      <p>Motor koruma</p>
+      Yağ Değişimi
       <div class="price">200 TL</div>
     </div>
 
   </div>
 </div>
 
-<!-- NEDEN BİZ -->
-<div class="section" id="neden">
+<!-- ÜRÜN -->
+<div class="section" id="urun">
+  <div class="title">Ürünler</div>
 
-  <div class="title">Neden Bizi Seçmelisiniz?</div>
+  <div class="cards">
 
-  <div class="why">
-
-    <div class="box">
-      🔧 Uzman Ekip<br>
-      20 yıllık deneyim
+    <div class="card">
+      Motor Yağı
+      <div class="price">500 TL</div>
     </div>
 
-    <div class="box">
-      ⚙️ Modern Ekipman<br>
-      Hassas ölçüm sistemleri
+    <div class="card">
+      Antifriz
+      <div class="price">250 TL</div>
     </div>
 
-    <div class="box">
-      ⭐ Güvenilir Hizmet<br>
-      Müşteri memnuniyeti odaklı
+    <div class="card">
+      Fren Spreyi
+      <div class="price">150 TL</div>
     </div>
 
   </div>
@@ -222,11 +205,16 @@ footer{
 <!-- RANDEVU -->
 <div class="section" id="randevu">
 
-  <div class="title">Online Randevu</div>
+  <div class="title">Randevu Sistemi</div>
 
-  <a class="btn green" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
-    📅 Randevu Oluştur
-  </a>
+  <div class="info">
+    Randevu almak için aşağıdaki butona tıkla
+    <br><br>
+
+    <a class="btn green" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
+      📅 Randevu Oluştur
+    </a>
+  </div>
 
 </div>
 
