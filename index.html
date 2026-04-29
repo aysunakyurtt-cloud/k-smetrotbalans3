@@ -6,12 +6,28 @@
 
 <title>Kısmet Rot Balans</title>
 
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 :root{
   --bg:#f6f7fb;
+  --card:#ffffff;
   --text:#111827;
   --muted:#6b7280;
   --border:#e5e7eb;
+  --sidebar:#0f0f0f;
+  --sideText:white;
+}
+
+body.dark{
+  --bg:#0b0f19;
+  --card:#111827;
+  --text:#ffffff;
+  --muted:#9ca3af;
+  --border:#1f2937;
+  --sidebar:#000000;
+  --sideText:#fff;
 }
 
 *{
@@ -24,30 +40,19 @@
 body{
   display:flex;
   background:var(--bg);
+  color:var(--text);
+  transition:0.3s;
 }
 
 /* SIDEBAR */
 .sidebar{
   width:240px;
   height:100vh;
-  background:#0f0f0f;
-  color:white;
+  background:var(--sidebar);
+  color:var(--sideText);
   padding:25px;
   position:fixed;
-
-  /* 🔥 giriş animasyonu */
-  animation: slideIn 0.5s ease;
-}
-
-@keyframes slideIn{
-  from{
-    transform:translateX(-100%);
-    opacity:0;
-  }
-  to{
-    transform:translateX(0);
-    opacity:1;
-  }
+  transition:0.3s;
 }
 
 .sidebar h2{
@@ -55,33 +60,29 @@ body{
   margin-bottom:25px;
 }
 
-/* MENU BUTTONS */
-.sidebar a{
-  display:block;
+/* MENU */
+.menu{
+  display:flex;
+  align-items:center;
+  gap:10px;
   padding:12px;
   margin-bottom:10px;
-  background:#1c1c1c;
   border-radius:10px;
-  color:white;
+  color:var(--sideText);
   text-decoration:none;
   cursor:pointer;
-
-  /* 🔥 animasyon */
-  transition:0.25s ease;
-  position:relative;
+  transition:0.2s;
+  background:rgba(255,255,255,0.05);
 }
 
-/* hover efekt */
-.sidebar a:hover{
-  background:#2c2c2c;
-  transform:translateX(6px);
+.menu:hover{
+  transform:translateX(5px);
+  background:rgba(255,255,255,0.1);
 }
 
-/* aktif menü */
-.sidebar a.active{
-  background:#ffffff;
-  color:#111;
-  font-weight:600;
+.menu.active{
+  background:white;
+  color:black;
 }
 
 /* CONTENT */
@@ -94,17 +95,16 @@ body{
 .section{
   display:none;
   padding:40px;
+  animation:fade 0.3s ease;
+}
 
-  animation: fade 0.4s ease;
+.active{
+  display:block;
 }
 
 @keyframes fade{
   from{opacity:0; transform:translateY(10px);}
   to{opacity:1; transform:translateY(0);}
-}
-
-.active{
-  display:block;
 }
 
 /* HERO */
@@ -114,35 +114,25 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-
-  background:
-    radial-gradient(circle at top, rgba(0,0,0,0.08), transparent 60%),
-    linear-gradient(135deg, #ffffff, #f2f4f7);
+  background:linear-gradient(135deg,#fff, #f2f4f7);
 }
 
-.hero-box{
-  max-width:750px;
+body.dark .hero{
+  background:linear-gradient(135deg,#0b0f19,#111827);
 }
 
 .hero h1{
-  font-size:70px;
+  font-size:65px;
   font-weight:900;
 }
 
 .hero p{
-  margin-top:15px;
-  font-size:18px;
   color:var(--muted);
-}
-
-.hero small{
-  display:block;
   margin-top:10px;
-  color:#9ca3af;
 }
 
 .btn{
-  margin-top:25px;
+  margin-top:20px;
   display:inline-block;
   padding:14px 22px;
   background:#111827;
@@ -165,7 +155,7 @@ body{
 }
 
 .card{
-  background:white;
+  background:var(--card);
   border:1px solid var(--border);
   padding:20px;
   border-radius:14px;
@@ -175,14 +165,14 @@ body{
 
 .card:hover{
   transform:translateY(-6px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
 /* INFO */
 .info{
   max-width:800px;
   margin:auto;
-  background:white;
+  background:var(--card);
   padding:25px;
   border-radius:16px;
   border:1px solid var(--border);
@@ -199,9 +189,16 @@ iframe{
   border-radius:16px;
 }
 
-/* FORM */
-.form iframe{
-  height:700px;
+/* THEME BUTTON */
+.theme{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  border-radius:50px;
+  cursor:pointer;
 }
 
 /* WHATSAPP */
@@ -225,10 +222,26 @@ iframe{
 <div class="sidebar">
   <h2>🚗 Kısmet Rot</h2>
 
-  <a class="menu active" onclick="show('home', this)">Ana Sayfa</a>
-  <a class="menu" onclick="show('services', this)">Hizmetler</a>
-  <a class="menu" onclick="show('booking', this)">Randevu</a>
-  <a class="menu" onclick="show('map', this)">Konum</a>
+  <div class="menu active" onclick="show('home', this)">
+    <i class="fa fa-home"></i> Ana Sayfa
+  </div>
+
+  <div class="menu" onclick="show('services', this)">
+    <i class="fa fa-wrench"></i> Hizmetler
+  </div>
+
+  <div class="menu" onclick="show('booking', this)">
+    <i class="fa fa-calendar"></i> Randevu
+  </div>
+
+  <div class="menu" onclick="show('map', this)">
+    <i class="fa fa-location-dot"></i> Konum
+  </div>
+</div>
+
+<!-- THEME BUTTON -->
+<div class="theme" onclick="toggleTheme()">
+  🌙 / ☀️
 </div>
 
 <!-- CONTENT -->
@@ -238,15 +251,12 @@ iframe{
 <div id="home" class="section active">
 
   <div class="hero">
-    <div class="hero-box">
+    <div>
 
       <h1>Kısmet Rot Balans</h1>
+      <p>Profesyonel oto servis – İstanbul</p>
 
-      <p>İstanbul’da profesyonel oto servis<br>Rot • Balans • Yağ Değişimi</p>
-
-      <small>Güvenli sürüş için doğru adres</small>
-
-      <a class="btn" onclick="show('booking')">Online Randevu Al</a>
+      <a class="btn" onclick="show('booking')">Randevu Al</a>
 
     </div>
   </div>
@@ -256,22 +266,20 @@ iframe{
 <!-- SERVICES -->
 <div id="services" class="section">
 
-  <h2>Hizmetler & Fiyatlar</h2>
+  <h2>Hizmetler</h2>
 
   <div class="cards">
-
-    <div class="card">Rot Ayarı <br><b>700 TL</b></div>
-    <div class="card">Balans <br><b>500 TL</b></div>
-    <div class="card">Yağ Değişimi <br><b>200 TL</b></div>
-
+    <div class="card">Rot Ayarı<br><b>700 TL</b></div>
+    <div class="card">Balans<br><b>500 TL</b></div>
+    <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
   </div>
 
 </div>
 
 <!-- BOOKING -->
-<div id="booking" class="section form">
+<div id="booking" class="section">
 
-  <h2>Online Randevu</h2>
+  <h2>Randevu</h2>
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
 
@@ -288,18 +296,20 @@ iframe{
 
 </div>
 
-<a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
 function show(id, el){
-
-  // sayfa değiştir
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
-  // menü active efekti
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   if(el) el.classList.add('active');
+}
+
+/* DARK MODE */
+function toggleTheme(){
+  document.body.classList.toggle('dark');
 }
 </script>
 
