@@ -4,95 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kısmet Rot Balans | İstanbul Rot & Balans Servisi</title>
+  <title>Kısmet Rot Balans | Rot, Balans & Lastik Servisi</title>
 
-  <meta name="description" content="Kısmet Rot Balans - İstanbul'da profesyonel rot, balans ve lastik hizmetleri.">
-  <meta name="keywords" content="rot balans, lastik, istanbul araç servisi">
+  <meta name="description" content="Kısmet Rot Balans - İstanbul'da profesyonel rot, balans ve lastik hizmetleri. Online randevu alın.">
 
   <style>
-    :root {
-      --bg: #f6f7fb;
-      --text: #1a1a1a;
-      --card: #ffffff;
-      --accent: #2b2f36;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: #f6f7fb;
+      color: #1a1a1a;
     }
 
-    /* TOP BAR */
+    /* TOP */
     .topbar {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
+      background: #fff;
+      border-bottom: 1px solid #ddd;
       text-align: center;
       padding: 10px;
       font-size: 13px;
-      color: var(--muted);
+      color: #555;
     }
 
     /* HERO */
     .hero {
-      height: 85vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      padding: 80px 20px;
       text-align: center;
-      padding: 20px;
     }
 
     .hero h1 {
-      font-size: 42px;
-      font-weight: 600;
-      letter-spacing: -1px;
-    }
-
-    .hero span {
-      color: var(--accent);
+      font-size: 40px;
+      margin-bottom: 10px;
     }
 
     .hero p {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
     }
 
     .btn {
-      margin-top: 20px;
+      display: inline-block;
       padding: 12px 18px;
-      background: var(--accent);
-      color: white;
+      margin: 5px;
       border-radius: 10px;
       text-decoration: none;
       font-size: 14px;
-      margin: 5px;
+      font-weight: bold;
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    .btn-dark {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .btn-green {
+      background: #00c853;
+      color: white;
     }
 
     /* SECTIONS */
     .section {
-      padding: 70px 20px;
+      padding: 60px 20px;
       text-align: center;
     }
 
     .section h2 {
-      font-size: 24px;
       margin-bottom: 30px;
-      color: var(--accent);
     }
 
     .cards {
@@ -103,67 +85,61 @@
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 25px;
+      background: white;
+      border: 1px solid #eee;
+      padding: 20px;
       width: 260px;
-      border-radius: 14px;
+      border-radius: 12px;
       text-align: left;
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
     }
 
     .card h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .card p {
-      font-size: 14px;
-      color: var(--muted);
+    .price {
+      font-weight: bold;
+      color: #00c853;
+      margin-top: 10px;
     }
 
-    /* CONTACT */
-    .contact {
-      background: var(--card);
-      border: 1px solid var(--border);
-      max-width: 520px;
+    /* FORM */
+    .form {
+      max-width: 400px;
       margin: auto;
-      padding: 25px;
-      border-radius: 14px;
-      text-align: left;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #eee;
     }
 
-    .contact p {
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 14px;
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
     }
 
+    /* MAP */
     iframe {
       width: 100%;
-      height: 260px;
-      border-radius: 12px;
+      height: 250px;
+      border-radius: 10px;
       margin-top: 15px;
       border: none;
     }
 
     footer {
       text-align: center;
-      padding: 25px;
+      padding: 20px;
       font-size: 13px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
+      color: #777;
     }
 
-    /* MOBİL */
     @media (max-width: 600px) {
       .hero h1 {
-        font-size: 30px;
+        font-size: 28px;
       }
 
       .card {
@@ -175,56 +151,66 @@
 
 <body>
 
-  <!-- TOP -->
   <div class="topbar">
     📍 İstanbul | 📞 0531 972 45 08 | Kısmet Rot Balans
   </div>
 
   <!-- HERO -->
   <div class="hero">
-    <h1>Kısmet <span>Rot Balans</span></h1>
-    <p>Profesyonel rot, balans ve lastik hizmetleri</p>
+    <h1>Kısmet Rot Balans</h1>
+    <p>Profesyonel rot, balans ve lastik servisi</p>
 
-    <a class="btn" href="#hizmetler">Hizmetler</a>
-    <a class="btn" href="#iletisim">İletişim</a>
+    <a class="btn btn-dark" href="#hizmetler">Hizmetler</a>
+    <a class="btn btn-green" href="#randevu">Online Randevu</a>
   </div>
 
   <!-- SERVICES -->
   <div id="hizmetler" class="section">
-    <h2>Hizmetler</h2>
+    <h2>Hizmetler & Fiyatlar</h2>
 
     <div class="cards">
       <div class="card">
         <h3>Rot Ayarı</h3>
-        <p>Direksiyon hassasiyeti ve güvenli sürüş için profesyonel ayar.</p>
+        <p>Direksiyon hizalama işlemi</p>
+        <div class="price">₺500</div>
       </div>
 
       <div class="card">
         <h3>Balans</h3>
-        <p>Titreşimi azaltan hassas balans ayarı.</p>
+        <p>Teker titreşim ayarı</p>
+        <div class="price">₺300</div>
       </div>
 
       <div class="card">
-        <h3>Lastik</h3>
-        <p>Lastik değişim ve kontrol hizmetleri.</p>
+        <h3>Lastik Değişim</h3>
+        <p>Profesyonel lastik sökme/takma</p>
+        <div class="price">₺200</div>
       </div>
     </div>
   </div>
 
+  <!-- RANDEVU -->
+  <div id="randevu" class="section">
+    <h2>Online Randevu</h2>
+
+    <div class="form">
+      <input type="text" placeholder="Ad Soyad">
+      <input type="tel" placeholder="Telefon">
+      <textarea placeholder="Hizmet seçimi ve not"></textarea>
+
+      <a class="btn btn-green" href="https://wa.me/905319724508">WhatsApp’tan Gönder</a>
+    </div>
+  </div>
+
   <!-- CONTACT -->
-  <div id="iletisim" class="section">
+  <div class="section">
     <h2>İletişim</h2>
 
-    <div class="contact">
-      <p>📍 İstanbul</p>
-      <p>📞 0531 972 45 08</p>
-      <p>✉️ aykutakyurt2@gmail.com</p>
+    <p>📍 İstanbul</p>
+    <p>📞 0531 972 45 08</p>
+    <p>✉️ aykutakyurt2@gmail.com</p>
 
-      <a class="btn" href="tel:+905319724508">Ara</a>
-      <a class="btn" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
-
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861436!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777462009673!5m2!1str!2str"></iframe>
-    </div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
   </div>
 
   <footer>
