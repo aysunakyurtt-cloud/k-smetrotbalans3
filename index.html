@@ -1,262 +1,30 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kısmet Rot Balans Panel</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-:root{
-  --bg:#f6f7fb;
-  --card:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --sidebar:#0f0f0f;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui;
-}
-
-body{
-  display:flex;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* SIDEBAR */
-.sidebar{
-  width:240px;
-  height:100vh;
-  background:var(--sidebar);
-  color:white;
-  padding:25px;
-  position:fixed;
-}
-
-.sidebar h2{
-  margin-bottom:20px;
-}
-
-.menu{
-  display:flex;
-  gap:10px;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
-  cursor:pointer;
-  background:rgba(255,255,255,0.05);
-}
-
-.menu.active{
-  background:white;
-  color:black;
-}
-
-/* CONTENT */
-.content{
-  margin-left:240px;
-  width:100%;
-  padding:30px;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-}
-
-.active{
-  display:block;
-}
-
-/* HERO */
-.hero{
-  height:70vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:linear-gradient(135deg,#fff,#f2f4f7);
-  border-radius:20px;
-}
-
-.hero h1{
-  font-size:60px;
-}
-
-/* CARDS */
-.cards{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.card{
-  background:white;
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:14px;
-  width:250px;
-}
-
-/* 📌 RANDEVU PANEL */
-.panel{
-  margin-top:20px;
-  background:white;
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:14px;
-}
-
-.randevu{
-  display:flex;
-  justify-content:space-between;
-  padding:12px;
-  border-bottom:1px solid var(--border);
-}
-
-.randevu:last-child{
-  border:none;
-}
-
-.badge{
-  background:#111827;
-  color:white;
-  padding:5px 10px;
-  border-radius:20px;
-  font-size:12px;
-}
-
-/* MAP */
-iframe{
-  width:100%;
-  max-width:800px;
-  height:320px;
-  border:none;
-  border-radius:16px;
-}
-
-/* WHATSAPP */
-.wp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:14px;
-  border-radius:50px;
-  text-decoration:none;
-}
-</style>
-</head>
-
-<body>
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-  <h2>🚗 Kısmet Panel</h2>
-
-  <div class="menu active" onclick="show('home', this)">Ana Sayfa</div>
-  <div class="menu" onclick="show('services', this)">Hizmetler</div>
-  <div class="menu" onclick="show('booking', this)">Randevu</div>
-  <div class="menu" onclick="show('panel', this)">Son Randevular</div>
-  <div class="menu" onclick="show('map', this)">Konum</div>
-
-</div>
-
-<!-- CONTENT -->
-<div class="content">
-
-<!-- HOME -->
-<div id="home" class="section active">
-
-  <div class="hero">
-    <div>
-      <h1>Kısmet Rot Balans</h1>
-      <p>İşletme Yönetim Paneli</p>
-    </div>
-  </div>
-
-</div>
-
-<!-- SERVICES -->
-<div id="services" class="section">
-
-  <h2>Hizmetler</h2>
-
-  <div class="cards">
-    <div class="card">Rot Ayarı<br><b>700 TL</b></div>
-    <div class="card">Balans<br><b>500 TL</b></div>
-    <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
-  </div>
-
-</div>
-
-<!-- BOOKING -->
-<div id="booking" class="section">
-
-  <h2>Randevu Oluştur</h2>
-
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
-
-</div>
-
-<!-- PANEL -->
-<div id="panel" class="section">
-
-  <h2>Son Randevular</h2>
-
-  <div class="panel">
-
-    <div class="randevu">
-      <div>Ali Yılmaz - Rot Ayarı</div>
-      <div class="badge">Yeni</div>
-    </div>
-
-    <div class="randevu">
-      <div>Mehmet Kaya - Balans</div>
-      <div class="badge">Bekliyor</div>
-    </div>
-
-    <div class="randevu">
-      <div>Ayşe Demir - Yağ Değişimi</div>
-      <div class="badge">Tamamlandı</div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- MAP -->
-<div id="map" class="section">
-
-  <h2>Konum</h2>
-
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
-
-</div>
-
-</div>
-
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
-
 <script>
-function show(id, el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+async function loadRandevular(){
 
-  document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  if(el) el.classList.add('active');
+  const url = "GOOGLE_SHEET_CSV_LINK_BURAYA";
+
+  const res = await fetch(url);
+  const text = await res.text();
+
+  const rows = text.split("\n").slice(1);
+
+  let html = "";
+
+  rows.forEach(r=>{
+    const cols = r.split(",");
+
+    if(cols.length > 1){
+      html += `
+        <div class="randevu">
+          <div>${cols[1]} - ${cols[2] || "Hizmet"}</div>
+          <div class="badge">Yeni</div>
+        </div>
+      `;
+    }
+  });
+
+  document.querySelector(".panel").innerHTML = html;
 }
-</script>
 
-</body>
-</html>
+loadRandevular();
+</script>
