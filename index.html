@@ -12,81 +12,47 @@
   --bg:#f6f7fb;
   --card:#ffffff;
   --text:#1a1a1a;
-  --muted:#666;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
-body{
-  background:var(--bg);
-  color:var(--text);
-}
+body{background:var(--bg);color:var(--text);}
 
-/* TOP */
+/* HEADER */
 .header{
-  background:var(--card);
-  padding:15px 25px;
+  position:sticky;
+  top:0;
+  background:white;
   display:flex;
   justify-content:space-between;
+  padding:15px 25px;
   border-bottom:1px solid #eee;
-}
-
-.logo{
-  font-weight:bold;
+  z-index:999;
 }
 
 /* HERO */
 .hero{
   text-align:center;
-  padding:80px 20px;
-  background:var(--card);
+  padding:70px 20px;
 }
 
-.hero h1{
-  font-size:40px;
-}
-
-.hero p{
-  color:var(--muted);
-  margin-top:10px;
-}
+.hero h1{font-size:40px;}
 
 .btn{
   display:inline-block;
   padding:12px 18px;
-  margin:8px;
+  margin:10px;
   border-radius:10px;
   text-decoration:none;
   font-weight:bold;
-  transition:0.2s;
+  cursor:pointer;
 }
 
-.btn:hover{
-  transform:translateY(-2px);
-}
+.primary{background:var(--primary);color:white;}
 
-.primary{
-  background:var(--primary);
-  color:white;
-}
+/* SECTION */
+.section{padding:60px 20px;text-align:center;}
 
-/* SECTIONS */
-.section{
-  padding:60px 20px;
-  text-align:center;
-}
-
-.title{
-  font-size:24px;
-  margin-bottom:20px;
-}
-
-/* CARDS */
 .cards{
   display:flex;
   justify-content:center;
@@ -95,34 +61,29 @@ body{
 }
 
 .card{
-  background:var(--card);
+  background:white;
   padding:20px;
-  border-radius:14px;
+  border-radius:12px;
   width:260px;
   border:1px solid #eee;
+  cursor:pointer;
 }
 
-.price{
-  margin-top:10px;
-  font-weight:bold;
-  color:var(--primary);
+.card.active{
+  border:2px solid var(--primary);
 }
 
-/* COLOR PANEL */
+.price{margin-top:10px;font-weight:bold;color:var(--primary);}
+
+/* PANEL */
 .panel{
   position:fixed;
   top:20px;
   right:20px;
   background:white;
+  padding:10px;
+  border-radius:10px;
   border:1px solid #ddd;
-  padding:12px;
-  border-radius:12px;
-  font-size:12px;
-}
-
-.panel input{
-  width:80px;
-  margin-top:5px;
 }
 
 /* WP */
@@ -135,86 +96,100 @@ body{
   padding:14px;
   border-radius:50px;
   text-decoration:none;
-  font-weight:bold;
 }
 
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  color:#888;
-  margin-top:30px;
-}
+footer{text-align:center;padding:20px;font-size:12px;color:#777;}
 </style>
 </head>
 
 <body>
 
-<!-- RENK PANEL -->
+<!-- RENK -->
 <div class="panel">
-  🎨 Renk Seç
-  <input type="color" id="colorPicker" value="#111111">
+  🎨 <input type="color" id="color">
 </div>
 
 <!-- HEADER -->
 <div class="header">
-  <div class="logo">🚗 Kısmet Rot Balans</div>
-  <div>İstanbul</div>
+  <b>🚗 Kısmet Rot Balans</b>
+  <div>
+    <a href="#hizmet">Hizmet</a>
+    <a href="#randevu">Randevu</a>
+  </div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
   <h1>Profesyonel Oto Servis</h1>
-  <p>Rot • Balans • Yağ • Lastik</p>
+  <p>Rot • Balans • Yağ</p>
 
   <a class="btn primary" href="#randevu">Randevu Al</a>
 </div>
 
 <!-- HİZMET -->
-<div class="section">
-  <div class="title">Hizmetler</div>
+<div id="hizmet" class="section">
 
-  <div class="cards">
+<h2>Hizmet Seç</h2>
 
-    <div class="card">
-      Rot Ayarı
-      <div class="price">700 TL</div>
-    </div>
+<div class="cards">
 
-    <div class="card">
-      Balans
-      <div class="price">500 TL</div>
-    </div>
+<div class="card" onclick="selectService(this,'Rot Ayarı - 700 TL')">
+Rot Ayarı
+<div class="price">700 TL</div>
+</div>
 
-    <div class="card">
-      Yağ Değişimi
-      <div class="price">200 TL</div>
-    </div>
+<div class="card" onclick="selectService(this,'Balans - 500 TL')">
+Balans
+<div class="price">500 TL</div>
+</div>
 
-  </div>
+<div class="card" onclick="selectService(this,'Yağ Değişimi - 200 TL')">
+Yağ Değişimi
+<div class="price">200 TL</div>
+</div>
+
+</div>
+
 </div>
 
 <!-- RANDEVU -->
-<div class="section" id="randevu">
-  <div class="title">Randevu</div>
+<div id="randevu" class="section">
 
-  <a class="btn primary" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
-    📅 Randevu Oluştur
-  </a>
+<h2>Randevu</h2>
+
+<p id="secili">Seçilen hizmet: Yok</p>
+
+<br>
+
+<a id="randevuBtn" class="btn primary" target="_blank">
+📅 Randevu Oluştur
+</a>
+
 </div>
 
-<footer>
-© 2026 Kısmet Rot Balans
-</footer>
+<footer>© 2026</footer>
 
 <a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
 
 <script>
-const picker = document.getElementById("colorPicker");
-
-picker.addEventListener("input", function(){
-  document.documentElement.style.setProperty("--primary", this.value);
+// RENK
+document.getElementById("color").addEventListener("input", e=>{
+  document.documentElement.style.setProperty("--primary", e.target.value);
 });
+
+// HİZMET SEÇ
+let seciliHizmet="";
+
+function selectService(el, hizmet){
+  document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+
+  seciliHizmet=hizmet;
+  document.getElementById("secili").innerText="Seçilen hizmet: "+hizmet;
+
+  document.getElementById("randevuBtn").href=
+  "https://wa.me/905319724508?text=Randevu almak istiyorum: "+hizmet;
+}
 </script>
 
 </body>
