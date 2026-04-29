@@ -4,9 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kısmet Rot Balans | Profesyonel Sistem</title>
+<title>Kısmet Rot Balans</title>
 
 <style>
+:root{
+  --primary:#111;
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#1a1a1a;
+  --muted:#666;
+}
+
 *{
   margin:0;
   padding:0;
@@ -15,13 +23,13 @@
 }
 
 body{
-  background:#f6f7fb;
-  color:#1a1a1a;
+  background:var(--bg);
+  color:var(--text);
 }
 
-/* HEADER */
+/* TOP */
 .header{
-  background:#fff;
+  background:var(--card);
   padding:15px 25px;
   display:flex;
   justify-content:space-between;
@@ -32,29 +40,22 @@ body{
   font-weight:bold;
 }
 
-.menu a{
-  margin-left:15px;
-  text-decoration:none;
-  color:#444;
-}
-
 /* HERO */
 .hero{
   text-align:center;
   padding:80px 20px;
-  background:white;
+  background:var(--card);
 }
 
 .hero h1{
-  font-size:42px;
+  font-size:40px;
 }
 
 .hero p{
-  color:#666;
+  color:var(--muted);
   margin-top:10px;
 }
 
-/* BUTTONS */
 .btn{
   display:inline-block;
   padding:12px 18px;
@@ -62,11 +63,17 @@ body{
   border-radius:10px;
   text-decoration:none;
   font-weight:bold;
+  transition:0.2s;
 }
 
-.green{background:#16a34a;color:white;}
-.dark{background:#111;color:white;}
-.blue{background:#2563eb;color:white;}
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary{
+  background:var(--primary);
+  color:white;
+}
 
 /* SECTIONS */
 .section{
@@ -88,7 +95,7 @@ body{
 }
 
 .card{
-  background:white;
+  background:var(--card);
   padding:20px;
   border-radius:14px;
   width:260px;
@@ -98,21 +105,27 @@ body{
 .price{
   margin-top:10px;
   font-weight:bold;
-  color:#16a34a;
-  font-size:18px;
+  color:var(--primary);
 }
 
-/* INFO BOX */
-.info{
+/* COLOR PANEL */
+.panel{
+  position:fixed;
+  top:20px;
+  right:20px;
   background:white;
-  max-width:600px;
-  margin:auto;
-  padding:20px;
-  border-radius:14px;
-  border:1px solid #eee;
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:12px;
+  font-size:12px;
 }
 
-/* FLOAT WP */
+.panel input{
+  width:80px;
+  margin-top:5px;
+}
+
+/* WP */
 .wp{
   position:fixed;
   bottom:20px;
@@ -130,19 +143,23 @@ footer{
   padding:20px;
   font-size:12px;
   color:#888;
+  margin-top:30px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- RENK PANEL -->
+<div class="panel">
+  🎨 Renk Seç
+  <input type="color" id="colorPicker" value="#111111">
+</div>
+
+<!-- HEADER -->
 <div class="header">
   <div class="logo">🚗 Kısmet Rot Balans</div>
-  <div class="menu">
-    <a href="#hizmet">Hizmet</a>
-    <a href="#urun">Ürün</a>
-    <a href="#randevu">Randevu</a>
-  </div>
+  <div>İstanbul</div>
 </div>
 
 <!-- HERO -->
@@ -150,12 +167,11 @@ footer{
   <h1>Profesyonel Oto Servis</h1>
   <p>Rot • Balans • Yağ • Lastik</p>
 
-  <a class="btn green" href="#randevu">Randevu Al</a>
-  <a class="btn dark" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+  <a class="btn primary" href="#randevu">Randevu Al</a>
 </div>
 
 <!-- HİZMET -->
-<div class="section" id="hizmet">
+<div class="section">
   <div class="title">Hizmetler</div>
 
   <div class="cards">
@@ -178,44 +194,13 @@ footer{
   </div>
 </div>
 
-<!-- ÜRÜN -->
-<div class="section" id="urun">
-  <div class="title">Ürünler</div>
-
-  <div class="cards">
-
-    <div class="card">
-      Motor Yağı
-      <div class="price">500 TL</div>
-    </div>
-
-    <div class="card">
-      Antifriz
-      <div class="price">250 TL</div>
-    </div>
-
-    <div class="card">
-      Fren Spreyi
-      <div class="price">150 TL</div>
-    </div>
-
-  </div>
-</div>
-
 <!-- RANDEVU -->
 <div class="section" id="randevu">
+  <div class="title">Randevu</div>
 
-  <div class="title">Randevu Sistemi</div>
-
-  <div class="info">
-    Randevu almak için aşağıdaki butona tıkla
-    <br><br>
-
-    <a class="btn green" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
-      📅 Randevu Oluştur
-    </a>
-  </div>
-
+  <a class="btn primary" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
+    📅 Randevu Oluştur
+  </a>
 </div>
 
 <footer>
@@ -223,6 +208,14 @@ footer{
 </footer>
 
 <a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+
+<script>
+const picker = document.getElementById("colorPicker");
+
+picker.addEventListener("input", function(){
+  document.documentElement.style.setProperty("--primary", this.value);
+});
+</script>
 
 </body>
 </html>
