@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO -->
-  <title>Kısmet Rot Balans | Rot, Balans ve Lastik Hizmetleri İstanbul</title>
-  <meta name="description" content="Kısmet Rot Balans - İstanbul'da profesyonel rot, balans ve lastik hizmetleri. Güvenli sürüş için uzman ekip."/>
-  <meta name="keywords" content="rot balans, lastik değişimi, istanbul rot balans, araç bakım"/>
-  <meta name="author" content="Kısmet Rot Balans"/>
+  <title>Kısmet Rot Balans | İstanbul Rot, Balans, Lastik</title>
+  <meta name="description" content="Kısmet Rot Balans - İstanbul'da profesyonel rot, balans ve lastik hizmetleri. Güvenli sürüş için uzman ekip.">
+  <meta name="keywords" content="rot balans, istanbul lastik, araç bakım, rot ayarı">
+  <meta name="author" content="Kısmet Rot Balans">
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: Arial;
     }
 
     body {
@@ -23,16 +22,14 @@
       color: white;
     }
 
-    /* TOP BAR */
     .topbar {
-      background: #000;
-      padding: 8px;
+      background: black;
       text-align: center;
+      padding: 8px;
       font-size: 13px;
       opacity: 0.8;
     }
 
-    /* HERO */
     .hero {
       height: 100vh;
       display: flex;
@@ -45,7 +42,7 @@
     }
 
     .hero h1 {
-      font-size: 44px;
+      font-size: 48px;
     }
 
     .hero span {
@@ -65,58 +62,71 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
-      margin-right: 10px;
+      margin: 5px;
       display: inline-block;
     }
 
-    /* SECTIONS */
     .section {
       padding: 60px 20px;
       text-align: center;
     }
 
     .section h2 {
-      margin-bottom: 30px;
       color: #00c853;
+      margin-bottom: 30px;
     }
 
     .cards {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 20px;
     }
 
     .card {
       background: #121a2a;
       padding: 20px;
-      width: 260px;
+      width: 250px;
       border-radius: 12px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
     }
 
     .card h3 {
-      color: #00c853;
+      color: #00e676;
       margin-bottom: 10px;
     }
 
-    /* CONTACT */
     .contact {
       background: #121a2a;
-      padding: 30px;
       max-width: 500px;
       margin: auto;
+      padding: 25px;
       border-radius: 12px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .reviews {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .review {
+      background: #121a2a;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      background: #000;
+      background: black;
       opacity: 0.6;
     }
   </style>
@@ -133,10 +143,8 @@
     <h1>Kısmet <span>Rot Balans</span></h1>
     <p>Güvenli sürüş için profesyonel araç bakım hizmetleri</p>
 
-    <div>
-      <a class="btn" href="#hizmetler">Hizmetler</a>
-      <a class="btn" href="#iletisim">İletişim</a>
-    </div>
+    <a class="btn" href="#hizmetler">Hizmetler</a>
+    <a class="btn" href="#iletisim">İletişim</a>
   </div>
 
   <!-- HİZMETLER -->
@@ -146,18 +154,29 @@
     <div class="cards">
       <div class="card">
         <h3>Rot Ayarı</h3>
-        <p>Direksiyon hassasiyeti ve güvenli sürüş sağlar.</p>
+        <p>Direksiyon hassasiyeti ve güvenli sürüş.</p>
       </div>
 
       <div class="card">
-        <h3>Balans Ayarı</h3>
-        <p>Titreşimsiz, konforlu sürüş deneyimi.</p>
+        <h3>Balans</h3>
+        <p>Titreşimsiz ve konforlu sürüş.</p>
       </div>
 
       <div class="card">
-        <h3>Lastik Hizmeti</h3>
-        <p>Profesyonel lastik değişimi ve kontrol.</p>
+        <h3>Lastik</h3>
+        <p>Profesyonel lastik değişim hizmeti.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- YORUMLAR -->
+  <div class="section">
+    <h2>Müşteri Yorumları</h2>
+
+    <div class="reviews">
+      <div class="review">⭐ Çok memnun kaldım, hızlı ve kaliteli hizmet.</div>
+      <div class="review">⭐ Ustalar çok ilgili, tavsiye ederim.</div>
+      <div class="review">⭐ Fiyat performans çok iyi.</div>
     </div>
   </div>
 
@@ -172,6 +191,12 @@
 
       <a class="btn" href="tel:+90531XXXXXXX">Hemen Ara</a>
       <a class="btn" href="https://wa.me/90531XXXXXXX" target="_blank">WhatsApp</a>
+
+      <!-- GOOGLE MAPS (örnek) -->
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12..."
+        loading="lazy">
+      </iframe>
     </div>
   </div>
 
