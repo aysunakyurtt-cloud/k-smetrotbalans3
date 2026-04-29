@@ -31,7 +31,35 @@ body{
   color:var(--text);
 }
 
-/* TOP BAR (MOBİL APP HEADER) */
+/* 🔥 LOADING SCREEN */
+#loader{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:#0f0f0f;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:999;
+}
+
+.spinner{
+  width:40px;
+  height:40px;
+  border:4px solid #333;
+  border-top:4px solid #fff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:15px;
+}
+
+@keyframes spin{
+  100%{transform:rotate(360deg);}
+}
+
+/* TOPBAR */
 .topbar{
   display:none;
   justify-content:space-between;
@@ -42,11 +70,6 @@ body{
   position:sticky;
   top:0;
   z-index:100;
-}
-
-.topbar i{
-  font-size:20px;
-  cursor:pointer;
 }
 
 /* SIDEBAR */
@@ -77,7 +100,6 @@ body{
 
 .menu:hover{
   transform:translateX(5px);
-  background:rgba(255,255,255,0.1);
 }
 
 .menu.active{
@@ -95,10 +117,16 @@ body{
 .section{
   display:none;
   padding:40px;
+  animation:fade 0.3s ease;
 }
 
 .active{
   display:block;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 /* HERO */
@@ -112,11 +140,13 @@ body{
 }
 
 .hero h1{
-  font-size:60px;
+  font-size:65px;
+  letter-spacing:-1px;
 }
 
 .hero p{
   color:var(--muted);
+  margin-top:10px;
 }
 
 /* CARDS */
@@ -133,6 +163,12 @@ body{
   padding:20px;
   border-radius:14px;
   width:250px;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
 /* MAP */
@@ -154,38 +190,22 @@ iframe{
   padding:14px;
   border-radius:50px;
   text-decoration:none;
-}
-
-/* OVERLAY (menü açılınca arka plan kararma) */
-.overlay{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.4);
-  z-index:50;
+  font-weight:bold;
 }
 
 /* MOBILE */
-@media (max-width:768px){
-
-  .topbar{
-    display:flex;
-  }
-
+@media(max-width:768px){
   .sidebar{
     left:-260px;
-    z-index:100;
-  }
-
-  .sidebar.open{
-    left:0;
+    position:fixed;
   }
 
   .content{
     margin-left:0;
+  }
+
+  .topbar{
+    display:flex;
   }
 }
 </style>
@@ -193,35 +213,26 @@ iframe{
 
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <i class="fa fa-bars" onclick="toggleMenu()"></i>
-  <b>Kısmet Rot Balans</b>
+<!-- 🔥 LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+  <div>Kısmet Rot Balans</div>
 </div>
 
-<!-- OVERLAY -->
-<div class="overlay" onclick="closeMenu()"></div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <b>🚗 Kısmet Rot</b>
+</div>
 
 <!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+<div class="sidebar">
 
   <h2>🚗 Kısmet Rot</h2>
 
-  <div class="menu active" onclick="show('home', this)">
-    <i class="fa fa-home"></i> Ana Sayfa
-  </div>
-
-  <div class="menu" onclick="show('services', this)">
-    <i class="fa fa-wrench"></i> Hizmetler
-  </div>
-
-  <div class="menu" onclick="show('booking', this)">
-    <i class="fa fa-calendar"></i> Randevu
-  </div>
-
-  <div class="menu" onclick="show('map', this)">
-    <i class="fa fa-location-dot"></i> Konum
-  </div>
+  <div class="menu active" onclick="show('home', this)">Ana Sayfa</div>
+  <div class="menu" onclick="show('services', this)">Hizmetler</div>
+  <div class="menu" onclick="show('booking', this)">Randevu</div>
+  <div class="menu" onclick="show('map', this)">Konum</div>
 
 </div>
 
@@ -230,12 +241,14 @@ iframe{
 
 <!-- HOME -->
 <div id="home" class="section active">
+
   <div class="hero">
     <div>
       <h1>Kısmet Rot Balans</h1>
       <p>İstanbul Profesyonel Oto Servis</p>
     </div>
   </div>
+
 </div>
 
 <!-- SERVICES -->
@@ -274,27 +287,22 @@ iframe{
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
+
+/* LOADER */
+window.onload = function(){
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+  }, 1200);
+}
+
 function show(id, el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   if(el) el.classList.add('active');
-
-  // mobilde menü kapat
-  closeMenu();
 }
 
-/* MENÜ AÇ/KAPA */
-function toggleMenu(){
-  document.getElementById('sidebar').classList.toggle('open');
-  document.querySelector('.overlay').style.display = "block";
-}
-
-function closeMenu(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.querySelector('.overlay').style.display = "none";
-}
 </script>
 
 </body>
