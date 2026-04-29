@@ -8,115 +8,109 @@
 
 <style>
 :root{
-  --bg:#f3f5f9;
+  --bg:#f7f8fa;
   --card:#ffffff;
-  --text:#111;
-  --soft:#6b7280;
-  --accent:#111;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --accent:#111827;
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial;
+  font-family:system-ui, Arial;
 }
 
 body{
   background:var(--bg);
   color:var(--text);
+}
+
+/* HEADER */
+.header{
+  background:white;
+  padding:18px 25px;
+  border-bottom:1px solid var(--border);
   display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:240px;
-  height:100vh;
-  background:#0f0f0f;
-  color:white;
-  padding:25px;
-  position:fixed;
-}
-
-.sidebar h2{
+.header b{
   font-size:18px;
-  margin-bottom:25px;
 }
 
-.sidebar a{
-  display:block;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
-  background:#1c1c1c;
-  color:white;
+.header nav a{
+  margin-left:15px;
   text-decoration:none;
-  cursor:pointer;
-  transition:0.2s;
+  color:var(--muted);
+  font-weight:500;
 }
 
-.sidebar a:hover{
-  background:#333;
-}
-
-/* CONTENT */
-.content{
-  margin-left:240px;
-  width:100%;
-  padding:30px;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-  animation:fade .25s ease;
-}
-
-.active{
-  display:block;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(8px);}
-  to{opacity:1;transform:translateY(0);}
+.header nav a:hover{
+  color:var(--text);
 }
 
 /* HERO */
 .hero{
+  text-align:center;
+  padding:80px 20px;
   background:white;
-  padding:50px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
 .hero h1{
-  font-size:34px;
+  font-size:40px;
+  letter-spacing:-1px;
 }
 
 .hero p{
-  color:var(--soft);
+  color:var(--muted);
   margin-top:10px;
+}
+
+.btn{
+  margin-top:20px;
+  display:inline-block;
+  padding:12px 18px;
+  background:var(--accent);
+  color:white;
+  border-radius:10px;
+  text-decoration:none;
+}
+
+/* SECTION */
+.section{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.section h2{
+  margin-bottom:25px;
+  font-size:24px;
 }
 
 /* CARDS */
 .cards{
   display:flex;
   gap:20px;
+  justify-content:center;
   flex-wrap:wrap;
-  margin-top:20px;
 }
 
 .card{
   background:var(--card);
+  border:1px solid var(--border);
   padding:20px;
+  width:250px;
   border-radius:14px;
-  width:260px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.05);
   transition:0.2s;
 }
 
 .card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-4px);
+  border-color:#d1d5db;
 }
 
 .price{
@@ -124,150 +118,135 @@ body{
   font-weight:bold;
 }
 
-/* MAP + FORM */
+/* INFO BOX */
+.info{
+  max-width:800px;
+  margin:auto;
+  background:white;
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:14px;
+  color:var(--muted);
+}
+
+/* MAP */
 iframe{
   width:100%;
   max-width:800px;
   height:320px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
 }
 
+/* FORM */
 .form iframe{
-  height:700px;
+  height:650px;
 }
 
-/* WHY US */
-.why{
-  margin-top:20px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
 }
 
-.box{
-  background:white;
-  padding:15px;
-  border-radius:12px;
-  flex:1;
-  min-width:200px;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
-    display:flex;
-    flex-wrap:wrap;
-  }
-
-  .content{
-    margin-left:0;
-  }
-
-  body{
-    flex-direction:column;
-  }
+/* WHATSAPP */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:14px 16px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <h2>🚗 Kısmet Rot</h2>
+<!-- HEADER -->
+<div class="header">
+  <b>🚗 Kısmet Rot Balans</b>
 
-  <a onclick="show('home')">Ana Sayfa</a>
-  <a onclick="show('services')">Hizmetler</a>
-  <a onclick="show('why')">Neden Biz</a>
-  <a onclick="show('map')">Konum</a>
-  <a onclick="show('booking')">Randevu</a>
+  <nav>
+    <a href="#hizmet">Hizmet</a>
+    <a href="#konum">Konum</a>
+    <a href="#randevu">Randevu</a>
+  </nav>
 </div>
 
-<!-- CONTENT -->
-<div class="content">
-
-<!-- HOME -->
-<div id="home" class="section active">
-
-  <div class="hero">
-    <h1>Profesyonel Oto Servis</h1>
-    <p>Rot • Balans • Yağ • Lastik Hizmetleri</p>
-  </div>
-
+<!-- HERO -->
+<div class="hero">
+  <h1>Profesyonel Oto Servis</h1>
+  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmeti</p>
+  <a class="btn" href="#randevu">Online Randevu Al</a>
 </div>
 
-<!-- SERVICES -->
-<div id="services" class="section">
+<!-- HİZMET -->
+<div id="hizmet" class="section">
 
-  <h2>Hizmet & Fiyat</h2>
+<h2>Hizmetler</h2>
 
-  <div class="cards">
+<div class="cards">
 
-    <div class="card">
-      Rot Ayarı
-      <div class="price">700 TL</div>
-    </div>
-
-    <div class="card">
-      Balans
-      <div class="price">500 TL</div>
-    </div>
-
-    <div class="card">
-      Yağ Değişimi
-      <div class="price">200 TL</div>
-    </div>
-
-  </div>
-
+<div class="card">
+Rot Ayarı
+<div class="price">700 TL</div>
 </div>
 
-<!-- WHY US -->
-<div id="why" class="section">
-
-  <h2>Neden Biz?</h2>
-
-  <div class="why">
-
-    <div class="box">✔ 20+ yıl deneyim</div>
-    <div class="box">✔ Profesyonel ekip</div>
-    <div class="box">✔ Uygun fiyat garantisi</div>
-    <div class="box">✔ Hızlı servis</div>
-
-  </div>
-
+<div class="card">
+Balans
+<div class="price">500 TL</div>
 </div>
 
-<!-- MAP -->
-<div id="map" class="section">
-
-  <h2>Konum</h2>
-
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
-
+<div class="card">
+Yağ Değişimi
+<div class="price">200 TL</div>
 </div>
 
-<!-- BOOKING -->
-<div id="booking" class="section form">
+</div>
+</div>
 
-  <h2>Online Randevu</h2>
+<!-- NEDEN -->
+<div class="section">
 
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+<h2>Neden Biz?</h2>
 
+<div class="info">
+20 yılı aşkın tecrübe ile İstanbul’da profesyonel oto servis hizmeti veriyoruz.  
+Uygun fiyat, hızlı işlem ve güvenli sürüş garantisi.
 </div>
 
 </div>
 
-<script>
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-</script>
+<!-- KONUM -->
+<div id="konum" class="section">
+
+<h2>Konum</h2>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
+
+</div>
+
+<!-- RANDEVU -->
+<div id="randevu" class="section form">
+
+<h2>Online Randevu</h2>
+
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+
+</div>
+
+<footer>
+© 2026 Kısmet Rot Balans
+</footer>
+
+<a class="wp" href="https://wa.me/905319724508" target="_blank">
+WhatsApp
+</a>
 
 </body>
 </html>
