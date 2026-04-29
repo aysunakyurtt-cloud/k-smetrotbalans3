@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kısmet Rot Balans</title>
+<title>Kısmet Rot Balans | Profesyonel Oto Servis</title>
 
 <style>
 *{
@@ -15,157 +15,401 @@
 }
 
 body{
-  display:flex;
-  min-height:100vh;
-  background:#f5f7fb;
+  background:#f7f8fa;
+  color:#1a1a1a;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:260px;
-  background:#ffffff;
-  border-right:1px solid #e6e6e6;
-  padding:20px;
-}
-
-.sidebar h2{
-  font-size:18px;
-  margin-bottom:20px;
-}
-
-.tab{
-  display:block;
-  padding:12px;
-  margin-bottom:10px;
-  background:#f1f3f6;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-  transition:0.2s;
-}
-
-.tab:hover{
-  background:#e6e9ef;
-}
-
-/* CONTENT */
-.content{
-  flex:1;
-  padding:30px;
-}
-
-.box{
+/* HEADER */
+.header{
   background:white;
-  padding:20px;
-  border-radius:14px;
-  border:1px solid #eee;
-  max-width:700px;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #eee;
 }
 
-/* BUTTON */
+.logo{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.nav a{
+  margin-left:15px;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#ffffff,#f1f5f9);
+  padding:80px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+}
+
+.hero p{
+  color:#666;
+  margin-top:10px;
+}
+
 .btn{
   display:inline-block;
-  padding:10px 14px;
-  margin-top:10px;
+  padding:12px 18px;
+  margin-top:15px;
   border-radius:10px;
   text-decoration:none;
   font-weight:bold;
 }
 
-.green{background:#22c55e;color:white;}
-.dark{background:#1a1a1a;color:white;}
+.primary{background:#16a34a;color:white;}
+.dark{background:#111;color:white;}
 .blue{background:#2563eb;color:white;}
 
-.price{
-  margin:8px 0;
-  padding:10px;
-  background:#f7f7f7;
-  border-radius:8px;
+/* SECTIONS */
+.section{
+  padding:60px 20px;
+  text-align:center;
 }
 
-/* MOBILE */
-@media(max-width:700px){
-  body{flex-direction:column;}
-  .sidebar{width:100%;}
+.title{
+  font-size:24px;
+  margin-bottom:25px;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  width:260px;
+  border:1px solid #eee;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  color:#16a34a;
+  margin-top:10px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  color:#888;
+  font-size:12px;
+  border-top:1px solid #eee;
+}
+
+/* WHATSAPP FLOAT */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:14px 16px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  .hero h1{font-size:30px;}
+  .cards{flex-direction:column;align-items:center;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <h2>🚗 Kısmet Rot</h2>
-
-  <div class="tab" onclick="show('hizmet')">🔧 Hizmetler & Fiyat</div>
-  <div class="tab" onclick="show('randevu')">📅 Randevu</div>
-  <div class="tab" onclick="show('urun')">🛢️ Ürünler</div>
+<div class="header">
+  <div class="logo">🚗 Kısmet Rot Balans</div>
+  <div class="nav">
+    <a href="#hizmet">Hizmetler</a>
+    <a href="#fiyat">Fiyat</a>
+    <a href="#randevu">Randevu</a>
+  </div>
 </div>
 
-<!-- CONTENT -->
-<div class="content">
+<!-- HERO -->
+<div class="hero">
+  <h1>Profesyonel Oto Servis</h1>
+  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmetleri</p>
 
-  <!-- HİZMET -->
-  <div id="hizmet" class="section">
+  <a class="btn primary" href="#randevu">Randevu Al</a>
+  <a class="btn dark" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+</div>
 
-    <div class="box">
-      <h3>Hizmetler & Fiyat Listesi</h3>
+<!-- HİZMETLER -->
+<div class="section" id="hizmet">
 
-      <div class="price">Rot Ayarı — <b>700 TL</b></div>
-      <div class="price">Balans — <b>500 TL</b></div>
-      <div class="price">Yağ Değişimi — <b>200 TL</b></div>
+  <div class="title">Hizmetler</div>
 
+  <div class="cards">
+
+    <div class="card">
+      <h3>Rot Ayarı</h3>
+      <p>Direksiyon hassasiyeti ve güvenli sürüş</p>
+      <div class="price">700 TL</div>
+    </div>
+
+    <div class="card">
+      <h3>Balans</h3>
+      <p>Titreşimsiz sürüş deneyimi</p>
+      <div class="price">500 TL</div>
+    </div>
+
+    <div class="card">
+      <h3>Yağ Değişimi</h3>
+      <p>Motor ömrünü uzatır</p>
+      <div class="price">200 TL</div>
     </div>
 
   </div>
+</div>
 
-  <!-- RANDEVU -->
-  <div id="randevu" class="section" style="display:none;">
+<!-- RANDEVU -->
+<div class="section" id="randevu">
 
-    <div class="box">
-      <h3>Randevu Sistemi</h3>
+  <div class="title">Online Randevu</div>
 
-      <a class="btn dark"
-         href="https://forms.gle/m1A8Qbh8cUpkaRTu6"
-         target="_blank">
-         📅 Randevu Al
-      </a>
-
-      <a class="btn green"
-         href="https://wa.me/905319724508?text=Randevu%20almak%20istiyorum"
-         target="_blank">
-         WhatsApp
-      </a>
-
-    </div>
-
-  </div>
-
-  <!-- ÜRÜN -->
-  <div id="urun" class="section" style="display:none;">
-
-    <div class="box">
-      <h3>Ürünler & Aksesuar</h3>
-
-      <div class="price">Motor Yağı — <b>500 TL</b></div>
-      <div class="price">Fren Spreyi — <b>150 TL</b></div>
-      <div class="price">Antifriz — <b>250 TL</b></div>
-
-    </div>
-
-  </div>
+  <a class="btn primary" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
+    📅 Randevu Oluştur
+  </a>
 
 </div>
 
-<script>
-function show(id){
-  document.getElementById("hizmet").style.display="none";
-  document.getElementById("randevu").style.display="none";
-  document.getElementById("urun").style.display="none";
+<footer>
+© 2026 Kısmet Rot Balans
+</footer>
 
-  document.getElementById(id).style.display="block";
+<a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kısmet Rot Balans | Profesyonel Oto Servis</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
 }
-</script>
+
+body{
+  background:#f7f8fa;
+  color:#1a1a1a;
+}
+
+/* HEADER */
+.header{
+  background:white;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #eee;
+}
+
+.logo{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.nav a{
+  margin-left:15px;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#ffffff,#f1f5f9);
+  padding:80px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+}
+
+.hero p{
+  color:#666;
+  margin-top:10px;
+}
+
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  margin-top:15px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.primary{background:#16a34a;color:white;}
+.dark{background:#111;color:white;}
+.blue{background:#2563eb;color:white;}
+
+/* SECTIONS */
+.section{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.title{
+  font-size:24px;
+  margin-bottom:25px;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  width:260px;
+  border:1px solid #eee;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  color:#16a34a;
+  margin-top:10px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  color:#888;
+  font-size:12px;
+  border-top:1px solid #eee;
+}
+
+/* WHATSAPP FLOAT */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:14px 16px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  .hero h1{font-size:30px;}
+  .cards{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">🚗 Kısmet Rot Balans</div>
+  <div class="nav">
+    <a href="#hizmet">Hizmetler</a>
+    <a href="#fiyat">Fiyat</a>
+    <a href="#randevu">Randevu</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Profesyonel Oto Servis</h1>
+  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmetleri</p>
+
+  <a class="btn primary" href="#randevu">Randevu Al</a>
+  <a class="btn dark" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
+</div>
+
+<!-- HİZMETLER -->
+<div class="section" id="hizmet">
+
+  <div class="title">Hizmetler</div>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Rot Ayarı</h3>
+      <p>Direksiyon hassasiyeti ve güvenli sürüş</p>
+      <div class="price">700 TL</div>
+    </div>
+
+    <div class="card">
+      <h3>Balans</h3>
+      <p>Titreşimsiz sürüş deneyimi</p>
+      <div class="price">500 TL</div>
+    </div>
+
+    <div class="card">
+      <h3>Yağ Değişimi</h3>
+      <p>Motor ömrünü uzatır</p>
+      <div class="price">200 TL</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RANDEVU -->
+<div class="section" id="randevu">
+
+  <div class="title">Online Randevu</div>
+
+  <a class="btn primary" href="https://forms.gle/m1A8Qbh8cUpkaRTu6" target="_blank">
+    📅 Randevu Oluştur
+  </a>
+
+</div>
+
+<footer>
+© 2026 Kısmet Rot Balans
+</footer>
+
+<a class="wp" href="https://wa.me/905319724508" target="_blank">WhatsApp</a>
 
 </body>
 </html>
