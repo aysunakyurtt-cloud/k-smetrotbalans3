@@ -4,93 +4,154 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kısmet Rot Balans | Randevu Sistemi</title>
+  <title>Kısmet Rot Balans | Profesyonel Servis</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    :root{
+      --bg:#0f1115;
+      --card:#171a21;
+      --text:#eaeaea;
+      --muted:#a0a0a0;
+      --accent:#22c55e;
+      --accent2:#3b82f6;
     }
 
-    body {
-      background: #f6f7fb;
-      color: #1a1a1a;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
     }
 
-    .topbar {
-      background: white;
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      font-size: 13px;
+    body{
+      background:var(--bg);
+      color:var(--text);
     }
 
-    .hero {
-      text-align: center;
-      padding: 70px 20px;
+    /* TOP */
+    .topbar{
+      text-align:center;
+      padding:10px;
+      font-size:13px;
+      background:#0b0d10;
+      color:var(--muted);
+      border-bottom:1px solid #222;
     }
 
-    .hero h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
+    /* HERO */
+    .hero{
+      text-align:center;
+      padding:80px 20px;
     }
 
-    .hero p {
-      color: #666;
-      margin-bottom: 20px;
+    .hero h1{
+      font-size:40px;
+      font-weight:700;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 12px 18px;
-      margin: 6px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.2s;
+    .hero p{
+      color:var(--muted);
+      margin-top:10px;
+      font-size:15px;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
+    /* BUTTONS */
+    .btn{
+      display:inline-block;
+      padding:12px 18px;
+      margin:8px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:0.2s;
+      font-size:14px;
     }
 
-    .btn-dark {
-      background: #1a1a1a;
-      color: white;
+    .btn:hover{
+      transform:translateY(-2px);
     }
 
-    .btn-green {
-      background: #00c853;
-      color: white;
+    .primary{
+      background:var(--accent);
+      color:black;
     }
 
-    .btn-blue {
-      background: #0b3d91;
-      color: white;
+    .secondary{
+      background:#1f2937;
+      color:var(--text);
+      border:1px solid #2a2f3a;
     }
 
-    .section {
-      padding: 50px 20px;
-      text-align: center;
+    .blue{
+      background:var(--accent2);
+      color:white;
     }
 
-    .card {
-      background: white;
-      border: 1px solid #eee;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 500px;
-      margin: auto;
+    /* SECTION */
+    .section{
+      padding:60px 20px;
+      text-align:center;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: #777;
+    .title{
+      font-size:22px;
+      margin-bottom:25px;
     }
+
+    /* CARDS */
+    .cards{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:15px;
+    }
+
+    .card{
+      background:var(--card);
+      padding:20px;
+      border-radius:14px;
+      width:260px;
+      border:1px solid #222;
+      transition:0.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    .card h3{
+      margin-bottom:10px;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* RANDEVU BOX */
+    .box{
+      background:var(--card);
+      max-width:500px;
+      margin:auto;
+      padding:25px;
+      border-radius:14px;
+      border:1px solid #222;
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      font-size:12px;
+      color:#666;
+      border-top:1px solid #222;
+      margin-top:40px;
+    }
+
+    @media(max-width:600px){
+      .hero h1{font-size:30px;}
+      .cards{flex-direction:column;align-items:center;}
+    }
+
   </style>
 </head>
 
@@ -103,41 +164,62 @@
   <!-- HERO -->
   <div class="hero">
     <h1>Kısmet Rot Balans</h1>
-    <p>Rot • Balans • Lastik Servisi</p>
+    <p>Profesyonel Rot • Balans • Lastik Servisi</p>
 
-    <a class="btn btn-dark" href="#randevu">Randevu Al</a>
+    <div style="margin-top:20px;">
+      <a class="btn primary" href="#randevu">Randevu Al</a>
 
-    <!-- WHATSAPP (SADECE İLETİŞİM) -->
-    <a class="btn btn-green"
-       href="https://wa.me/905319724508?text=Merhaba%20bilgi%20almak%20istiyorum"
-       target="_blank">
-       WhatsApp İletişim
-    </a>
+      <a class="btn secondary"
+         href="https://wa.me/905319724508?text=Merhaba%20bilgi%20almak%20istiyorum"
+         target="_blank">
+         WhatsApp
+      </a>
 
-    <!-- SHEET PANEL -->
-    <a class="btn btn-blue"
-       href="https://docs.google.com/spreadsheets/d/1H2gKiO-X8rASTM1-ipyi060ByfnD9mQ-UvUa1Nd_s7g/edit?usp=sharing"
-       target="_blank">
-       Randevu Paneli
-    </a>
+      <a class="btn blue"
+         href="https://docs.google.com/spreadsheets/d/1H2gKiO-X8rASTM1-ipyi060ByfnD9mQ-UvUa1Nd_s7g/edit?usp=sharing"
+         target="_blank">
+         Panel
+      </a>
+    </div>
+  </div>
+
+  <!-- HİZMETLER -->
+  <div class="section">
+    <div class="title">Hizmetlerimiz</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Rot Ayarı</h3>
+        <p>Direksiyon hassasiyeti ve güvenli sürüş.</p>
+      </div>
+
+      <div class="card">
+        <h3>Balans</h3>
+        <p>Titreşimsiz, konforlu sürüş deneyimi.</p>
+      </div>
+
+      <div class="card">
+        <h3>Lastik</h3>
+        <p>Profesyonel lastik değişim ve kontrol.</p>
+      </div>
+    </div>
   </div>
 
   <!-- RANDEVU -->
   <div id="randevu" class="section">
 
-    <h2>Online Randevu</h2>
+    <div class="title">Online Randevu</div>
 
-    <div class="card">
+    <div class="box">
+      <p style="color:#aaa;margin-bottom:15px;">
+        Randevu oluşturmak için butona tıkla
+      </p>
 
-      <p>Randevu almak için aşağıdaki butona tıkla:</p>
-      <br>
-
-      <a href="https://forms.gle/m1A8Qbh8cUpkaRTu6"
-         target="_blank"
-         class="btn btn-dark">
-         📅 Randevu Formunu Aç
+      <a class="btn primary"
+         href="https://forms.gle/m1A8Qbh8cUpkaRTu6"
+         target="_blank">
+         📅 Randevu Formu
       </a>
-
     </div>
 
   </div>
