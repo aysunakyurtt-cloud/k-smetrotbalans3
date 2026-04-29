@@ -9,11 +9,9 @@
 <style>
 :root{
   --bg:#f6f7fb;
-  --card:#ffffff;
   --text:#111827;
   --muted:#6b7280;
   --border:#e5e7eb;
-  --accent:#111827;
 }
 
 *{
@@ -49,7 +47,6 @@ header nav a{
   margin-left:15px;
   text-decoration:none;
   color:var(--muted);
-  font-weight:500;
 }
 
 header nav a:hover{
@@ -58,27 +55,52 @@ header nav a:hover{
 
 /* HERO */
 .hero{
-  padding:100px 20px;
+  height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  background:white;
+  padding:20px;
+
+  /* GÖRSEL HİSSİ */
+  background:
+    radial-gradient(circle at top, rgba(0,0,0,0.08), transparent 60%),
+    linear-gradient(135deg, #ffffff, #f0f2f5);
 }
 
+.hero-box{
+  max-width:700px;
+  padding:40px;
+}
+
+/* BÜYÜK YAZI */
 .hero h1{
-  font-size:46px;
-  letter-spacing:-1px;
+  font-size:64px;
+  letter-spacing:-2px;
+  font-weight:800;
+  color:#111827;
 }
 
+/* ALT YAZI */
 .hero p{
+  margin-top:15px;
+  font-size:18px;
   color:var(--muted);
-  margin-top:10px;
-  font-size:16px;
 }
 
+/* SUB TEXT */
+.hero small{
+  display:block;
+  margin-top:10px;
+  color:#9ca3af;
+}
+
+/* BUTON */
 .btn{
   margin-top:25px;
   display:inline-block;
-  padding:13px 20px;
-  background:var(--accent);
+  padding:14px 22px;
+  background:#111827;
   color:white;
   border-radius:12px;
   text-decoration:none;
@@ -86,7 +108,7 @@ header nav a:hover{
 }
 
 .btn:hover{
-  transform:scale(1.03);
+  transform:scale(1.05);
 }
 
 /* SECTION */
@@ -96,8 +118,7 @@ section{
 }
 
 h2{
-  font-size:26px;
-  margin-bottom:30px;
+  margin-bottom:25px;
 }
 
 /* GRID */
@@ -110,34 +131,22 @@ h2{
 }
 
 .card{
-  background:var(--card);
+  background:white;
   border:1px solid var(--border);
   padding:22px;
   border-radius:16px;
-  transition:0.25s;
-  text-align:left;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.06);
-}
-
-.price{
-  margin-top:10px;
-  font-weight:600;
 }
 
 /* INFO */
 .info{
   max-width:750px;
   margin:auto;
-  color:var(--muted);
-  line-height:1.6;
   background:white;
   padding:25px;
   border-radius:16px;
   border:1px solid var(--border);
+  color:var(--muted);
+  line-height:1.6;
 }
 
 /* MAP */
@@ -190,12 +199,25 @@ footer{
 
 <!-- HERO -->
 <div class="hero">
-  <h1>Profesyonel Oto Servis</h1>
-  <p>Rot • Balans • Yağ Değişimi • Lastik Hizmetleri</p>
-  <a class="btn" href="#randevu">Online Randevu Al</a>
+
+  <div class="hero-box">
+
+    <h1>Kısmet Rot Balans</h1>
+
+    <p>
+      Profesyonel oto servis hizmetleri<br>
+      Rot • Balans • Yağ Değişimi • Lastik
+    </p>
+
+    <small>İstanbul’da güvenli sürüşün adresi</small>
+
+    <a class="btn" href="#randevu">Online Randevu Al</a>
+
+  </div>
+
 </div>
 
-<!-- HİZMETLER -->
+<!-- HİZMET -->
 <section id="hizmet">
 
 <h2>Hizmetler & Fiyatlar</h2>
@@ -203,25 +225,22 @@ footer{
 <div class="grid">
 
 <div class="card">
-<h3>Rot Ayarı</h3>
-<div class="price">700 TL</div>
+Rot Ayarı<br><b>700 TL</b>
 </div>
 
 <div class="card">
-<h3>Balans</h3>
-<div class="price">500 TL</div>
+Balans<br><b>500 TL</b>
 </div>
 
 <div class="card">
-<h3>Yağ Değişimi</h3>
-<div class="price">200 TL</div>
+Yağ Değişimi<br><b>200 TL</b>
 </div>
 
 </div>
 
 </section>
 
-<!-- NEDEN BİZ -->
+<!-- NEDEN -->
 <section id="neden">
 
 <h2>Neden Biz?</h2>
@@ -229,8 +248,8 @@ footer{
 <div class="info">
 ✔ 20+ yıl deneyim  
 ✔ Profesyonel ekip  
-✔ Uygun fiyat politikası  
-✔ Hızlı ve güvenli servis  
+✔ Uygun fiyat  
+✔ Hızlı servis  
 </div>
 
 </section>
