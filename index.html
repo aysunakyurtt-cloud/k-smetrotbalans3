@@ -27,9 +27,26 @@
 }
 
 body{
-  display:flex;
   background:var(--bg);
   color:var(--text);
+}
+
+/* TOP BAR (MOBİL APP HEADER) */
+.topbar{
+  display:none;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:#0f0f0f;
+  color:white;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.topbar i{
+  font-size:20px;
+  cursor:pointer;
 }
 
 /* SIDEBAR */
@@ -47,7 +64,6 @@ body{
   margin-bottom:20px;
 }
 
-/* MENU */
 .menu{
   display:flex;
   gap:10px;
@@ -140,42 +156,36 @@ iframe{
   text-decoration:none;
 }
 
-/* 🔥 MOBILE FIX */
+/* OVERLAY (menü açılınca arka plan kararma) */
+.overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  z-index:50;
+}
+
+/* MOBILE */
 @media (max-width:768px){
 
-  body{
-    flex-direction:column;
+  .topbar{
+    display:flex;
   }
 
   .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-around;
-    padding:10px;
+    left:-260px;
+    z-index:100;
   }
 
-  .sidebar h2{
-    width:100%;
-    text-align:center;
-    margin-bottom:10px;
-  }
-
-  .menu{
-    flex:1;
-    justify-content:center;
-    margin:5px;
-    font-size:14px;
+  .sidebar.open{
+    left:0;
   }
 
   .content{
     margin-left:0;
-  }
-
-  .hero h1{
-    font-size:38px;
   }
 }
 </style>
@@ -183,8 +193,18 @@ iframe{
 
 <body>
 
+<!-- TOPBAR -->
+<div class="topbar">
+  <i class="fa fa-bars" onclick="toggleMenu()"></i>
+  <b>Kısmet Rot Balans</b>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" onclick="closeMenu()"></div>
+
 <!-- SIDEBAR -->
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
+
   <h2>🚗 Kısmet Rot</h2>
 
   <div class="menu active" onclick="show('home', this)">
@@ -202,11 +222,13 @@ iframe{
   <div class="menu" onclick="show('map', this)">
     <i class="fa fa-location-dot"></i> Konum
   </div>
+
 </div>
 
 <!-- CONTENT -->
 <div class="content">
 
+<!-- HOME -->
 <div id="home" class="section active">
   <div class="hero">
     <div>
@@ -216,7 +238,9 @@ iframe{
   </div>
 </div>
 
+<!-- SERVICES -->
 <div id="services" class="section">
+
   <h2>Hizmetler</h2>
 
   <div class="cards">
@@ -224,18 +248,25 @@ iframe{
     <div class="card">Balans<br><b>500 TL</b></div>
     <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
   </div>
+
 </div>
 
+<!-- BOOKING -->
 <div id="booking" class="section">
+
   <h2>Randevu</h2>
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+
 </div>
 
+<!-- MAP -->
 <div id="map" class="section">
+
   <h2>Konum</h2>
 
   <iframe src="https://www.google.com/maps/embed?pb=!1m18..."></iframe>
+
 </div>
 
 </div>
@@ -249,6 +280,20 @@ function show(id, el){
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   if(el) el.classList.add('active');
+
+  // mobilde menü kapat
+  closeMenu();
+}
+
+/* MENÜ AÇ/KAPA */
+function toggleMenu(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.querySelector('.overlay').style.display = "block";
+}
+
+function closeMenu(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.querySelector('.overlay').style.display = "none";
 }
 </script>
 
