@@ -1,167 +1,30 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kısmet Rot Balans</title>
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui;
-}
-
-body{
-  display:flex;
-  background:#f6f7fb;
-}
-
-/* SIDEBAR */
-.sidebar{
-  width:240px;
-  height:100vh;
-  background:#111;
-  color:white;
-  padding:20px;
-  position:fixed;
-}
-
-.menu{
-  padding:12px;
-  margin-bottom:10px;
-  background:rgba(255,255,255,0.05);
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.menu.active{
-  background:white;
-  color:black;
-}
-
-/* CONTENT */
-.content{
-  margin-left:240px;
-  width:100%;
-  padding:20px;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-}
-
-.active{
-  display:block;
-}
-
-/* HERO */
-.hero{
-  height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:white;
-  border-radius:15px;
-  text-align:center;
-}
-
-.hero h1{
-  font-size:50px;
-}
-
-/* CARDS */
-.card{
-  background:white;
-  padding:15px;
-  margin:10px;
-  border-radius:10px;
-  display:inline-block;
-}
-
-/* IFRAME */
-iframe{
-  width:100%;
-  height:600px;
-  border:none;
-  border-radius:10px;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar{
-    width:70px;
-  }
-
-  .content{
-    margin-left:70px;
-  }
-
-  .menu{
-    font-size:12px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="sidebar">
-
-<div class="menu active" onclick="show('home', this)">Ana</div>
-<div class="menu" onclick="show('services', this)">Hizmet</div>
-<div class="menu" onclick="show('booking', this)">Randevu</div>
-
-</div>
-
-<div class="content">
-
-<!-- HOME -->
-<div id="home" class="section active">
-
-<div class="hero">
-  <div>
-    <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel oto servis</p>
-  </div>
-</div>
-
-</div>
-
-<!-- SERVICES -->
-<div id="services" class="section">
-
-<h2>Hizmetler</h2>
-
-<div class="card">Rot Ayarı - 700 TL</div>
-<div class="card">Balans - 500 TL</div>
-<div class="card">Yağ Değişimi - 200 TL</div>
-
-</div>
-
-<!-- BOOKING -->
-<div id="booking" class="section">
-
-<h2>Randevu Al</h2>
-
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
-
-</div>
-
-</div>
-
 <script>
-function show(id, el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+async function loadRandevular(){
 
-  document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  el.classList.add('active');
+  const url = "GOOGLE_SHEET_CSV_LINK_BURAYA";
+
+  const res = await fetch(url);
+  const text = await res.text();
+
+  const rows = text.split("\n").slice(1);
+
+  let html = "";
+
+  rows.forEach(r=>{
+    const cols = r.split(",");
+
+    if(cols.length > 1){
+      html += `
+        <div class="randevu">
+          <div>${cols[1]} - ${cols[2] || "Hizmet"}</div>
+          <div class="badge">Yeni</div>
+        </div>
+      `;
+    }
+  });
+
+  document.querySelector(".panel").innerHTML = html;
 }
-</script>
 
-</body>
-</html>
+loadRandevular();
+</script>
