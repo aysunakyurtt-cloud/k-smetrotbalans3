@@ -1,232 +1,171 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kısmet Rot Balans | Profesyonel Servis</title>
+<title>Kısmet Rot Balans</title>
 
-  <style>
-    :root{
-      --bg:#0f1115;
-      --card:#171a21;
-      --text:#eaeaea;
-      --muted:#a0a0a0;
-      --accent:#22c55e;
-      --accent2:#3b82f6;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
+body{
+  display:flex;
+  min-height:100vh;
+  background:#f5f7fb;
+}
 
-    body{
-      background:var(--bg);
-      color:var(--text);
-    }
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  background:#ffffff;
+  border-right:1px solid #e6e6e6;
+  padding:20px;
+}
 
-    /* TOP */
-    .topbar{
-      text-align:center;
-      padding:10px;
-      font-size:13px;
-      background:#0b0d10;
-      color:var(--muted);
-      border-bottom:1px solid #222;
-    }
+.sidebar h2{
+  font-size:18px;
+  margin-bottom:20px;
+}
 
-    /* HERO */
-    .hero{
-      text-align:center;
-      padding:80px 20px;
-    }
+.tab{
+  display:block;
+  padding:12px;
+  margin-bottom:10px;
+  background:#f1f3f6;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.2s;
+}
 
-    .hero h1{
-      font-size:40px;
-      font-weight:700;
-    }
+.tab:hover{
+  background:#e6e9ef;
+}
 
-    .hero p{
-      color:var(--muted);
-      margin-top:10px;
-      font-size:15px;
-    }
+/* CONTENT */
+.content{
+  flex:1;
+  padding:30px;
+}
 
-    /* BUTTONS */
-    .btn{
-      display:inline-block;
-      padding:12px 18px;
-      margin:8px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:bold;
-      transition:0.2s;
-      font-size:14px;
-    }
+.box{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  border:1px solid #eee;
+  max-width:700px;
+}
 
-    .btn:hover{
-      transform:translateY(-2px);
-    }
+/* BUTTON */
+.btn{
+  display:inline-block;
+  padding:10px 14px;
+  margin-top:10px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-    .primary{
-      background:var(--accent);
-      color:black;
-    }
+.green{background:#22c55e;color:white;}
+.dark{background:#1a1a1a;color:white;}
+.blue{background:#2563eb;color:white;}
 
-    .secondary{
-      background:#1f2937;
-      color:var(--text);
-      border:1px solid #2a2f3a;
-    }
+.price{
+  margin:8px 0;
+  padding:10px;
+  background:#f7f7f7;
+  border-radius:8px;
+}
 
-    .blue{
-      background:var(--accent2);
-      color:white;
-    }
-
-    /* SECTION */
-    .section{
-      padding:60px 20px;
-      text-align:center;
-    }
-
-    .title{
-      font-size:22px;
-      margin-bottom:25px;
-    }
-
-    /* CARDS */
-    .cards{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:15px;
-    }
-
-    .card{
-      background:var(--card);
-      padding:20px;
-      border-radius:14px;
-      width:260px;
-      border:1px solid #222;
-      transition:0.2s;
-    }
-
-    .card:hover{
-      transform:translateY(-5px);
-    }
-
-    .card h3{
-      margin-bottom:10px;
-    }
-
-    .card p{
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    /* RANDEVU BOX */
-    .box{
-      background:var(--card);
-      max-width:500px;
-      margin:auto;
-      padding:25px;
-      border-radius:14px;
-      border:1px solid #222;
-    }
-
-    footer{
-      text-align:center;
-      padding:20px;
-      font-size:12px;
-      color:#666;
-      border-top:1px solid #222;
-      margin-top:40px;
-    }
-
-    @media(max-width:600px){
-      .hero h1{font-size:30px;}
-      .cards{flex-direction:column;align-items:center;}
-    }
-
-  </style>
+/* MOBILE */
+@media(max-width:700px){
+  body{flex-direction:column;}
+  .sidebar{width:100%;}
+}
+</style>
 </head>
 
 <body>
 
-  <div class="topbar">
-    📍 İstanbul | Kısmet Rot Balans | 📞 0531 972 45 08
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>🚗 Kısmet Rot</h2>
+
+  <div class="tab" onclick="show('hizmet')">🔧 Hizmetler & Fiyat</div>
+  <div class="tab" onclick="show('randevu')">📅 Randevu</div>
+  <div class="tab" onclick="show('urun')">🛢️ Ürünler</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- HİZMET -->
+  <div id="hizmet" class="section">
+
+    <div class="box">
+      <h3>Hizmetler & Fiyat Listesi</h3>
+
+      <div class="price">Rot Ayarı — <b>700 TL</b></div>
+      <div class="price">Balans — <b>500 TL</b></div>
+      <div class="price">Yağ Değişimi — <b>200 TL</b></div>
+
+    </div>
+
   </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel Rot • Balans • Lastik Servisi</p>
+  <!-- RANDEVU -->
+  <div id="randevu" class="section" style="display:none;">
 
-    <div style="margin-top:20px;">
-      <a class="btn primary" href="#randevu">Randevu Al</a>
+    <div class="box">
+      <h3>Randevu Sistemi</h3>
 
-      <a class="btn secondary"
-         href="https://wa.me/905319724508?text=Merhaba%20bilgi%20almak%20istiyorum"
+      <a class="btn dark"
+         href="https://forms.gle/m1A8Qbh8cUpkaRTu6"
+         target="_blank">
+         📅 Randevu Al
+      </a>
+
+      <a class="btn green"
+         href="https://wa.me/905319724508?text=Randevu%20almak%20istiyorum"
          target="_blank">
          WhatsApp
       </a>
 
-      <a class="btn blue"
-         href="https://docs.google.com/spreadsheets/d/1H2gKiO-X8rASTM1-ipyi060ByfnD9mQ-UvUa1Nd_s7g/edit?usp=sharing"
-         target="_blank">
-         Panel
-      </a>
     </div>
+
   </div>
 
-  <!-- HİZMETLER -->
-  <div class="section">
-    <div class="title">Hizmetlerimiz</div>
-
-    <div class="cards">
-      <div class="card">
-        <h3>Rot Ayarı</h3>
-        <p>Direksiyon hassasiyeti ve güvenli sürüş.</p>
-      </div>
-
-      <div class="card">
-        <h3>Balans</h3>
-        <p>Titreşimsiz, konforlu sürüş deneyimi.</p>
-      </div>
-
-      <div class="card">
-        <h3>Lastik</h3>
-        <p>Profesyonel lastik değişim ve kontrol.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- RANDEVU -->
-  <div id="randevu" class="section">
-
-    <div class="title">Online Randevu</div>
+  <!-- ÜRÜN -->
+  <div id="urun" class="section" style="display:none;">
 
     <div class="box">
-      <p style="color:#aaa;margin-bottom:15px;">
-        Randevu oluşturmak için butona tıkla
-      </p>
+      <h3>Ürünler & Aksesuar</h3>
 
-      <a class="btn primary"
-         href="https://forms.gle/m1A8Qbh8cUpkaRTu6"
-         target="_blank">
-         📅 Randevu Formu
-      </a>
+      <div class="price">Motor Yağı — <b>500 TL</b></div>
+      <div class="price">Fren Spreyi — <b>150 TL</b></div>
+      <div class="price">Antifriz — <b>250 TL</b></div>
+
     </div>
 
   </div>
 
-  <footer>
-    © 2026 Kısmet Rot Balans
-  </footer>
+</div>
+
+<script>
+function show(id){
+  document.getElementById("hizmet").style.display="none";
+  document.getElementById("randevu").style.display="none";
+  document.getElementById("urun").style.display="none";
+
+  document.getElementById(id).style.display="block";
+}
+</script>
 
 </body>
 </html>
