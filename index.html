@@ -1,171 +1,36 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>CRM SaaS V1</title>
+<title>OtoServis SaaS</title>
 
 <style>
 body{margin:0;font-family:system-ui;background:#0b1220;color:white;}
-.top{padding:15px;background:#0f172a;text-align:center;font-weight:bold;}
-
-.wrap{max-width:900px;margin:auto;padding:20px;}
-
-.card{background:#111827;padding:15px;border-radius:12px;margin:10px 0;}
-
-input{
-  width:100%;padding:10px;margin:5px 0;
-  border:none;border-radius:8px;background:#1f2937;color:white;
-}
-
-button{
-  width:100%;padding:10px;
-  background:#2563eb;border:none;color:white;border-radius:8px;
-  cursor:pointer;
-}
-
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-.small{font-size:22px;font-weight:bold;}
-
-.hidden{display:none;}
+.hero{padding:80px;text-align:center;}
+.btn{padding:15px 25px;background:#2563eb;color:white;border:none;border-radius:10px;cursor:pointer;}
+.box{max-width:800px;margin:auto;}
 </style>
 </head>
 
 <body>
 
-<div class="top">SAAS CRM V1 (DEPLOY READY)</div>
+<div class="hero">
 
-<div class="wrap">
+  <div class="box">
 
-<!-- LOGIN -->
-<div id="auth" class="card">
+    <h1>Oto Servis Yönetim Sistemi</h1>
+    <p>Randevu, müşteri ve gelir takibini tek panelden yönet.</p>
 
-  <h3>Giriş</h3>
-
-  <input id="email" placeholder="Email">
-  <input id="pass" type="password" placeholder="Şifre">
-
-  <button onclick="login()">Giriş</button>
-  <button onclick="register()">Kayıt</button>
-
-</div>
-
-<!-- PANEL -->
-<div id="panel" class="hidden">
-
-  <div class="grid">
-
-    <div class="card">
-      Kayıt<br>
-      <div class="small" id="count">0</div>
-    </div>
-
-    <div class="card">
-      Gelir<br>
-      <div class="small" id="income">0 TL</div>
-    </div>
+    <button class="btn" onclick="go()">Sistemi Aç</button>
 
   </div>
 
-  <div class="card">
-
-    <input id="isim" placeholder="Müşteri">
-    <input id="hizmet" placeholder="Hizmet">
-    <input id="fiyat" placeholder="Fiyat">
-
-    <button onclick="ekle()">Kaydet</button>
-
-  </div>
-
-  <div id="list"></div>
-
 </div>
 
-</div>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import { getFirestore, collection, addDoc, query, where, getDocs } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// AUTH
-window.login = async () => {
-  await signInWithEmailAndPassword(auth,email.value,pass.value);
+<script>
+function go(){
+  window.location.href="app.html";
 }
-
-window.register = async () => {
-  await createUserWithEmailAndPassword(auth,email.value,pass.value);
-}
-
-// STATE
-onAuthStateChanged(auth,(user)=>{
-  if(user){
-    authUI(false);
-    load();
-  }
-});
-
-function authUI(show){
-  document.getElementById("auth").style.display = show ? "block":"none";
-  document.getElementById("panel").style.display = show ? "none":"block";
-}
-
-// ADD
-window.ekle = async () => {
-
-  let user = auth.currentUser;
-
-  await addDoc(collection(db,"crm"),{
-    uid:user.uid,
-    isim:isim.value,
-    hizmet:hizmet.value,
-    fiyat:parseFloat(fiyat.value)||0
-  });
-
-  load();
-}
-
-// LOAD
-async function load(){
-
-  let user=auth.currentUser;
-
-  let q=query(collection(db,"crm"),where("uid","==",user.uid));
-  let snap=await getDocs(q);
-
-  let list=document.getElementById("list");
-  list.innerHTML="";
-
-  let total=0;
-
-  snap.forEach(doc=>{
-    let d=doc.data();
-    total+=d.fiyat;
-
-    list.innerHTML+=`
-      <div class="card">
-        ${d.isim} - ${d.hizmet} - ${d.fiyat} TL
-      </div>
-    `;
-  });
-
-  document.getElementById("count").innerText=snap.size;
-  document.getElementById("income").innerText=total+" TL";
-}
-
 </script>
 
 </body>
