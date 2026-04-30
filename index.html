@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oto Servis CRM PRO</title>
+<title>Oto Servis CRM FINAL</title>
 
 <style>
 :root{
@@ -19,7 +19,9 @@
   font-family:system-ui;
 }
 
-body{background:var(--bg);}
+body{
+  background:var(--bg);
+}
 
 /* TOP */
 .topbar{
@@ -61,16 +63,11 @@ body{background:var(--bg);}
   padding:80px 20px;
 }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
+/* CARD */
 .card{
   background:white;
   padding:15px;
+  margin:10px 0;
   border-radius:12px;
   box-shadow:0 5px 15px rgba(0,0,0,0.06);
 }
@@ -110,37 +107,33 @@ th,td{
   text-align:left;
 }
 
+/* DELETE */
 .del{
   background:red;
   padding:6px 10px;
   border:none;
   color:white;
   border-radius:8px;
+  cursor:pointer;
 }
 
-/* GRAPH */
-.bar{
-  height:10px;
-  background:#ddd;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.bar-fill{
-  height:100%;
-  background:var(--primary);
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Oto Servis CRM PRO | Dashboard</div>
+<div class="topbar">Oto Servis CRM FINAL | Profesyonel Sistem</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('dash',this)">Dashboard</div>
-  <div class="menu" onclick="show('yeni',this)">Yeni İş</div>
-  <div class="menu" onclick="show('arac',this)">Araçlar</div>
+  <div class="menu" onclick="show('yeni',this)">Yeni Kayıt</div>
+  <div class="menu" onclick="show('liste',this)">Kayıtlar</div>
 </div>
 
 <div class="content">
@@ -151,25 +144,20 @@ th,td{
   <div class="grid">
 
     <div class="card">
-      <h3>Toplam İş</h3>
+      Toplam Kayıt<br>
       <h2 id="total">0</h2>
     </div>
 
     <div class="card">
-      <h3>Toplam Gelir</h3>
+      Toplam Gelir<br>
       <h2 id="gelir">0 TL</h2>
     </div>
 
     <div class="card">
-      <h3>Bugün</h3>
+      Bugün İşlem<br>
       <h2 id="today">0</h2>
     </div>
 
-  </div>
-
-  <div class="card" style="margin-top:15px;">
-    <h3>Son İşlemler</h3>
-    <div id="last"></div>
   </div>
 
 </div>
@@ -177,25 +165,27 @@ th,td{
 <!-- YENİ -->
 <div id="yeni" class="section">
 
-  <h2>Yeni Servis</h2>
+  <h2>Yeni Servis Kaydı</h2>
 
-  <input id="isim" placeholder="Müşteri">
-  <input id="plaka" placeholder="Plaka">
+  <input id="isim" placeholder="Müşteri Adı">
+  <input id="plaka" placeholder="Araç Plaka">
   <input id="hizmet" placeholder="İşlem">
-  <input id="fiyat" placeholder="Fiyat">
+  <input id="fiyat" placeholder="Fiyat (TL)">
+  <textarea id="not" placeholder="Servis Notu"></textarea>
 
   <button onclick="ekle()">Kaydet</button>
 
 </div>
 
-<!-- ARAÇ -->
-<div id="arac" class="section">
+<!-- LİSTE -->
+<div id="liste" class="section">
 
-  <input id="search" placeholder="Plaka ara" oninput="render()">
+  <input id="search" placeholder="Plaka veya isim ara..." oninput="render()">
 
   <table>
     <thead>
       <tr>
+        <th>İsim</th>
         <th>Plaka</th>
         <th>İşlem</th>
         <th>Fiyat</th>
@@ -211,7 +201,7 @@ th,td{
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("crmpro") || "[]");
+let data = JSON.parse(localStorage.getItem("crm_final") || "[]");
 
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -229,19 +219,29 @@ function ekle(){
   let plaka=document.getElementById("plaka").value;
   let hizmet=document.getElementById("hizmet").value;
   let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
+  let not=document.getElementById("not").value;
 
   if(!isim || !plaka){
-    alert("Eksik bilgi");
+    alert("Zorunlu alanları doldur");
     return;
   }
 
   data.push({
-    isim,plaka,hizmet,fiyat,date:new Date().toISOString()
+    isim,plaka,hizmet,fiyat,not,date:new Date().toISOString()
   });
 
-  localStorage.setItem("crmpro",JSON.stringify(data));
+  localStorage.setItem("crm_final",JSON.stringify(data));
 
+  clear();
   render();
+}
+
+function clear(){
+  document.getElementById("isim").value="";
+  document.getElementById("plaka").value="";
+  document.getElementById("hizmet").value="";
+  document.getElementById("fiyat").value="";
+  document.getElementById("not").value="";
 }
 
 function render(){
@@ -252,49 +252,41 @@ function render(){
 
   let search=document.getElementById("search")?.value?.toLowerCase() || "";
 
-  let filtered = data.filter(d=>d.plaka.toLowerCase().includes(search));
+  let today=new Date().toISOString().split("T")[0];
+
+  let filtered=data.filter(d=>{
+    return d.isim.toLowerCase().includes(search) ||
+           d.plaka.toLowerCase().includes(search);
+  });
 
   let total=0;
   let todayCount=0;
 
-  let today=new Date().toISOString().split("T")[0];
-
-  let last=document.getElementById("last");
-  if(last) last.innerHTML="";
-
   filtered.forEach((d,i)=>{
 
     total+=d.fiyat;
+
     if(d.date.startsWith(today)) todayCount++;
 
     list.innerHTML+=`
       <tr>
+        <td>${d.isim}</td>
         <td>${d.plaka}</td>
         <td>${d.hizmet}</td>
         <td>${d.fiyat} TL</td>
         <td><button class="del" onclick="sil(${i})">X</button></td>
       </tr>
     `;
-
   });
 
   document.getElementById("total").innerText=data.length;
   document.getElementById("gelir").innerText=total+" TL";
   document.getElementById("today").innerText=todayCount;
-
-  filtered.slice(-5).forEach(d=>{
-    last.innerHTML+=`
-      <div class="card">
-        ${d.plaka} - ${d.hizmet} - ${d.fiyat} TL
-      </div>
-    `;
-  });
-
 }
 
 function sil(i){
   data.splice(i,1);
-  localStorage.setItem("crmpro",JSON.stringify(data));
+  localStorage.setItem("crm_final",JSON.stringify(data));
   render();
 }
 
