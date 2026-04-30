@@ -2,302 +2,143 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans | İşletme Sistemi</title>
+<title>SAAS CRM SYSTEM</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
 <style>
-:root{
-  --dark:#0f172a;
-  --primary:#2563eb;
-  --bg:#f1f5f9;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui;
-}
-
-body{
-  background:var(--bg);
-}
-
-/* TOP */
-.topbar{
-  position:fixed;
-  top:0;left:0;right:0;
-  background:var(--dark);
-  color:white;
-  padding:14px;
-  text-align:center;
-  font-weight:600;
-  z-index:1000;
-}
-
-/* SIDEBAR */
-.sidebar{
-  width:240px;
-  height:100vh;
-  background:var(--dark);
-  position:fixed;
-  padding-top:70px;
-}
-
-.menu{
-  margin:10px;
-  padding:12px;
-  color:white;
-  border-radius:10px;
-  cursor:pointer;
-  background:rgba(255,255,255,0.06);
-}
-
-.menu.active{
-  background:white;
-  color:black;
-}
-
-/* CONTENT */
-.content{
-  margin-left:240px;
-  padding:80px 20px;
-}
-
-/* SECTION */
-.section{display:none;}
-.section.active{display:block;}
-
-/* CARD */
-.card{
-  background:white;
-  padding:15px;
-  margin:10px 0;
-  border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.06);
-}
-
-/* INPUT */
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border:1px solid #ddd;
-  border-radius:10px;
-}
-
-/* BUTTON */
-button{
-  width:100%;
-  padding:12px;
-  background:var(--primary);
-  color:white;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* TABLE */
-table{
-  width:100%;
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-  margin-top:15px;
-}
-
-th,td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-  text-align:left;
-}
-
-/* WHATSAPP */
-.wp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50px;
-  text-decoration:none;
-  font-weight:600;
-}
+body{font-family:system-ui;background:#f1f5f9;margin:0;}
+.top{background:#0f172a;color:white;padding:15px;text-align:center;}
+.box{max-width:400px;margin:50px auto;background:white;padding:20px;border-radius:10px;}
+input{width:100%;padding:10px;margin:5px 0;}
+button{width:100%;padding:10px;background:#2563eb;color:white;border:none;}
+.hidden{display:none;}
+.card{background:white;margin:10px;padding:10px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Profesyonel İşletme Sistemi</div>
+<div class="top">SAAS CRM SYSTEM</div>
 
-<div class="sidebar">
-  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
-  <div class="menu" onclick="show('services',this)">Hizmetler</div>
-  <div class="menu" onclick="show('randevu',this)">Kayıt</div>
-  <div class="menu" onclick="show('admin',this)">Kayıtlar</div>
-  <div class="menu" onclick="show('contact',this)">İletişim</div>
+<!-- LOGIN -->
+<div id="login" class="box">
+  <h3>Giriş</h3>
+  <input id="email" placeholder="Email">
+  <input id="pass" type="password" placeholder="Şifre">
+  <button onclick="login()">Giriş Yap</button>
+  <button onclick="register()">Kayıt Ol</button>
 </div>
 
-<div class="content">
+<!-- PANEL -->
+<div id="panel" class="hidden">
 
-<!-- HOME -->
-<div id="home" class="section active">
-
-  <div class="card">
-    <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel oto servis ve bakım hizmetleri</p>
+  <div class="box">
+    <h3>Yeni Kayıt</h3>
+    <input id="isim" placeholder="İsim">
+    <input id="plaka" placeholder="Plaka">
+    <input id="hizmet" placeholder="Hizmet">
+    <input id="fiyat" placeholder="Fiyat">
+    <button onclick="ekle()">Kaydet</button>
+    <button onclick="logout()">Çıkış</button>
   </div>
 
-  <div class="card">
-    📍 Konum:<br>
-    <a target="_blank" href="https://maps.google.com">Google Maps'te Aç</a>
-  </div>
+  <div id="list"></div>
 
 </div>
-
-<!-- SERVICES -->
-<div id="services" class="section">
-
-  <div class="card">🚗 Rot Ayarı - 700 TL</div>
-  <div class="card">⚙️ Balans - 500 TL</div>
-  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
-  <div class="card">🔧 Fren Bakım - 600 TL</div>
-
-</div>
-
-<!-- KAYIT -->
-<div id="randevu" class="section">
-
-  <h2>Yeni Kayıt</h2>
-
-  <input id="isim" placeholder="Ad Soyad">
-  <input id="tel" placeholder="Telefon">
-  <input id="hizmet" placeholder="Hizmet">
-  <input id="fiyat" placeholder="Fiyat">
-  <textarea id="not" placeholder="Not"></textarea>
-
-  <button onclick="ekle()">Kaydet</button>
-
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="section">
-
-  <input id="search" placeholder="Ara..." oninput="render()">
-
-  <table>
-    <thead>
-      <tr>
-        <th>İsim</th>
-        <th>Telefon</th>
-        <th>Hizmet</th>
-        <th>Fiyat</th>
-        <th>Sil</th>
-      </tr>
-    </thead>
-    <tbody id="list"></tbody>
-  </table>
-
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="section">
-
-  <div class="card">
-    <h2>İletişim</h2>
-
-    📞 0531 972 45 08<br>
-    📍 İstanbul / Türkiye<br><br>
-
-    <a href="https://wa.me/905319724508" target="_blank">WhatsApp'tan Yaz</a>
-  </div>
-
-</div>
-
-</div>
-
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("biz") || "[]");
+// 🔥 FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT"
+};
 
-function show(id,el){
+firebase.initializeApp(firebaseConfig);
 
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-  document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  el.classList.add('active');
+// LOGIN
+function login(){
+  let email=document.getElementById("email").value;
+  let pass=document.getElementById("pass").value;
 
-  render();
+  auth.signInWithEmailAndPassword(email,pass)
+  .then(()=>showPanel());
 }
 
+// REGISTER
+function register(){
+  let email=document.getElementById("email").value;
+  let pass=document.getElementById("pass").value;
+
+  auth.createUserWithEmailAndPassword(email,pass);
+}
+
+// LOGOUT
+function logout(){
+  auth.signOut().then(()=>location.reload());
+}
+
+// CHECK USER
+auth.onAuthStateChanged(user=>{
+  if(user){
+    showPanel();
+  }
+});
+
+// PANEL SHOW
+function showPanel(){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("panel").classList.remove("hidden");
+  load();
+}
+
+// ADD DATA
 function ekle(){
 
-  let isim=document.getElementById("isim").value;
-  let tel=document.getElementById("tel").value;
-  let hizmet=document.getElementById("hizmet").value;
-  let fiyat=document.getElementById("fiyat").value;
-  let not=document.getElementById("not").value;
+  let user=auth.currentUser;
 
-  if(!isim || !hizmet){
-    alert("Zorunlu alanları doldur");
-    return;
-  }
-
-  data.push({isim,tel,hizmet,fiyat,not});
-
-  localStorage.setItem("biz",JSON.stringify(data));
-
-  clear();
-  render();
-}
-
-function clear(){
-  document.getElementById("isim").value="";
-  document.getElementById("tel").value="";
-  document.getElementById("hizmet").value="";
-  document.getElementById("fiyat").value="";
-  document.getElementById("not").value="";
-}
-
-function render(){
-
-  let list=document.getElementById("list");
-  if(!list) return;
-
-  list.innerHTML="";
-
-  let search=document.getElementById("search")?.value?.toLowerCase() || "";
-
-  let filtered=data.filter(d=>{
-    return d.isim.toLowerCase().includes(search) ||
-           d.hizmet.toLowerCase().includes(search);
+  db.collection("servis").add({
+    uid:user.uid,
+    isim:isim.value,
+    plaka:plaka.value,
+    hizmet:hizmet.value,
+    fiyat:fiyat.value,
+    date:new Date()
   });
 
-  filtered.forEach((d,i)=>{
+  load();
+}
+
+// LOAD DATA
+async function load(){
+
+  let user=auth.currentUser;
+  let list=document.getElementById("list");
+  list.innerHTML="";
+
+  let snap=await db.collection("servis")
+  .where("uid","==",user.uid)
+  .get();
+
+  snap.forEach(doc=>{
+    let d=doc.data();
+
     list.innerHTML+=`
-      <tr>
-        <td>${d.isim}</td>
-        <td>${d.tel}</td>
-        <td>${d.hizmet}</td>
-        <td>${d.fiyat} TL</td>
-        <td><button onclick="sil(${i})">X</button></td>
-      </tr>
+      <div class="card">
+        ${d.isim} - ${d.plaka}<br>
+        ${d.hizmet} - ${d.fiyat} TL
+      </div>
     `;
   });
 
 }
-
-function sil(i){
-  data.splice(i,1);
-  localStorage.setItem("biz",JSON.stringify(data));
-  render();
-}
-
-render();
 
 </script>
 
