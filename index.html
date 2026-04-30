@@ -17,20 +17,19 @@ body{
   background:#f4f6f8;
 }
 
-/* TOP BAR (MOBİL MENÜ) */
+/* TOP MENU */
 .topbar{
   display:flex;
   background:#111;
   color:white;
-  overflow-x:auto;
 }
 
 .topbar div{
   flex:1;
   text-align:center;
-  padding:14px;
+  padding:14px 5px;
   cursor:pointer;
-  white-space:nowrap;
+  font-size:14px;
 }
 
 .topbar div:hover{
@@ -39,7 +38,9 @@ body{
 
 /* CONTENT */
 .content{
-  padding:15px;
+  padding:12px;
+  max-width:900px;
+  margin:auto;
 }
 
 /* CARD */
@@ -51,7 +52,7 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* SERVICE ITEM */
+/* SERVICE */
 .service-item{
   display:flex;
   justify-content:space-between;
@@ -67,7 +68,7 @@ body{
 input,select{
   width:100%;
   padding:10px;
-  margin:5px 0;
+  margin:6px 0;
   border-radius:8px;
   border:1px solid #ccc;
 }
@@ -80,14 +81,20 @@ button{
   color:white;
   border:none;
   border-radius:8px;
-  cursor:pointer;
 }
 
-/* MAP */
-iframe{
+/* MAP FIX (ÖNEMLİ KISIM) */
+.map-container{
   width:100%;
-  border:0;
+  height:300px;
+  overflow:hidden;
   border-radius:10px;
+}
+
+.map-container iframe{
+  width:100%;
+  height:100%;
+  border:0;
 }
 
 /* WHATSAPP */
@@ -102,7 +109,7 @@ iframe{
   text-decoration:none;
 }
 
-/* PAGES */
+/* PAGE SYSTEM */
 .page{display:none;}
 .page.active{display:block;}
 </style>
@@ -110,7 +117,7 @@ iframe{
 
 <body>
 
-<!-- TOP MENU (MOBİL UYUMLU) -->
+<!-- MENU -->
 <div class="topbar">
   <div onclick="show('home')">🏠</div>
   <div onclick="show('services')">🔧</div>
@@ -120,15 +127,12 @@ iframe{
   <div onclick="show('contact')">📞</div>
 </div>
 
-<!-- CONTENT -->
 <div class="content">
 
 <!-- HOME -->
 <div id="home" class="page active">
   <h2>Hoşgeldiniz</h2>
-
   <div class="card">
-    Yolda güvenle ilerlemek istiyorsanız doğru yerdesiniz.  
     Rot balans ve araç bakım hizmetleri.
   </div>
 </div>
@@ -136,44 +140,26 @@ iframe{
 <!-- SERVICES -->
 <div id="services" class="page">
   <h2>Hizmetler</h2>
-
   <div class="card">
-    <div class="service-item">
-      <span>Ön Takım Kontrolü</span>
-      <span class="price">300 TL</span>
-    </div>
-
-    <div class="service-item">
-      <span>Balata Değişimi</span>
-      <span class="price">800 TL</span>
-    </div>
-
-    <div class="service-item">
-      <span>Lastik Tamiri</span>
-      <span class="price">200-450 TL</span>
-    </div>
-
-    <div class="service-item">
-      <span>Bilgisayar Arıza</span>
-      <span class="price">800 TL</span>
-    </div>
+    <div class="service-item"><span>Ön Takım Kontrolü</span><span class="price">300 TL</span></div>
+    <div class="service-item"><span>Balata Değişimi</span><span class="price">800 TL</span></div>
+    <div class="service-item"><span>Lastik Tamiri</span><span class="price">200-450 TL</span></div>
+    <div class="service-item"><span>Bilgisayar Arıza</span><span class="price">800 TL</span></div>
   </div>
 </div>
 
 <!-- PRICES -->
 <div id="prices" class="page">
-  <h2>Fiyat Listesi</h2>
-
+  <h2>Fiyatlar</h2>
   <div class="card">Ön Takım → 300 TL</div>
   <div class="card">Balata → 800 TL</div>
   <div class="card">Lastik → 200-450 TL</div>
-  <div class="card">Arıza Tespit → 800 TL</div>
+  <div class="card">Arıza → 800 TL</div>
 </div>
 
 <!-- APPOINTMENT -->
 <div id="appointment" class="page">
   <h2>Randevu</h2>
-
   <div class="card">
     <input placeholder="İsim">
     <input placeholder="Telefon">
@@ -189,33 +175,32 @@ iframe{
   </div>
 </div>
 
-<!-- LOCATION -->
+<!-- LOCATION (FIXED) -->
 <div id="location" class="page">
   <h2>Konum</h2>
 
   <div class="card">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291"
-      height="250">
-    </iframe>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str">
+      </iframe>
+    </div>
   </div>
 </div>
 
 <!-- CONTACT -->
 <div id="contact" class="page">
   <h2>İletişim</h2>
-
   <div class="card">
     📞 0531 972 45 08<br>
     📞 0544 624 56 54<br>
     📍 Başakşehir İstanbul<br>
-    ✉️ aykutakyurt2@gmail.com
+    ✉️ mail@gmail.com
   </div>
 </div>
 
 </div>
 
-<!-- WHATSAPP -->
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
