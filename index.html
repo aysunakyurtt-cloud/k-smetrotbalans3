@@ -1,151 +1,42 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<title>OtoServis SaaS</title>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-
-<style>
-body{font-family:system-ui;margin:0;background:#f1f5f9;}
-.top{background:#0f172a;color:white;padding:15px;text-align:center;}
-
-.box{max-width:420px;margin:40px auto;background:white;padding:20px;border-radius:12px;}
-input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;}
-button{width:100%;padding:10px;background:#2563eb;color:white;border:none;border-radius:8px;}
-
-.panel{display:none;padding:20px;}
-.card{background:white;padding:10px;margin:10px;border-radius:10px;}
-.row{display:flex;gap:10px;}
-.small{width:50%;}
-.logout{background:red;margin-top:10px;}
-</style>
-</head>
-
+<html>
 <body>
 
-<div class="top">Oto Servis SaaS ÜRÜN v1</div>
+<input id="email" placeholder="email">
+<input id="pass" type="password" placeholder="pass">
+<button onclick="login()">Giriş</button>
 
-<!-- AUTH -->
-<div id="auth" class="box">
-
-  <h3>Giriş / Kayıt</h3>
-
-  <input id="email" placeholder="Email">
-  <input id="pass" type="password" placeholder="Şifre">
-
-  <button onclick="login()">Giriş</button>
-  <button onclick="register()">Kayıt Ol</button>
-
+<div id="panel" style="display:none;">
+  GİRİŞ BAŞARILI 🎉
 </div>
 
-<!-- PANEL -->
-<div id="panel" class="panel">
+<script type="module">
 
-  <div class="box">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    <h3>Yeni Servis</h3>
-
-    <input id="isim" placeholder="Müşteri">
-    <input id="plaka" placeholder="Plaka">
-    <input id="hizmet" placeholder="Hizmet">
-    <input id="fiyat" placeholder="Fiyat">
-
-    <button onclick="ekle()">Kaydet</button>
-    <button class="logout" onclick="logout()">Çıkış</button>
-
-  </div>
-
-  <div id="list"></div>
-
-</div>
-
-<script>
-
-// 🔥 FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "YOUR_KEY",
   authDomain: "YOUR_DOMAIN",
   projectId: "YOUR_PROJECT"
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+window.login = async function(){
 
-// LOGIN
-function login(){
-  auth.signInWithEmailAndPassword(email.value,pass.value)
-  .then(()=>showPanel());
-}
+  try {
+    await signInWithEmailAndPassword(auth,email.value,pass.value);
 
-// REGISTER
-function register(){
-  auth.createUserWithEmailAndPassword(email.value,pass.value);
-}
+    document.getElementById("panel").style.display="block";
 
-// LOGOUT
-function logout(){
-  auth.signOut().then(()=>location.reload());
-}
+    alert("Giriş başarılı");
 
-// CHECK USER
-auth.onAuthStateChanged(user=>{
-  if(user){
-    showPanel();
+  } catch(e){
+    alert("HATA: "+e.message);
   }
-});
-
-// PANEL
-function showPanel(){
-  document.getElementById("auth").style.display="none";
-  document.getElementById("panel").style.display="block";
-  load();
-}
-
-// ADD
-function ekle(){
-
-  let user=auth.currentUser;
-
-  db.collection("servis").add({
-    uid:user.uid,
-    isim:isim.value,
-    plaka:plaka.value,
-    hizmet:hizmet.value,
-    fiyat:fiyat.value,
-    time:new Date()
-  });
-
-  load();
-}
-
-// LOAD
-async function load(){
-
-  let user=auth.currentUser;
-  let list=document.getElementById("list");
-  list.innerHTML="";
-
-  let snap=await db.collection("servis")
-  .where("uid","==",user.uid)
-  .get();
-
-  snap.forEach(doc=>{
-    let d=doc.data();
-
-    list.innerHTML+=`
-      <div class="card">
-        <b>${d.isim}</b><br>
-        ${d.plaka} - ${d.hizmet}<br>
-        ${d.fiyat} TL
-      </div>
-    `;
-  });
-
 }
 
 </script>
