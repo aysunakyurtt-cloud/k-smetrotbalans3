@@ -96,7 +96,7 @@ th,td{
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
+<div class="topbar">Kısmet Rot Balans | Firebase Randevu Sistemi</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
@@ -110,7 +110,7 @@ th,td{
 <div id="home" class="section active">
   <div class="card">
     <h1>Kısmet Rot Balans</h1>
-    <p>Modern randevu sistemi</p>
+    <p>Firebase destekli randevu sistemi</p>
   </div>
 </div>
 
@@ -131,6 +131,7 @@ th,td{
 <div id="admin" class="section">
   <div class="card">
     <h2>Admin Panel</h2>
+
     <button onclick="loadData()">Verileri Yükle</button>
 
     <table id="table">
@@ -151,18 +152,21 @@ th,td{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// 🔥 SENİN FIREBASE KONFIGİN
 const firebaseConfig = {
-  apiKey: "XXX",
-  authDomain: "XXX",
-  projectId: "XXX",
-  storageBucket: "XXX",
-  messagingSenderId: "XXX",
-  appId: "XXX"
+  apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
+  authDomain: "kismet-rot-balans.firebaseapp.com",
+  projectId: "kismet-rot-balans",
+  storageBucket: "kismet-rot-balans.firebasestorage.app",
+  messagingSenderId: "350629465784",
+  appId: "1:350629465784:web:33f91cad2a724e0f45ee4d"
 };
 
+// INIT
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// GLOBAL
 window.db = db;
 window.addDoc = addDoc;
 window.collection = collection;
@@ -181,7 +185,7 @@ function show(id,el){
   el.classList.add('active');
 }
 
-// SAVE APPOINTMENT
+// SAVE RANDEVU
 async function save(){
 
   const name=document.getElementById("name").value;
@@ -194,7 +198,9 @@ async function save(){
   }
 
   await addDoc(collection(db,"randevular"),{
-    name,phone,service,
+    name,
+    phone,
+    service,
     time:new Date().toISOString()
   });
 
@@ -205,7 +211,7 @@ async function save(){
   document.getElementById("service").value="";
 }
 
-// LOAD ADMIN DATA
+// LOAD ADMIN
 async function loadData(){
 
   const snap = await getDocs(collection(db,"randevular"));
