@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Kısmet Rot Balans PRO</title>
+<title>Oto Servis PRO V2</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
@@ -15,16 +15,13 @@ body{
 /* TOP */
 .top{
   background:#0f172a;
-  padding:18px;
+  padding:16px;
   text-align:center;
-  font-weight:600;
-  letter-spacing:1px;
+  font-weight:700;
 }
 
 /* LAYOUT */
-.container{
-  display:flex;
-}
+.container{display:flex;}
 
 /* SIDEBAR */
 .sidebar{
@@ -40,7 +37,6 @@ body{
   background:#1f2937;
   border-radius:10px;
   cursor:pointer;
-  transition:.2s;
 }
 
 .menu:hover{
@@ -50,29 +46,29 @@ body{
 /* CONTENT */
 .content{
   flex:1;
-  padding:25px;
+  padding:20px;
 }
 
 /* SECTIONS */
 .section{display:none;}
 .section.active{display:block;}
 
-/* CARD */
+/* CARDS */
 .card{
   background:#111827;
-  padding:20px;
+  padding:18px;
   margin:12px 0;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 /* INPUT */
-input{
+input,textarea{
   width:100%;
   padding:12px;
-  margin:8px 0;
+  margin:6px 0;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   background:#1f2937;
   color:white;
 }
@@ -86,16 +82,15 @@ button{
   border:none;
   border-radius:10px;
   cursor:pointer;
-  margin-top:8px;
 }
 
 /* TABLE */
 table{
   width:100%;
-  border-collapse:collapse;
   margin-top:15px;
+  border-collapse:collapse;
   background:#111827;
-  border-radius:12px;
+  border-radius:10px;
   overflow:hidden;
 }
 
@@ -106,16 +101,27 @@ th,td{
 
 th{
   background:#1f2937;
-  text-align:left;
 }
 
 .del{
   background:red;
   border:none;
-  color:white;
   padding:6px 10px;
+  color:white;
   border-radius:6px;
   cursor:pointer;
+}
+
+/* DASH */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.small{
+  font-size:20px;
+  font-weight:bold;
 }
 
 /* WHATSAPP */
@@ -124,78 +130,79 @@ th{
   bottom:20px;
   right:20px;
   background:#25D366;
-  color:white;
-  padding:14px 18px;
+  padding:14px;
   border-radius:50px;
+  color:white;
   text-decoration:none;
-  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">KISMET ROT BALANS | PRO PANEL</div>
+<div class="top">OTO SERVİS PRO V2</div>
 
 <div class="container">
 
 <div class="sidebar">
 
-  <div class="menu" onclick="show('home')">Ana Sayfa</div>
-  <div class="menu" onclick="show('services')">Hizmetler</div>
-  <div class="menu" onclick="show('randevu')">Kayıt</div>
-  <div class="menu" onclick="show('admin')">Kayıtlar</div>
+  <div class="menu" onclick="show('dash')">Dashboard</div>
+  <div class="menu" onclick="show('add')">Yeni Kayıt</div>
+  <div class="menu" onclick="show('list')">Kayıtlar</div>
 
 </div>
 
 <div class="content">
 
-<!-- HOME -->
-<div id="home" class="section active">
-  <div class="card">
-    <h2>Hoşgeldin 👋</h2>
-    <p>Profesyonel oto servis yönetim paneli</p>
+<!-- DASH -->
+<div id="dash" class="section active">
+
+  <div class="grid">
+
+    <div class="card">
+      Toplam Kayıt<br>
+      <div class="small" id="total">0</div>
+    </div>
+
+    <div class="card">
+      Toplam Gelir<br>
+      <div class="small" id="income">0 TL</div>
+    </div>
+
   </div>
 
-  <div class="card">
-    📍 Konum: İstanbul<br>
-    📞 0531 972 45 08
-  </div>
 </div>
 
-<!-- SERVICES -->
-<div id="services" class="section">
-  <div class="card">🚗 Rot Ayarı - 700 TL</div>
-  <div class="card">⚙️ Balans - 500 TL</div>
-  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
-</div>
-
-<!-- KAYIT -->
-<div id="randevu" class="section">
+<!-- ADD -->
+<div id="add" class="section">
 
   <div class="card">
-    <input id="isim" placeholder="Müşteri Adı">
+
+    <input id="isim" placeholder="Müşteri">
     <input id="tel" placeholder="Telefon">
     <input id="hizmet" placeholder="Hizmet">
     <input id="fiyat" placeholder="Fiyat">
+    <textarea id="not" placeholder="Not"></textarea>
+
     <button onclick="ekle()">Kaydet</button>
+
   </div>
 
 </div>
 
-<!-- ADMIN -->
-<div id="admin" class="section">
+<!-- LIST -->
+<div id="list" class="section">
 
   <table>
     <thead>
       <tr>
         <th>İsim</th>
-        <th>Telefon</th>
         <th>Hizmet</th>
+        <th>Fiyat</th>
         <th>Sil</th>
       </tr>
     </thead>
-    <tbody id="list"></tbody>
+    <tbody id="table"></tbody>
   </table>
 
 </div>
@@ -208,7 +215,7 @@ th{
 
 <script>
 
-let data=[];
+let data = JSON.parse(localStorage.getItem("pro_v2") || "[]");
 
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -219,36 +226,46 @@ function show(id){
 function ekle(){
 
   let isim=document.getElementById("isim").value;
-  let tel=document.getElementById("tel").value;
   let hizmet=document.getElementById("hizmet").value;
-  let fiyat=document.getElementById("fiyat").value;
+  let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
 
   if(!isim || !hizmet) return;
 
-  data.push({isim,tel,hizmet,fiyat});
+  data.push({isim,hizmet,fiyat});
+
+  localStorage.setItem("pro_v2",JSON.stringify(data));
+
   render();
 }
 
 function render(){
 
-  let list=document.getElementById("list");
-  list.innerHTML="";
+  let table=document.getElementById("table");
+  table.innerHTML="";
+
+  let totalIncome=0;
 
   data.forEach((d,i)=>{
-    list.innerHTML+=`
+    totalIncome+=d.fiyat;
+
+    table.innerHTML+=`
       <tr>
         <td>${d.isim}</td>
-        <td>${d.tel}</td>
         <td>${d.hizmet}</td>
+        <td>${d.fiyat} TL</td>
         <td><button class="del" onclick="sil(${i})">X</button></td>
       </tr>
     `;
   });
 
+  document.getElementById("total").innerText=data.length;
+  document.getElementById("income").innerText=totalIncome + " TL";
+
 }
 
 function sil(i){
   data.splice(i,1);
+  localStorage.setItem("pro_v2",JSON.stringify(data));
   render();
 }
 
