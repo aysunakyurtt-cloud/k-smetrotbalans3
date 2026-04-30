@@ -6,23 +6,14 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 
-body{
-  background:#eef1f6;
-}
+body{background:#eef1f6;}
 
-/* TOP BAR */
+/* TOP */
 .topbar{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
+  top:0;left:0;right:0;
   background:#111;
   color:white;
   text-align:center;
@@ -62,13 +53,8 @@ body{
 }
 
 /* SECTIONS */
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
+.section{display:none;}
+.section.active{display:block;}
 
 /* HERO */
 .hero{
@@ -82,62 +68,33 @@ body{
 }
 
 .hero h1{font-size:50px;}
-.hero p{color:#666;margin-top:10px;}
 
 /* CARDS */
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-}
-
 .card{
   background:white;
   padding:20px;
   margin:10px;
   border-radius:15px;
-  width:220px;
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* IFRAME */
-iframe{
+/* ADMIN TABLE */
+table{
   width:100%;
-  height:500px;
-  border:none;
-  border-radius:12px;
-}
-
-/* ADMIN */
-.admin{
-  display:none;
-  padding:20px;
-}
-
-.login-box{
-  max-width:300px;
-  margin:auto;
-  margin-top:100px;
+  margin-top:20px;
+  border-collapse:collapse;
   background:white;
-  padding:20px;
   border-radius:10px;
+  overflow:hidden;
 }
 
-input{
-  width:100%;
+th,td{
   padding:10px;
-  margin:10px 0;
+  border-bottom:1px solid #eee;
+  text-align:left;
 }
 
-button{
-  width:100%;
-  padding:10px;
-  background:black;
-  color:white;
-  border:none;
-  cursor:pointer;
-}
-
-/* FLOAT */
+/* BUTTONS */
 .wp{
   position:fixed;
   bottom:20px;
@@ -148,17 +105,12 @@ button{
   border-radius:50px;
   text-decoration:none;
 }
-
-@media(max-width:768px){
-  .sidebar{width:70px;}
-  .content{margin-left:70px;}
-}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Sistem V28</div>
+<div class="topbar">Kısmet Rot Balans | Canlı Randevu Sistemi</div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
@@ -173,12 +125,14 @@ button{
 
 <!-- HOME -->
 <div id="home" class="section active">
+
   <div class="hero">
     <div>
       <h1>Kısmet Rot Balans</h1>
-      <p>Profesyonel Oto Servis Sistemi</p>
+      <p>Profesyonel Servis Sistemi</p>
     </div>
   </div>
+
 </div>
 
 <!-- SERVICES -->
@@ -186,11 +140,9 @@ button{
 
   <h2>Hizmetler</h2>
 
-  <div class="cards">
-    <div class="card">Rot Ayarı<br><b>700 TL</b></div>
-    <div class="card">Balans<br><b>500 TL</b></div>
-    <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
-  </div>
+  <div class="card">Rot Ayarı - 700 TL</div>
+  <div class="card">Balans - 500 TL</div>
+  <div class="card">Yağ Değişimi - 200 TL</div>
 
 </div>
 
@@ -199,25 +151,25 @@ button{
 
   <h2>Randevu Al</h2>
 
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
+  style="width:100%;height:500px;border:none;"></iframe>
 
 </div>
 
 <!-- ADMIN -->
 <div id="admin" class="section">
 
-  <div id="login" class="login-box">
-    <h3>Admin Giriş</h3>
-    <input type="password" id="pass" placeholder="Şifre">
-    <button onclick="login()">Giriş</button>
-  </div>
+  <h2>Canlı Randevular</h2>
 
-  <div id="panel" style="display:none;">
-    <h2>Randevu Paneli</h2>
+  <button onclick="loadData()">Verileri Yükle</button>
 
-    <p>Buraya sonra Google Sheet bağlanacak</p>
-
-  </div>
+  <table id="table">
+    <tr>
+      <th>İsim</th>
+      <th>Telefon</th>
+      <th>Hizmet</th>
+    </tr>
+  </table>
 
 </div>
 
@@ -234,15 +186,33 @@ function show(id,el){
   el.classList.add('active');
 }
 
-/* ADMIN LOGIN */
-function login(){
-  let pass=document.getElementById('pass').value;
+/* GOOGLE SHEET (PUBLIC CSV) */
+async function loadData(){
 
-  if(pass=="1234"){
-    document.getElementById("login").style.display="none";
-    document.getElementById("panel").style.display="block";
-  }else{
-    alert("Hatalı şifre");
+  /* BURAYA SHEET CSV LINKİNİ KOYACAĞIZ */
+  let url="https://docs.google.com/spreadsheets/d/e/2PACX-EXAMPLE/pub?output=csv";
+
+  let res=await fetch(url);
+  let data=await res.text();
+
+  let rows=data.split("\n");
+
+  let table=document.getElementById("table");
+
+  for(let i=1;i<rows.length;i++){
+    let cols=rows[i].split(",");
+
+    if(cols.length>1){
+      let row=document.createElement("tr");
+
+      row.innerHTML=`
+        <td>${cols[0]}</td>
+        <td>${cols[1]}</td>
+        <td>${cols[2]}</td>
+      `;
+
+      table.appendChild(row);
+    }
   }
 }
 </script>
