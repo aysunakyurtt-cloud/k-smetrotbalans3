@@ -6,38 +6,62 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+:root{
+  --dark:#0f172a;
+  --primary:#2563eb;
+  --bg:#f1f5f9;
+  --card:#ffffff;
+}
 
-body{background:#eef1f6;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system;
+}
 
-/* TOP */
+body{
+  background:var(--bg);
+  color:#111;
+}
+
+/* TOPBAR */
 .topbar{
   position:fixed;
-  top:0;left:0;right:0;
-  background:#111;
+  top:0;
+  left:0;
+  right:0;
+  background:var(--dark);
   color:white;
+  padding:14px;
   text-align:center;
-  padding:10px;
+  font-weight:600;
   z-index:1000;
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:220px;
+  width:240px;
   height:100vh;
-  background:#111;
-  color:white;
+  background:var(--dark);
   position:fixed;
-  padding:20px;
-  padding-top:60px;
+  top:0;
+  left:0;
+  padding-top:70px;
 }
 
 .menu{
+  margin:10px;
   padding:12px;
-  margin-bottom:10px;
-  background:#1f1f1f;
   border-radius:10px;
+  color:white;
   cursor:pointer;
+  transition:.2s;
+  background:rgba(255,255,255,0.05);
+}
+
+.menu:hover{
+  background:rgba(255,255,255,0.15);
 }
 
 .menu.active{
@@ -47,88 +71,114 @@ body{background:#eef1f6;}
 
 /* CONTENT */
 .content{
-  margin-left:220px;
-  padding:20px;
-  padding-top:60px;
+  margin-left:240px;
+  padding:80px 25px 25px;
 }
-
-/* SECTIONS */
-.section{display:none;}
-.section.active{display:block;}
 
 /* HERO */
 .hero{
-  height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#fff,#eaeaea);
-  border-radius:15px;
+  background:linear-gradient(135deg,#fff,#e2e8f0);
+  padding:80px 20px;
+  border-radius:20px;
   text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
 }
 
-.hero h1{font-size:50px;}
+.hero h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
 
-/* CARDS */
+/* SECTION */
+.section{display:none;}
+.section.active{display:block;}
+
+/* CARD */
 .card{
-  background:white;
-  padding:20px;
-  margin:10px;
+  background:var(--card);
+  padding:18px;
+  margin:10px 0;
   border-radius:15px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.08);
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+  transition:.2s;
 }
 
-/* FORM */
+.card:hover{
+  transform:translateY(-2px);
+}
+
+/* INPUT */
 input{
   width:100%;
-  padding:10px;
-  margin:5px 0;
+  padding:12px;
+  margin:8px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
 }
 
+input:focus{
+  border-color:var(--primary);
+}
+
+/* BUTTON */
 button{
-  padding:10px;
   width:100%;
-  background:black;
-  color:white;
+  padding:12px;
   border:none;
+  background:var(--primary);
+  color:white;
+  border-radius:10px;
   cursor:pointer;
+  font-weight:600;
+  margin-top:10px;
+}
+
+button:hover{
+  opacity:0.9;
 }
 
 /* TABLE */
 table{
   width:100%;
-  margin-top:20px;
   background:white;
-  border-collapse:collapse;
+  border-radius:12px;
+  overflow:hidden;
+  margin-top:15px;
 }
 
-td,th{
-  padding:10px;
+th,td{
+  padding:12px;
+  text-align:left;
   border-bottom:1px solid #eee;
 }
 
-/* FLOAT */
+th{
+  background:#f8fafc;
+}
+
+/* WHATSAPP */
 .wp{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#25D366;
   color:white;
-  padding:15px;
+  padding:14px 16px;
   border-radius:50px;
   text-decoration:none;
+  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | V30 Sistem</div>
+<div class="topbar">Kısmet Rot Balans | Yönetim Paneli</div>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="menu active" onclick="show('home',this)">Ana</div>
-  <div class="menu" onclick="show('services',this)">Hizmet</div>
+  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
+  <div class="menu" onclick="show('services',this)">Hizmetler</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
   <div class="menu" onclick="show('admin',this)">Admin</div>
 </div>
@@ -138,41 +188,34 @@ td,th{
 <!-- HOME -->
 <div id="home" class="section active">
   <div class="hero">
-    <div>
-      <h1>Kısmet Rot Balans</h1>
-      <p>Profesyonel Oto Servis Sistemi</p>
-    </div>
+    <h1>Kısmet Rot Balans</h1>
+    <p>Profesyonel Oto Servis & Randevu Sistemi</p>
   </div>
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="section">
-
   <h2>Hizmetler</h2>
 
-  <div class="card">Rot Ayarı - 700 TL</div>
-  <div class="card">Balans - 500 TL</div>
-  <div class="card">Yağ Değişimi - 200 TL</div>
-
+  <div class="card">🚗 Rot Ayarı - 700 TL</div>
+  <div class="card">⚙️ Balans - 500 TL</div>
+  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
 </div>
 
 <!-- RANDEVU -->
 <div id="randevu" class="section">
-
   <h2>Randevu Al</h2>
 
-  <input id="isim" placeholder="İsim">
+  <input id="isim" placeholder="Ad Soyad">
   <input id="tel" placeholder="Telefon">
   <input id="hizmet" placeholder="Hizmet">
 
-  <button onclick="ekle()">Randevu Gönder</button>
-
+  <button onclick="ekle()">Randevu Oluştur</button>
 </div>
 
 <!-- ADMIN -->
 <div id="admin" class="section">
-
-  <h2>Randevular</h2>
+  <h2>Gelen Randevular</h2>
 
   <table>
     <thead>
@@ -184,7 +227,6 @@ td,th{
     </thead>
     <tbody id="list"></tbody>
   </table>
-
 </div>
 
 </div>
@@ -205,32 +247,29 @@ function show(id,el){
   render();
 }
 
-/* RANDEVU EKLE */
 function ekle(){
-
-  let isim=document.getElementById("isim").value;
-  let tel=document.getElementById("tel").value;
-  let hizmet=document.getElementById("hizmet").value;
+  let isim = document.getElementById("isim").value;
+  let tel = document.getElementById("tel").value;
+  let hizmet = document.getElementById("hizmet").value;
 
   if(!isim || !tel || !hizmet){
-    alert("Boş bırakma");
+    alert("Lütfen tüm alanları doldur.");
     return;
   }
 
   data.push({isim,tel,hizmet});
-
   localStorage.setItem("randevular",JSON.stringify(data));
 
-  alert("Randevu alındı");
+  alert("Randevu başarıyla oluşturuldu");
 
   document.getElementById("isim").value="";
   document.getElementById("tel").value="";
   document.getElementById("hizmet").value="";
+
+  render();
 }
 
-/* TABLO */
 function render(){
-
   let list=document.getElementById("list");
   list.innerHTML="";
 
@@ -243,7 +282,6 @@ function render(){
       </tr>
     `;
   });
-
 }
 
 render();
@@ -251,4 +289,4 @@ render();
 </script>
 
 </body>
-</html>
+</html>s
