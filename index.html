@@ -1,132 +1,80 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans</title>
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui;
+.footer {
+  background: #111;
+  color: #fff;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
 }
 
-body{
-  display:flex;
-  height:100vh;
-  background:#f4f6f8;
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:220px;
-  background:#111;
-  color:white;
-  padding:15px;
+.footer-box {
+  background: #1c1c1c;
+  padding: 20px;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
-.menu{
-  padding:12px;
-  margin:8px 0;
-  background:#1f1f1f;
-  border-radius:8px;
-  cursor:pointer;
+.footer-box:hover {
+  background: #222;
 }
 
-/* CONTENT */
-.content{
-  flex:1;
-  padding:20px;
-  overflow:auto;
+.footer-title {
+  color: #e60023;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-/* CARD */
-.card{
-  background:white;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* PAGE SYSTEM (ÖNEMLİ FIX) */
-.page{
-  display:none;
-}
-.page.active{
-  display:block;
-}
-
-/* WHATSAPP */
-.wp{
-  position:fixed;
-  right:15px;
-  bottom:15px;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50px;
-  text-decoration:none;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar{
-    width:80px;
-    padding:10px;
-  }
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
 }
 </style>
-</head>
 
-<body>
+<div class="footer">
+  <div class="footer-container">
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="menu" onclick="show('home')">🏠 Ana</div>
-  <div class="menu" onclick="show('services')">🔧 Hizmet</div>
-  <div class="menu" onclick="show('prices')">💰 Fiyat</div>
-  <div class="menu" onclick="show('appointment')">📅 Randevu</div>
-  <div class="menu" onclick="show('location')">📍 Konum</div>
-  <div class="menu" onclick="show('contact')">📞 İletişim</div>
-</div>
+    <div class="footer-box">
+      <div class="footer-title">📍 ADRES</div>
+      Altınşehir Mahallesi<br>
+      Eski İstanbul Caddesi No:7/A<br>
+      Başakşehir / İstanbul
+    </div>
 
-<!-- CONTENT -->
-<div class="content">
+    <div class="footer-box">
+      <div class="footer-title">📞 TELEFON</div>
+      0531 972 45 08<br>
+      0544 624 56 54
+    </div>
 
-<!-- HOME -->
-<div id="home" class="page active">
-  <div class="card">
-    Hoşgeldiniz
+    <div class="footer-box">
+      <div class="footer-title">📧 E-POSTA</div>
+      aykutakyurt2@gmail.com
+    </div>
+
+    <div class="footer-box">
+      <div class="footer-title">⏰ ÇALIŞMA SAATLERİ</div>
+      Hafta içi: 08:00 - 22:00<br>
+      Cumartesi: 08:00 - 20:00
+    </div>
+
+    <div class="footer-box">
+      <div class="footer-title">🚗 HİZMET</div>
+      Randevusuz hızlı servis<br>
+      Güvenilir ve profesyonel hizmet
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Kısmet Rot Balans - Tüm Hakları Saklıdır
   </div>
 </div>
-
-<!-- CONTACT (FIXED) -->
-<div id="contact" class="page">
-  <h2>İletişim</h2>
-
-  <div class="card">
-    📞 0531 972 45 08<br><br>
-    📞 0544 624 56 54<br><br>
-    📍 Başakşehir İstanbul<br><br>
-    ✉️ aykutakyurt2@gmail.com
-  </div>
-</div>
-
-</div>
-
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
-
-<script>
-function show(id){
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
-}
-</script>
-
-</body>
-</html>
