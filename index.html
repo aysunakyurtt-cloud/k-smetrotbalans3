@@ -2,92 +2,61 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>SaaS CRM FINAL</title>
+<title>CRM SaaS V1</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+body{margin:0;font-family:system-ui;background:#0b1220;color:white;}
+.top{padding:15px;background:#0f172a;text-align:center;font-weight:bold;}
 
-body{background:#0b1220;color:white;}
+.wrap{max-width:900px;margin:auto;padding:20px;}
 
-.top{
-  background:#0f172a;
-  padding:15px;
-  text-align:center;
-  font-weight:700;
-}
-
-.box{
-  max-width:420px;
-  margin:40px auto;
-  background:#111827;
-  padding:20px;
-  border-radius:12px;
-}
+.card{background:#111827;padding:15px;border-radius:12px;margin:10px 0;}
 
 input{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border:none;
-  border-radius:8px;
-  background:#1f2937;
-  color:white;
+  width:100%;padding:10px;margin:5px 0;
+  border:none;border-radius:8px;background:#1f2937;color:white;
 }
 
 button{
-  width:100%;
-  padding:12px;
-  background:#2563eb;
-  color:white;
-  border:none;
-  border-radius:8px;
+  width:100%;padding:10px;
+  background:#2563eb;border:none;color:white;border-radius:8px;
   cursor:pointer;
 }
 
-.panel{display:none;padding:20px;}
-
-.card{
-  background:#111827;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-}
-
-/* DASH */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .small{font-size:22px;font-weight:bold;}
+
+.hidden{display:none;}
 </style>
 </head>
 
 <body>
 
-<div class="top">SAAS CRM FINAL SYSTEM</div>
+<div class="top">SAAS CRM V1 (DEPLOY READY)</div>
+
+<div class="wrap">
 
 <!-- LOGIN -->
-<div id="login" class="box">
+<div id="auth" class="card">
 
-  <h3>Giriş / Kayıt</h3>
+  <h3>Giriş</h3>
 
   <input id="email" placeholder="Email">
   <input id="pass" type="password" placeholder="Şifre">
 
-  <button onclick="register()">Kayıt</button>
   <button onclick="login()">Giriş</button>
+  <button onclick="register()">Kayıt</button>
 
 </div>
 
 <!-- PANEL -->
-<div id="panel" class="panel">
+<div id="panel" class="hidden">
 
   <div class="grid">
 
     <div class="card">
-      Toplam Kayıt<br>
-      <div class="small" id="total">0</div>
+      Kayıt<br>
+      <div class="small" id="count">0</div>
     </div>
 
     <div class="card">
@@ -111,6 +80,8 @@ button{
 
 </div>
 
+</div>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -120,7 +91,6 @@ from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, where, getDocs } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 🔥 FIREBASE CONFIG (BURAYA KENDİNİN KEYİNİ KOY)
 const firebaseConfig = {
   apiKey: "YOUR_KEY",
   authDomain: "YOUR_DOMAIN",
@@ -131,27 +101,30 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// LOGIN
-window.login = async function(){
+// AUTH
+window.login = async () => {
   await signInWithEmailAndPassword(auth,email.value,pass.value);
 }
 
-// REGISTER
-window.register = async function(){
+window.register = async () => {
   await createUserWithEmailAndPassword(auth,email.value,pass.value);
 }
 
-// CHECK USER
+// STATE
 onAuthStateChanged(auth,(user)=>{
   if(user){
-    document.getElementById("login").style.display="none";
-    document.getElementById("panel").style.display="block";
+    authUI(false);
     load();
   }
 });
 
+function authUI(show){
+  document.getElementById("auth").style.display = show ? "block":"none";
+  document.getElementById("panel").style.display = show ? "none":"block";
+}
+
 // ADD
-window.ekle = async function(){
+window.ekle = async () => {
 
   let user = auth.currentUser;
 
@@ -189,7 +162,7 @@ async function load(){
     `;
   });
 
-  document.getElementById("total").innerText=snap.size;
+  document.getElementById("count").innerText=snap.size;
   document.getElementById("income").innerText=total+" TL";
 }
 
