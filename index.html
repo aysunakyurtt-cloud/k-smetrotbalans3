@@ -78,7 +78,7 @@ body{background:#eef1f6;}
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* ADMIN TABLE */
+/* TABLE */
 table{
   width:100%;
   margin-top:20px;
@@ -94,7 +94,17 @@ th,td{
   text-align:left;
 }
 
-/* BUTTONS */
+/* BUTTON */
+button{
+  padding:10px 15px;
+  border:none;
+  background:#111;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* WHATSAPP */
 .wp{
   position:fixed;
   bottom:20px;
@@ -125,30 +135,24 @@ th,td{
 
 <!-- HOME -->
 <div id="home" class="section active">
-
   <div class="hero">
     <div>
       <h1>Kısmet Rot Balans</h1>
       <p>Profesyonel Servis Sistemi</p>
     </div>
   </div>
-
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="section">
-
   <h2>Hizmetler</h2>
-
   <div class="card">Rot Ayarı - 700 TL</div>
   <div class="card">Balans - 500 TL</div>
   <div class="card">Yağ Değişimi - 200 TL</div>
-
 </div>
 
 <!-- RANDEVU -->
 <div id="randevu" class="section">
-
   <h2>Randevu Al</h2>
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
@@ -158,9 +162,7 @@ th,td{
 
 <!-- ADMIN -->
 <div id="admin" class="section">
-
   <h2>Canlı Randevular</h2>
-
   <button onclick="loadData()">Verileri Yükle</button>
 
   <table id="table">
@@ -170,7 +172,6 @@ th,td{
       <th>Hizmet</th>
     </tr>
   </table>
-
 </div>
 
 </div>
@@ -186,11 +187,11 @@ function show(id,el){
   el.classList.add('active');
 }
 
-/* GOOGLE SHEET (PUBLIC CSV) */
+/* GOOGLE SHEET VERİ ÇEKME */
 async function loadData(){
 
-  /* BURAYA SHEET CSV LINKİNİ KOYACAĞIZ */
-  let url="https://docs.google.com/spreadsheets/d/e/2PACX-EXAMPLE/pub?output=csv";
+  // 🔴 BURAYA KENDİ CSV LİNKİNİ KOY
+  let url="BURAYA_CSV_LINK";
 
   let res=await fetch(url);
   let data=await res.text();
@@ -199,16 +200,26 @@ async function loadData(){
 
   let table=document.getElementById("table");
 
-  for(let i=1;i<rows.length;i++){
-    let cols=rows[i].split(",");
+  // tabloyu temizle
+  table.innerHTML = `
+  <tr>
+    <th>İsim</th>
+    <th>Telefon</th>
+    <th>Hizmet</th>
+  </tr>
+  `;
 
-    if(cols.length>1){
+  for(let i=1;i<rows.length;i++){
+    let cols=rows[i].split(/,|;/);
+
+    // Google Formda ilk sütun timestamp olduğu için 1-2-3 alıyoruz
+    if(cols.length>3){
       let row=document.createElement("tr");
 
       row.innerHTML=`
-        <td>${cols[0]}</td>
         <td>${cols[1]}</td>
         <td>${cols[2]}</td>
+        <td>${cols[3]}</td>
       `;
 
       table.appendChild(row);
