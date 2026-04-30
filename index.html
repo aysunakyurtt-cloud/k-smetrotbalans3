@@ -7,130 +7,111 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-
 body{background:#eef1f6;}
 
 /* TOP */
 .topbar{
   position:fixed;
   top:0;left:0;right:0;
-  background:#111;
-  color:white;
-  text-align:center;
-  padding:10px;
+  background:#111;color:white;
+  text-align:center;padding:10px;
   z-index:1000;
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:220px;
-  height:100vh;
-  background:#111;
-  color:white;
-  position:fixed;
-  padding:20px;
-  padding-top:60px;
+  width:220px;height:100vh;
+  background:#111;color:white;
+  position:fixed;padding:20px;padding-top:60px;
 }
 
 .menu{
-  padding:12px;
-  margin-bottom:10px;
-  background:#1f1f1f;
-  border-radius:10px;
+  padding:12px;margin-bottom:10px;
+  background:#1f1f1f;border-radius:10px;
   cursor:pointer;
 }
-
-.menu.active{
-  background:white;
-  color:black;
-}
+.menu.active{background:white;color:black;}
 
 /* CONTENT */
 .content{
   margin-left:220px;
-  padding:20px;
-  padding-top:60px;
+  padding:20px;padding-top:60px;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section{display:none;}
 .section.active{display:block;}
 
 /* HERO */
 .hero{
-  height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  height:60vh;display:flex;
+  align-items:center;justify-content:center;
   background:linear-gradient(135deg,#fff,#eaeaea);
-  border-radius:15px;
-  text-align:center;
+  border-radius:15px;text-align:center;
 }
-
 .hero h1{font-size:50px;}
 
-/* CARDS */
+/* CARD */
 .card{
-  background:white;
-  padding:20px;
-  margin:10px;
-  border-radius:15px;
+  background:white;padding:20px;
+  margin:10px;border-radius:15px;
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
 /* TABLE */
 table{
-  width:100%;
-  margin-top:20px;
-  border-collapse:collapse;
-  background:white;
-  border-radius:10px;
-  overflow:hidden;
+  width:100%;margin-top:20px;
+  border-collapse:collapse;background:white;
+  border-radius:10px;overflow:hidden;
 }
-
 th,td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-  text-align:left;
+  padding:10px;border-bottom:1px solid #eee;
 }
 
 /* BUTTON */
 button{
-  padding:10px 15px;
-  border:none;
-  background:#111;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
+  padding:10px 15px;border:none;
+  background:#111;color:white;
+  border-radius:8px;cursor:pointer;
 }
 
-/* WHATSAPP */
+/* LOGIN */
+.loginBox{
+  max-width:300px;
+  margin:100px auto;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+/* WP */
 .wp{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50px;
-  text-decoration:none;
+  bottom:20px;right:20px;
+  background:#25D366;color:white;
+  padding:15px;border-radius:50px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Canlı Randevu Sistemi</div>
+<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
   <div class="menu" onclick="show('services',this)">Hizmet</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
-  <div class="menu" onclick="show('admin',this)">Admin</div>
+  <div class="menu" onclick="showAdmin(this)">Admin</div>
 </div>
 
-<!-- CONTENT -->
 <div class="content">
 
 <!-- HOME -->
@@ -157,10 +138,18 @@ button{
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
   style="width:100%;height:500px;border:none;"></iframe>
-
 </div>
 
-<!-- ADMIN -->
+<!-- ADMIN LOGIN -->
+<div id="login" class="section">
+  <div class="loginBox">
+    <h3>Admin Giriş</h3>
+    <input type="password" id="pass" placeholder="Şifre">
+    <button onclick="login()">Giriş Yap</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
 <div id="admin" class="section">
   <h2>Canlı Randevular</h2>
   <button onclick="loadData()">Verileri Yükle</button>
@@ -179,19 +168,36 @@ button{
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
+
+/* SAYFA GEÇİŞ */
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  el.classList.add('active');
+  if(el) el.classList.add('active');
 }
 
-/* GOOGLE SHEET VERİ ÇEKME */
+/* ADMIN BUTON */
+function showAdmin(el){
+  show('login',el);
+}
+
+/* ŞİFRE */
+function login(){
+  let p=document.getElementById("pass").value;
+
+  if(p==="1234"){ // 🔴 BURAYI DEĞİŞTİR
+    show('admin');
+  }else{
+    alert("Hatalı şifre");
+  }
+}
+
+/* SHEET VERİ ÇEK */
 async function loadData(){
 
-  // 🔴 BURAYA KENDİ CSV LİNKİNİ KOY
-  let url="BURAYA_CSV_LINK";
+  let url="BURAYA_CSV_LINK"; // 🔴 BURAYI DEĞİŞTİR
 
   let res=await fetch(url);
   let data=await res.text();
@@ -200,8 +206,7 @@ async function loadData(){
 
   let table=document.getElementById("table");
 
-  // tabloyu temizle
-  table.innerHTML = `
+  table.innerHTML=`
   <tr>
     <th>İsim</th>
     <th>Telefon</th>
@@ -212,7 +217,6 @@ async function loadData(){
   for(let i=1;i<rows.length;i++){
     let cols=rows[i].split(/,|;/);
 
-    // Google Formda ilk sütun timestamp olduğu için 1-2-3 alıyoruz
     if(cols.length>3){
       let row=document.createElement("tr");
 
@@ -226,6 +230,7 @@ async function loadData(){
     }
   }
 }
+
 </script>
 
 </body>
