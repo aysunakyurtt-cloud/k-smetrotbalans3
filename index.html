@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Randevu Sistemi</title>
+<title>Kısmet Rot Balans</title>
 
 <style>
 body{font-family:system-ui;margin:0;background:#eef1f6;}
 .top{background:#111;color:#fff;padding:10px;text-align:center;position:fixed;top:0;left:0;right:0;}
-.container{margin-top:60px;display:flex;}
+.container{display:flex;margin-top:50px;}
 
 .menu{width:200px;background:#111;color:#fff;height:100vh;padding:10px;}
 .menu div{padding:10px;margin:5px;background:#222;cursor:pointer;border-radius:8px;}
@@ -20,7 +20,7 @@ body{font-family:system-ui;margin:0;background:#eef1f6;}
 
 input,select{
   width:100%;padding:10px;margin:5px 0;
-  border:1px solid #ccc;border-radius:8px;
+  border-radius:8px;border:1px solid #ccc;
 }
 
 button{
@@ -35,13 +35,13 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
 
 <body>
 
-<div class="top">Randevu Sistemi</div>
+<div class="top">Kısmet Rot Balans - FINAL SYSTEM</div>
 
 <div class="container">
 
 <!-- MENU -->
 <div class="menu">
-  <div onclick="show('home')" class="active">Ana</div>
+  <div class="active" onclick="show('home')">Ana</div>
   <div onclick="show('randevu')">Randevu</div>
   <div onclick="show('admin')">Admin</div>
 </div>
@@ -50,15 +50,15 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
 <div class="content">
 
 <!-- HOME -->
-<div id="home" class="page">
+<div id="home">
   <div class="card">
     <h2>Hoşgeldin</h2>
-    <p>Basit Firebase randevu sistemi</p>
+    <p>Firebase randevu sistemi hazır</p>
   </div>
 </div>
 
 <!-- RANDEVU -->
-<div id="randevu" class="page" style="display:none">
+<div id="randevu" style="display:none">
   <div class="card">
     <h2>Randevu Al</h2>
 
@@ -72,7 +72,6 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
       <option>11:00</option>
       <option>13:00</option>
       <option>14:00</option>
-      <option>15:00</option>
     </select>
 
     <button onclick="save()">Gönder</button>
@@ -82,7 +81,7 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
 </div>
 
 <!-- ADMIN -->
-<div id="admin" class="page" style="display:none">
+<div id="admin" style="display:none">
   <div class="card">
     <h2>Admin Panel</h2>
 
@@ -110,10 +109,17 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-getFirestore, collection, addDoc, getDocs,
-query, where, deleteDoc, doc
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// 🔥 SENİN CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
   authDomain: "kismet-rot-balans.firebaseapp.com",
@@ -143,7 +149,10 @@ let logged=false;
 
 // MENU
 function show(id){
-  document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+  document.getElementById("home").style.display="none";
+  document.getElementById("randevu").style.display="none";
+  document.getElementById("admin").style.display="none";
+
   document.getElementById(id).style.display="block";
 }
 
@@ -154,7 +163,7 @@ async function save(){
   const phone=document.getElementById("phone").value;
   const time=document.getElementById("time").value;
 
-  if(!name||!phone||!time){
+  if(!name || !phone || !time){
     msg("Boş bırakma ❌");
     return;
   }
@@ -175,11 +184,12 @@ async function save(){
   msg("Randevu alındı ✔");
 }
 
+// MSG
 function msg(t){
   document.getElementById("msg").innerText=t;
 }
 
-// ADMIN LOGIN
+// LOGIN
 function login(){
   if(document.getElementById("pass").value==="1234"){
     logged=true;
