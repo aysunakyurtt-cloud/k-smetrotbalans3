@@ -2,58 +2,29 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Oto Servis PRO V3</title>
+<title>SaaS CRM FINAL</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 
-body{
-  background:#0b1220;
-  color:white;
-}
+body{background:#0b1220;color:white;}
 
 .top{
   background:#0f172a;
-  padding:16px;
+  padding:15px;
   text-align:center;
   font-weight:700;
 }
 
-.container{display:flex;}
-
-/* SIDEBAR */
-.sidebar{
-  width:240px;
-  height:100vh;
+.box{
+  max-width:420px;
+  margin:40px auto;
   background:#111827;
   padding:20px;
-}
-
-.menu{
-  padding:12px;
-  margin-bottom:10px;
-  background:#1f2937;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.menu:hover{background:#2563eb;}
-
-.content{flex:1;padding:20px;}
-
-.section{display:none;}
-.section.active{display:block;}
-
-/* CARD */
-.card{
-  background:#111827;
-  padding:18px;
-  margin:10px 0;
   border-radius:12px;
 }
 
-/* INPUT */
-input,select{
+input{
   width:100%;
   padding:12px;
   margin:6px 0;
@@ -63,225 +34,164 @@ input,select{
   color:white;
 }
 
-/* BUTTON */
 button{
   width:100%;
   padding:12px;
   background:#2563eb;
   color:white;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   cursor:pointer;
 }
 
-/* TABLE */
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
+.panel{display:none;padding:20px;}
+
+.card{
   background:#111827;
+  padding:15px;
+  margin:10px 0;
   border-radius:10px;
-  overflow:hidden;
-}
-
-th,td{
-  padding:12px;
-  border-bottom:1px solid #1f2937;
-  text-align:left;
-}
-
-th{background:#1f2937;}
-
-.del{
-  background:red;
-  border:none;
-  padding:6px 10px;
-  border-radius:6px;
-  color:white;
-  cursor:pointer;
 }
 
 /* DASH */
 .grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:10px;
 }
-
-.small{
-  font-size:22px;
-  font-weight:bold;
-}
-
-/* SEARCH */
-.search{
-  margin-bottom:10px;
-}
+.small{font-size:22px;font-weight:bold;}
 </style>
 </head>
 
 <body>
 
-<div class="top">OTO SERVİS CRM PRO V3</div>
+<div class="top">SAAS CRM FINAL SYSTEM</div>
 
-<div class="container">
+<!-- LOGIN -->
+<div id="login" class="box">
 
-<div class="sidebar">
+  <h3>Giriş / Kayıt</h3>
 
-  <div class="menu" onclick="show('dash')">Dashboard</div>
-  <div class="menu" onclick="show('add')">Yeni Kayıt</div>
-  <div class="menu" onclick="show('list')">Kayıtlar</div>
+  <input id="email" placeholder="Email">
+  <input id="pass" type="password" placeholder="Şifre">
+
+  <button onclick="register()">Kayıt</button>
+  <button onclick="login()">Giriş</button>
 
 </div>
 
-<div class="content">
-
-<!-- DASH -->
-<div id="dash" class="section active">
+<!-- PANEL -->
+<div id="panel" class="panel">
 
   <div class="grid">
 
     <div class="card">
-      Toplam İşlem<br>
+      Toplam Kayıt<br>
       <div class="small" id="total">0</div>
     </div>
 
     <div class="card">
-      Toplam Gelir<br>
+      Gelir<br>
       <div class="small" id="income">0 TL</div>
-    </div>
-
-    <div class="card">
-      Ortalama<br>
-      <div class="small" id="avg">0 TL</div>
     </div>
 
   </div>
 
-</div>
-
-<!-- ADD -->
-<div id="add" class="section">
-
   <div class="card">
 
     <input id="isim" placeholder="Müşteri">
-    <input id="tel" placeholder="Telefon">
-
-    <select id="hizmet">
-      <option>Rot Ayarı</option>
-      <option>Balans</option>
-      <option>Yağ Değişimi</option>
-      <option>Fren Bakım</option>
-    </select>
-
+    <input id="hizmet" placeholder="Hizmet">
     <input id="fiyat" placeholder="Fiyat">
 
     <button onclick="ekle()">Kaydet</button>
 
   </div>
 
-</div>
-
-<!-- LIST -->
-<div id="list" class="section">
-
-  <input class="search" id="search" placeholder="Ara..." oninput="render()">
-
-  <table>
-    <thead>
-      <tr>
-        <th>İsim</th>
-        <th>Hizmet</th>
-        <th>Fiyat</th>
-        <th>Tarih</th>
-        <th>Sil</th>
-      </tr>
-    </thead>
-    <tbody id="table"></tbody>
-  </table>
+  <div id="list"></div>
 
 </div>
 
-</div>
+<script type="module">
 
-</div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-<script>
+import { getFirestore, collection, addDoc, query, where, getDocs } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-let data = JSON.parse(localStorage.getItem("pro_v3") || "[]");
+// 🔥 FIREBASE CONFIG (BURAYA KENDİNİN KEYİNİ KOY)
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT"
+};
 
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  render();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// LOGIN
+window.login = async function(){
+  await signInWithEmailAndPassword(auth,email.value,pass.value);
 }
 
-function ekle(){
+// REGISTER
+window.register = async function(){
+  await createUserWithEmailAndPassword(auth,email.value,pass.value);
+}
 
-  let isim=document.getElementById("isim").value;
-  let tel=document.getElementById("tel").value;
-  let hizmet=document.getElementById("hizmet").value;
-  let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
+// CHECK USER
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    document.getElementById("login").style.display="none";
+    document.getElementById("panel").style.display="block";
+    load();
+  }
+});
 
-  if(!isim || !hizmet) return;
+// ADD
+window.ekle = async function(){
 
-  data.push({
-    isim,
-    tel,
-    hizmet,
-    fiyat,
-    tarih:new Date().toLocaleDateString()
+  let user = auth.currentUser;
+
+  await addDoc(collection(db,"crm"),{
+    uid:user.uid,
+    isim:isim.value,
+    hizmet:hizmet.value,
+    fiyat:parseFloat(fiyat.value)||0
   });
 
-  localStorage.setItem("pro_v3",JSON.stringify(data));
-
-  render();
+  load();
 }
 
-function render(){
+// LOAD
+async function load(){
 
-  let table=document.getElementById("table");
-  table.innerHTML="";
+  let user=auth.currentUser;
 
-  let search=document.getElementById("search")?.value?.toLowerCase() || "";
+  let q=query(collection(db,"crm"),where("uid","==",user.uid));
+  let snap=await getDocs(q);
+
+  let list=document.getElementById("list");
+  list.innerHTML="";
 
   let total=0;
 
-  let filtered=data.filter(d=>{
-    return d.isim.toLowerCase().includes(search) ||
-           d.hizmet.toLowerCase().includes(search);
-  });
-
-  filtered.forEach((d,i)=>{
-
+  snap.forEach(doc=>{
+    let d=doc.data();
     total+=d.fiyat;
 
-    table.innerHTML+=`
-      <tr>
-        <td>${d.isim}</td>
-        <td>${d.hizmet}</td>
-        <td>${d.fiyat} TL</td>
-        <td>${d.tarih}</td>
-        <td><button class="del" onclick="sil(${i})">X</button></td>
-      </tr>
+    list.innerHTML+=`
+      <div class="card">
+        ${d.isim} - ${d.hizmet} - ${d.fiyat} TL
+      </div>
     `;
   });
 
-  document.getElementById("total").innerText=data.length;
+  document.getElementById("total").innerText=snap.size;
   document.getElementById("income").innerText=total+" TL";
-
-  let avg = data.length ? (total / data.length).toFixed(1) : 0;
-  document.getElementById("avg").innerText=avg+" TL";
 }
-
-function sil(i){
-  data.splice(i,1);
-  localStorage.setItem("pro_v3",JSON.stringify(data));
-  render();
-}
-
-render();
 
 </script>
 
