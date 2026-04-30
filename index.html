@@ -9,18 +9,17 @@
 body{margin:0;font-family:system-ui;background:#f4f6f8;}
 
 header{
-  background:#111;color:white;
-  text-align:center;padding:15px;
-  position:sticky;top:0;
+  background:#111;color:#fff;
+  padding:15px;text-align:center;
 }
 
 nav{
   display:flex;justify-content:center;
-  gap:20px;background:#1c1c1c;
+  gap:15px;background:#1c1c1c;
   padding:10px;
 }
 
-nav a{color:white;text-decoration:none;}
+nav a{color:white;text-decoration:none;font-size:14px;}
 
 .hero{
   text-align:center;
@@ -33,14 +32,14 @@ nav a{color:white;text-decoration:none;}
 .section{
   max-width:900px;
   margin:auto;
-  padding:40px 20px;
+  padding:30px 20px;
 }
 
 .card{
-  background:white;
+  background:#fff;
   padding:15px;
   border-radius:10px;
-  margin:10px 0;
+  margin-bottom:10px;
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
@@ -61,7 +60,7 @@ input,select{
 button{
   padding:10px;
   background:#111;
-  color:white;
+  color:#fff;
   border:none;
   border-radius:8px;
   cursor:pointer;
@@ -72,11 +71,10 @@ button{
   right:20px;
   bottom:20px;
   background:#25D366;
-  color:white;
+  color:#fff;
   padding:15px;
   border-radius:50px;
   text-decoration:none;
-  font-weight:bold;
 }
 </style>
 </head>
@@ -97,7 +95,6 @@ button{
 
 <div class="hero">
   <h1>Güvenli Sürüş İçin Doğru Adres</h1>
-  <p>Rot • Balans • Lastik • Bakım</p>
 </div>
 
 <!-- HİZMET -->
@@ -160,7 +157,7 @@ button{
 
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
-<!-- FIREBASE (EN STABİL VERSİYON) -->
+<!-- FIREBASE (STABİL VERSİYON) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
@@ -180,13 +177,11 @@ const db = firebase.firestore();
 
 <script>
 
-// RANDEVU KAYDET
 async function save(){
 
   const name=document.getElementById("name").value;
   const phone=document.getElementById("phone").value;
   const time=document.getElementById("time").value;
-
   const msg=document.getElementById("msg");
 
   if(!name || !phone || !time){
@@ -194,7 +189,7 @@ async function save(){
     return;
   }
 
-  try {
+  try{
 
     const check = await db.collection("randevular")
       .where("time","==",time)
@@ -211,9 +206,9 @@ async function save(){
 
     msg.innerText="Randevu alındı ✔";
 
-  } catch(e){
+  }catch(e){
     console.log(e);
-    msg.innerText="Hata var ❌ Firestore rules kontrol et";
+    msg.innerText="Hata ❌ (Rules kontrol et)";
   }
 }
 
