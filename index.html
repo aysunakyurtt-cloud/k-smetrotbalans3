@@ -14,7 +14,6 @@ body{
   background:#f4f6f8;
 }
 
-/* SIDEBAR */
 .sidebar{
   width:220px;
   background:#111;
@@ -32,7 +31,6 @@ body{
 
 .menu:hover{background:#333;}
 
-/* CONTENT */
 .content{
   flex:1;
   padding:20px;
@@ -47,12 +45,18 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* CONTACT BOX */
-.contact-box{
-  line-height:1.8;
+/* SERVICE ITEM */
+.service-item{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  border-bottom:1px solid #eee;
 }
 
-/* MAP */
+.price{
+  font-weight:bold;
+}
+
 iframe{
   border:0;
   border-radius:10px;
@@ -82,7 +86,6 @@ button{
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <h3>Kısmet Rot</h3>
 
@@ -94,30 +97,55 @@ button{
   <div class="menu" onclick="show('contact')">📞 İletişim</div>
 </div>
 
-<!-- CONTENT -->
 <div class="content">
 
 <!-- HOME -->
 <div id="home" class="page">
   <h1>Hoşgeldiniz</h1>
-  <h1>Yolda güvenle ilerlemek istiyorsanız doğru yerdesiniz.
-Rot balans ayarı, lastik hizmetleri ve araç bakımında hızlı, güvenilir ve uygun fiyatlı çözümler sunuyoruz.
-Aracınızı bize emanet edin, farkı hissedin.</h1>
-  <p>Kısmet Rot Balans</p>
+
+  <div class="card">
+    <p>
+      Yolda güvenle ilerlemek istiyorsanız doğru yerdesiniz.  
+      Rot balans ve araç bakımında profesyonel hizmet.
+    </p>
+  </div>
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="page" style="display:none;">
   <h2>Hizmetler</h2>
-  <div class="card">Rot Ayarı</div>
-  <div class="card">Balans</div>
+
+  <div class="card">
+    <div class="service-item">
+      <span>Ön Takım Kontrolü</span>
+      <span class="price">300 TL</span>
+    </div>
+
+    <div class="service-item">
+      <span>Balata Değişimi</span>
+      <span class="price">800 TL</span>
+    </div>
+
+    <div class="service-item">
+      <span>Lastik Tamiri</span>
+      <span class="price">200 - 450 TL</span>
+    </div>
+
+    <div class="service-item">
+      <span>Bilgisayar Arıza Tespit</span>
+      <span class="price">800 TL</span>
+    </div>
+  </div>
 </div>
 
 <!-- PRICES -->
 <div id="prices" class="page" style="display:none;">
-  <h2>Fiyatlar</h2>
-  <div class="card">Rot: 700 TL</div>
-  <div class="card">Balans: 500 TL</div>
+  <h2>Fiyat Listesi</h2>
+
+  <div class="card">Ön Takım Kontrolü → 300 TL</div>
+  <div class="card">Balata Değişimi → 800 TL</div>
+  <div class="card">Lastik Tamiri → 200 - 450 TL</div>
+  <div class="card">Bilgisayar Arıza Tespit → 800 TL</div>
 </div>
 
 <!-- APPOINTMENT -->
@@ -148,8 +176,7 @@ Aracınızı bize emanet edin, farkı hissedin.</h1>
 
     <iframe 
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str"
-      width="100%" 
-      height="300">
+      width="100%" height="300">
     </iframe>
 
   </div>
@@ -159,11 +186,11 @@ Aracınızı bize emanet edin, farkı hissedin.</h1>
 <div id="contact" class="page" style="display:none;">
   <h2>İletişim</h2>
 
-  <div class="card contact-box">
-    📞 Telefon: <b>0531 972 45 08</b><br>
-    📞 Telefon: <b>0544 624 56 54</b><br>
-    📍 Adres: Altınşehir mahallesi eski İstanbul caddesi no yedi / A başakşehir İstanbul<br>
-    ✉️ Mail:aykutakyurt2@gmail.com<br><br>
+  <div class="card">
+    📞 0531 972 45 08<br>
+    📞 0544 624 56 54<br>
+    📍 Altınşehir Mah. Başakşehir İstanbul<br>
+    ✉️ aykutakyurt2@gmail.com<br><br>
 
     <a href="https://wa.me/905319724508">
       <button>WhatsApp Yaz</button>
