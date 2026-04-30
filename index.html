@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oto Servis CRM FINAL</title>
+<title>Kısmet Rot Balans</title>
 
 <style>
 :root{
@@ -32,6 +32,7 @@ body{
   padding:14px;
   text-align:center;
   font-weight:600;
+  z-index:10;
 }
 
 /* SIDEBAR */
@@ -62,6 +63,10 @@ body{
   margin-left:240px;
   padding:80px 20px;
 }
+
+/* SECTIONS */
+.section{display:none;}
+.section.active{display:block;}
 
 /* CARD */
 .card{
@@ -107,87 +112,84 @@ th,td{
   text-align:left;
 }
 
-/* DELETE */
-.del{
-  background:red;
-  padding:6px 10px;
-  border:none;
+/* WHATSAPP */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
   color:white;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Oto Servis CRM FINAL | Profesyonel Sistem</div>
+<div class="topbar">Kısmet Rot Balans | Profesyonel Servis Sistemi</div>
 
 <div class="sidebar">
-  <div class="menu active" onclick="show('dash',this)">Dashboard</div>
-  <div class="menu" onclick="show('yeni',this)">Yeni Kayıt</div>
-  <div class="menu" onclick="show('liste',this)">Kayıtlar</div>
+  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
+  <div class="menu" onclick="show('services',this)">Hizmetler</div>
+  <div class="menu" onclick="show('randevu',this)">Kayıt</div>
+  <div class="menu" onclick="show('admin',this)">Kayıtlar</div>
+  <div class="menu" onclick="show('contact',this)">İletişim</div>
 </div>
 
 <div class="content">
 
-<!-- DASHBOARD -->
-<div id="dash" class="section active">
-
-  <div class="grid">
-
-    <div class="card">
-      Toplam Kayıt<br>
-      <h2 id="total">0</h2>
-    </div>
-
-    <div class="card">
-      Toplam Gelir<br>
-      <h2 id="gelir">0 TL</h2>
-    </div>
-
-    <div class="card">
-      Bugün İşlem<br>
-      <h2 id="today">0</h2>
-    </div>
-
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="card">
+    <h1>Kısmet Rot Balans</h1>
+    <p>Rot, balans, bakım ve servis hizmetleri</p>
   </div>
+
+  <div class="card">
+    📍 Konum:  
+    <a href="https://www.google.com/maps" target="_blank">Haritada Aç</a>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="section">
+
+  <div class="card">🚗 Rot Ayarı - 700 TL</div>
+  <div class="card">⚙️ Balans - 500 TL</div>
+  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
+  <div class="card">🔧 Fren Bakım - 600 TL</div>
 
 </div>
 
-<!-- YENİ -->
-<div id="yeni" class="section">
+<!-- RANDEVU / KAYIT -->
+<div id="randevu" class="section">
 
-  <h2>Yeni Servis Kaydı</h2>
+  <h2>Servis Kaydı</h2>
 
-  <input id="isim" placeholder="Müşteri Adı">
-  <input id="plaka" placeholder="Araç Plaka">
-  <input id="hizmet" placeholder="İşlem">
-  <input id="fiyat" placeholder="Fiyat (TL)">
-  <textarea id="not" placeholder="Servis Notu"></textarea>
+  <input id="isim" placeholder="Ad Soyad">
+  <input id="tel" placeholder="Telefon">
+  <input id="hizmet" placeholder="Hizmet">
+  <input id="fiyat" placeholder="Fiyat">
+  <textarea id="not" placeholder="Not"></textarea>
 
   <button onclick="ekle()">Kaydet</button>
 
 </div>
 
-<!-- LİSTE -->
-<div id="liste" class="section">
+<!-- ADMIN -->
+<div id="admin" class="section">
 
-  <input id="search" placeholder="Plaka veya isim ara..." oninput="render()">
+  <input id="search" placeholder="Ara (isim/hizmet)" oninput="render()">
 
   <table>
     <thead>
       <tr>
         <th>İsim</th>
-        <th>Plaka</th>
-        <th>İşlem</th>
+        <th>Telefon</th>
+        <th>Hizmet</th>
         <th>Fiyat</th>
         <th>Sil</th>
       </tr>
@@ -197,11 +199,26 @@ th,td{
 
 </div>
 
+<!-- CONTACT -->
+<div id="contact" class="section">
+
+  <div class="card">
+    <h2>İletişim</h2>
+    📞 Telefon: 0531 972 45 08<br><br>
+    📍 Adres: İstanbul / Türkiye<br><br>
+    💬 WhatsApp:
+    <a href="https://wa.me/905319724508" target="_blank">Mesaj Gönder</a>
+  </div>
+
 </div>
+
+</div>
+
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("crm_final") || "[]");
+let data = JSON.parse(localStorage.getItem("servis_full") || "[]");
 
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -216,21 +233,18 @@ function show(id,el){
 function ekle(){
 
   let isim=document.getElementById("isim").value;
-  let plaka=document.getElementById("plaka").value;
+  let tel=document.getElementById("tel").value;
   let hizmet=document.getElementById("hizmet").value;
   let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
   let not=document.getElementById("not").value;
 
-  if(!isim || !plaka){
+  if(!isim || !hizmet){
     alert("Zorunlu alanları doldur");
     return;
   }
 
-  data.push({
-    isim,plaka,hizmet,fiyat,not,date:new Date().toISOString()
-  });
-
-  localStorage.setItem("crm_final",JSON.stringify(data));
+  data.push({isim,tel,hizmet,fiyat,not});
+  localStorage.setItem("servis_full",JSON.stringify(data));
 
   clear();
   render();
@@ -238,7 +252,7 @@ function ekle(){
 
 function clear(){
   document.getElementById("isim").value="";
-  document.getElementById("plaka").value="";
+  document.getElementById("tel").value="";
   document.getElementById("hizmet").value="";
   document.getElementById("fiyat").value="";
   document.getElementById("not").value="";
@@ -248,45 +262,33 @@ function render(){
 
   let list=document.getElementById("list");
   if(!list) return;
+
   list.innerHTML="";
 
   let search=document.getElementById("search")?.value?.toLowerCase() || "";
 
-  let today=new Date().toISOString().split("T")[0];
-
   let filtered=data.filter(d=>{
     return d.isim.toLowerCase().includes(search) ||
-           d.plaka.toLowerCase().includes(search);
+           d.hizmet.toLowerCase().includes(search);
   });
 
-  let total=0;
-  let todayCount=0;
-
   filtered.forEach((d,i)=>{
-
-    total+=d.fiyat;
-
-    if(d.date.startsWith(today)) todayCount++;
-
     list.innerHTML+=`
       <tr>
         <td>${d.isim}</td>
-        <td>${d.plaka}</td>
+        <td>${d.tel}</td>
         <td>${d.hizmet}</td>
         <td>${d.fiyat} TL</td>
-        <td><button class="del" onclick="sil(${i})">X</button></td>
+        <td><button onclick="sil(${i})">X</button></td>
       </tr>
     `;
   });
 
-  document.getElementById("total").innerText=data.length;
-  document.getElementById("gelir").innerText=total+" TL";
-  document.getElementById("today").innerText=todayCount;
 }
 
 function sil(i){
   data.splice(i,1);
-  localStorage.setItem("crm_final",JSON.stringify(data));
+  localStorage.setItem("servis_full",JSON.stringify(data));
   render();
 }
 
