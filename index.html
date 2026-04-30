@@ -3,100 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans</title>
+<title>Kısmet Rot Balans PRO</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 body{background:#eef1f6;}
 
 .topbar{
-  position:fixed;
-  top:0;left:0;right:0;
-  background:#111;
-  color:white;
-  text-align:center;
-  padding:10px;
-  z-index:1000;
+  position:fixed;top:0;left:0;right:0;
+  background:#111;color:white;
+  text-align:center;padding:10px;z-index:1000;
 }
 
 .sidebar{
-  width:220px;
-  height:100vh;
-  background:#111;
-  color:white;
-  position:fixed;
-  padding:20px;
-  padding-top:60px;
+  width:220px;height:100vh;
+  background:#111;color:white;
+  position:fixed;padding:20px;padding-top:60px;
 }
 
 .menu{
-  padding:12px;
-  margin-bottom:10px;
-  background:#1f1f1f;
-  border-radius:10px;
+  padding:12px;margin-bottom:10px;
+  background:#1f1f1f;border-radius:10px;
   cursor:pointer;
 }
 
-.menu.active{
-  background:white;
-  color:black;
-}
+.menu.active{background:white;color:black;}
 
 .content{
   margin-left:220px;
-  padding:20px;
-  padding-top:60px;
+  padding:20px;padding-top:60px;
 }
 
 .section{display:none;}
 .section.active{display:block;}
 
 .card{
-  background:white;
-  padding:20px;
-  margin:10px 0;
-  border-radius:12px;
+  background:white;padding:20px;
+  margin:10px 0;border-radius:12px;
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
 input{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
+  width:100%;padding:10px;margin:5px 0;
+  border-radius:8px;border:1px solid #ccc;
 }
 
 button{
-  padding:10px 15px;
-  border:none;
-  background:#111;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
+  padding:10px 15px;border:none;
+  background:#111;color:white;
+  border-radius:8px;cursor:pointer;
   margin-top:10px;
 }
 
 table{
-  width:100%;
-  margin-top:20px;
-  border-collapse:collapse;
-  background:white;
-  border-radius:10px;
-  overflow:hidden;
+  width:100%;margin-top:20px;
+  border-collapse:collapse;background:white;
+  border-radius:10px;overflow:hidden;
 }
 
 th,td{
-  padding:10px;
-  border-bottom:1px solid #eee;
+  padding:10px;border-bottom:1px solid #eee;
   text-align:left;
+}
+
+#adminLogin{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;
+}
+
+.loginBox{
+  background:white;padding:20px;border-radius:12px;
+  width:300px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Firebase Randevu Sistemi</div>
+<div class="topbar">Kısmet Rot Balans PRO</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
@@ -106,15 +91,13 @@ th,td{
 
 <div class="content">
 
-<!-- HOME -->
 <div id="home" class="section active">
   <div class="card">
     <h1>Kısmet Rot Balans</h1>
-    <p>Firebase destekli randevu sistemi</p>
+    <p>PRO Firebase Randevu Sistemi</p>
   </div>
 </div>
 
-<!-- RANDEVU -->
 <div id="randevu" class="section">
   <div class="card">
     <h2>Randevu Al</h2>
@@ -124,14 +107,14 @@ th,td{
     <input id="service" placeholder="Hizmet">
 
     <button onclick="save()">Randevu Gönder</button>
+
+    <p id="msg"></p>
   </div>
 </div>
 
-<!-- ADMIN -->
 <div id="admin" class="section">
   <div class="card">
     <h2>Admin Panel</h2>
-
     <button onclick="loadData()">Verileri Yükle</button>
 
     <table id="table">
@@ -146,13 +129,20 @@ th,td{
 
 </div>
 
-<!-- FIREBASE -->
+<!-- ADMIN LOGIN -->
+<div id="adminLogin">
+  <div class="loginBox">
+    <h3>Admin Giriş</h3>
+    <input type="password" id="pass" placeholder="Şifre">
+    <button onclick="login()">Giriş</button>
+  </div>
+</div>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// 🔥 SENİN FIREBASE KONFIGİN
 const firebaseConfig = {
   apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
   authDomain: "kismet-rot-balans.firebaseapp.com",
@@ -162,15 +152,15 @@ const firebaseConfig = {
   appId: "1:350629465784:web:33f91cad2a724e0f45ee4d"
 };
 
-// INIT
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// GLOBAL
-window.db = db;
-window.addDoc = addDoc;
-window.collection = collection;
-window.getDocs = getDocs;
+window.db=db;
+window.addDoc=addDoc;
+window.collection=collection;
+window.getDocs=getDocs;
+window.query=query;
+window.where=where;
 
 </script>
 
@@ -185,36 +175,54 @@ function show(id,el){
   el.classList.add('active');
 }
 
-// SAVE RANDEVU
+// SAVE
 async function save(){
 
   const name=document.getElementById("name").value;
   const phone=document.getElementById("phone").value;
   const service=document.getElementById("service").value;
+  const msg=document.getElementById("msg");
 
   if(!name || !phone || !service){
-    alert("Tüm alanları doldur");
+    msg.innerText="Tüm alanları doldur ❌";
+    return;
+  }
+
+  msg.innerText="Kaydediliyor...";
+
+  // duplicate kontrol (telefon)
+  const q=query(collection(db,"randevular"),where("phone","==",phone));
+  const snap=await getDocs(q);
+
+  if(!snap.empty){
+    msg.innerText="Bu telefon zaten kayıtlı ❌";
     return;
   }
 
   await addDoc(collection(db,"randevular"),{
-    name,
-    phone,
-    service,
+    name,phone,service,
     time:new Date().toISOString()
   });
 
-  alert("Randevu alındı ✔");
+  msg.innerText="Randevu alındı ✔";
 
-  document.getElementById("name").value="";
-  document.getElementById("phone").value="";
-  document.getElementById("service").value="";
 }
 
-// LOAD ADMIN
+// ADMIN LOGIN
+function login(){
+  let pass=document.getElementById("pass").value;
+
+  if(pass==="1234"){
+    document.getElementById("adminLogin").style.display="none";
+  }else{
+    alert("Hatalı şifre");
+  }
+}
+
+// LOAD
 async function loadData(){
 
-  const snap = await getDocs(collection(db,"randevular"));
+  const snap=await getDocs(collection(db,"randevular"));
 
   let table=document.getElementById("table");
 
