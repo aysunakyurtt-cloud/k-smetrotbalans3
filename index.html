@@ -1,47 +1,77 @@
-<script type="module">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CRM</title>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+<style>
+body{margin:0;font-family:system-ui;background:#0b1220;color:white;}
+.center{text-align:center;padding:80px;}
+.hidden{display:none;}
+input{padding:10px;margin:5px;width:200px;}
+button{padding:10px;background:#2563eb;color:white;border:none;}
+.card{background:#111827;padding:10px;margin:10px;border-radius:10px;}
+</style>
+</head>
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT"
-};
+<body>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+<!-- LANDING -->
+<div id="home" class="center">
+  <h1>Oto Servis Sistemi</h1>
+  <button onclick="start()">Sisteme Gir</button>
+</div>
 
-// 🔥 LOGIN
-window.login = async function(){
+<!-- APP -->
+<div id="app" class="hidden center">
 
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      email.value,
-      pass.value
-    );
+  <input id="isim" placeholder="Müşteri">
+  <input id="hizmet" placeholder="Hizmet">
+  <input id="fiyat" placeholder="Fiyat">
 
-    alert("Giriş başarılı");
+  <br>
+  <button onclick="ekle()">Kaydet</button>
 
-  } catch(e){
-    alert("Hata: " + e.message);
-  }
+  <div id="list"></div>
+
+</div>
+
+<script>
+
+let data=[];
+
+function start(){
+  document.getElementById("home").style.display="none";
+  document.getElementById("app").style.display="block";
 }
 
-// 🔥 EN KRİTİK KISIM (EKRAN GEÇİŞİ)
-onAuthStateChanged(auth,(user)=>{
+function ekle(){
 
-  if(user){
-    document.getElementById("login").style.display="none";
-    document.getElementById("panel").style.display="block";
-  }
-  else{
-    document.getElementById("login").style.display="block";
-    document.getElementById("panel").style.display="none";
-  }
+  data.push({
+    isim:isim.value,
+    hizmet:hizmet.value,
+    fiyat:fiyat.value
+  });
 
-});
+  render();
+}
+
+function render(){
+
+  let list=document.getElementById("list");
+  list.innerHTML="";
+
+  data.forEach(d=>{
+    list.innerHTML+=`
+      <div class="card">
+        ${d.isim} - ${d.hizmet} - ${d.fiyat} TL
+      </div>
+    `;
+  });
+
+}
 
 </script>
+
+</body>
+</html>
