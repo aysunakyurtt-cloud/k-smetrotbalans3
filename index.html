@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans</title>
+<title>Servis Yönetim Sistemi</title>
 
 <style>
 :root{
@@ -63,19 +63,6 @@ body{
   padding:80px 20px;
 }
 
-/* HERO */
-.hero{
-  background:white;
-  padding:70px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
-}
-
-/* SECTION */
-.section{display:none;}
-.section.active{display:block;}
-
 /* CARD */
 .card{
   background:white;
@@ -86,7 +73,7 @@ body{
 }
 
 /* INPUT */
-input{
+input,textarea{
   width:100%;
   padding:12px;
   margin:6px 0;
@@ -129,86 +116,57 @@ th,td{
   border-radius:8px;
   cursor:pointer;
 }
-
-/* TOAST */
-#toast{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:#22c55e;
-  color:white;
-  padding:12px 18px;
-  border-radius:10px;
-  display:none;
-}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
+<div class="topbar">Servis Yönetim Sistemi | CRM V1</div>
 
 <div class="sidebar">
-  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
-  <div class="menu" onclick="show('services',this)">Hizmetler</div>
-  <div class="menu" onclick="show('randevu',this)">Randevu</div>
-  <div class="menu" onclick="show('admin',this)">Panel</div>
+  <div class="menu active" onclick="show('home',this)">Panel</div>
+  <div class="menu" onclick="show('yeni',this)">Yeni İş</div>
+  <div class="menu" onclick="show('liste',this)">Kayıtlar</div>
 </div>
 
 <div class="content">
 
-<!-- HOME -->
+<!-- PANEL -->
 <div id="home" class="section active">
-  <div class="hero">
-    <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel Oto Servis Sistemi</p>
+  <div class="card">
+    Toplam Kayıt: <b id="total">0</b>
   </div>
 </div>
 
-<!-- SERVICES -->
-<div id="services" class="section">
-  <div class="card">🚗 Rot Ayarı - 700 TL</div>
-  <div class="card">⚙️ Balans - 500 TL</div>
-  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
-</div>
+<!-- YENİ -->
+<div id="yeni" class="section">
 
-<!-- RANDEVU -->
-<div id="randevu" class="section">
-  <h2>Randevu Oluştur</h2>
+  <h2>Yeni Servis Kaydı</h2>
 
-  <input id="isim" placeholder="Ad Soyad">
+  <input id="isim" placeholder="Müşteri Adı">
   <input id="tel" placeholder="Telefon">
-  <input id="hizmet" placeholder="Hizmet">
+  <input id="plaka" placeholder="Araç Plaka">
+  <input id="hizmet" placeholder="Yapılan İşlem">
+  <textarea id="not" placeholder="Servis Notu"></textarea>
   <input id="tarih" type="date">
   <input id="saat" type="time">
 
-  <button onclick="ekle()">Randevu Ekle</button>
+  <button onclick="ekle()">Kaydet</button>
+
 </div>
 
-<!-- ADMIN -->
-<div id="admin" class="section">
+<!-- LİSTE -->
+<div id="liste" class="section">
 
-  <h2>Panel</h2>
-
-  <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <div class="card">Toplam: <b id="total">0</b></div>
-    <div class="card">Bugün: <b id="todayCount">0</b></div>
-  </div>
-
-  <input id="search" placeholder="İsim veya telefon ara..." oninput="render()">
-
-  <button onclick="exportData()" style="margin-top:10px;background:#16a34a;">
-    Veriyi İndir
-  </button>
+  <input id="search" placeholder="Ara (isim/plaka)" oninput="render()">
 
   <table>
     <thead>
       <tr>
         <th>İsim</th>
-        <th>Telefon</th>
+        <th>Plaka</th>
         <th>Hizmet</th>
         <th>Tarih</th>
-        <th>Saat</th>
         <th>Sil</th>
       </tr>
     </thead>
@@ -219,11 +177,9 @@ th,td{
 
 </div>
 
-<div id="toast"></div>
-
 <script>
 
-let data = JSON.parse(localStorage.getItem("randevular") || "[]");
+let data = JSON.parse(localStorage.getItem("servis") || "[]");
 
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -239,26 +195,26 @@ function ekle(){
 
   let isim=document.getElementById("isim").value;
   let tel=document.getElementById("tel").value;
+  let plaka=document.getElementById("plaka").value;
   let hizmet=document.getElementById("hizmet").value;
+  let not=document.getElementById("not").value;
   let tarih=document.getElementById("tarih").value;
   let saat=document.getElementById("saat").value;
 
-  if(!isim || !tel || !hizmet || !tarih || !saat){
-    alert("Tüm alanları doldur");
+  if(!isim || !plaka || !hizmet){
+    alert("Zorunlu alanları doldur");
     return;
   }
 
-  data.push({isim,tel,hizmet,tarih,saat});
-  localStorage.setItem("randevular",JSON.stringify(data));
+  data.push({
+    isim,tel,plaka,hizmet,not,tarih,saat
+  });
 
-  toast("Randevu eklendi");
+  localStorage.setItem("servis",JSON.stringify(data));
+
+  alert("Kayıt eklendi");
+
   render();
-
-  document.getElementById("isim").value="";
-  document.getElementById("tel").value="";
-  document.getElementById("hizmet").value="";
-  document.getElementById("tarih").value="";
-  document.getElementById("saat").value="";
 }
 
 function render(){
@@ -268,25 +224,20 @@ function render(){
 
   let search=document.getElementById("search")?.value?.toLowerCase() || "";
 
-  let today = new Date().toISOString().split("T")[0];
-
   let filtered = data.filter(d=>{
     return d.isim.toLowerCase().includes(search) ||
-           d.tel.includes(search);
+           d.plaka.toLowerCase().includes(search);
   });
 
   document.getElementById("total").innerText = data.length;
-  document.getElementById("todayCount").innerText =
-    data.filter(d=>d.tarih === today).length;
 
   filtered.forEach((d,i)=>{
     list.innerHTML+=`
       <tr>
         <td>${d.isim}</td>
-        <td>${d.tel}</td>
+        <td>${d.plaka}</td>
         <td>${d.hizmet}</td>
-        <td>${d.tarih}</td>
-        <td>${d.saat}</td>
+        <td>${d.tarih || "-"}</td>
         <td><button class="del" onclick="sil(${i})">X</button></td>
       </tr>
     `;
@@ -295,31 +246,8 @@ function render(){
 
 function sil(i){
   data.splice(i,1);
-  localStorage.setItem("randevular",JSON.stringify(data));
+  localStorage.setItem("servis",JSON.stringify(data));
   render();
-  toast("Silindi");
-}
-
-function exportData(){
-  let blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
-  let url = URL.createObjectURL(blob);
-
-  let a=document.createElement("a");
-  a.href=url;
-  a.download="randevular.json";
-  a.click();
-
-  toast("İndirildi");
-}
-
-function toast(msg){
-  let t=document.getElementById("toast");
-  t.innerText=msg;
-  t.style.display="block";
-
-  setTimeout(()=>{
-    t.style.display="none";
-  },2000);
 }
 
 render();
