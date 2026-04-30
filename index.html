@@ -121,6 +121,7 @@ button{
 
 <div class="content">
 
+<!-- HOME -->
 <div id="home" class="section active">
   <div class="hero">
     <div>
@@ -130,6 +131,7 @@ button{
   </div>
 </div>
 
+<!-- SERVICES -->
 <div id="services" class="section">
   <h2>Hizmetler</h2>
   <div class="card">Rot Ayarı - 700 TL</div>
@@ -137,17 +139,23 @@ button{
   <div class="card">Yağ Değişimi - 200 TL</div>
 </div>
 
+<!-- APPOINTMENT -->
 <div id="randevu" class="section">
   <h2>Randevu Al</h2>
 
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
-  style="width:100%;height:500px;border:none;"></iframe>
+  <iframe 
+    src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
+    style="width:100%;height:500px;border:none;">
+  </iframe>
 </div>
 
+<!-- ADMIN -->
 <div id="admin" class="section">
   <h2>Canlı Randevular</h2>
 
   <button onclick="loadData()">Verileri Yükle</button>
+
+  <p id="status" style="margin-top:10px;color:#555;"></p>
 
   <table id="table">
     <tr>
@@ -174,37 +182,51 @@ function show(id,el){
 
 async function loadData(){
 
-  let url="https://docs.google.com/spreadsheets/d/e/2PACX-1vTyMoSuPnG01scJudz6y0gq7iDc65YAgAH1xJFNgxPyhboEqkYUkcDBY_sLYI2mEjZ_9M5x5CRMyuHx/pub?output=csv";
+  const status=document.getElementById("status");
+  status.innerText="Yükleniyor...";
 
-  let res=await fetch(url);
-  let data=await res.text();
+  const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vTyMoSuPnG01scJudz6y0gq7iDc65YAgAH1xJFNgxPyhboEqkYUkcDBY_sLYI2mEjZ_9M5x5CRMyuHx/pub?output=csv";
 
-  let rows=data.split("\n");
+  try{
+    let res=await fetch(url);
+    let data=await res.text();
 
-  let table=document.getElementById("table");
+    let rows=data.trim().split("\n");
 
-  table.innerHTML=`
-  <tr>
-    <th>İsim</th>
-    <th>Telefon</th>
-    <th>Hizmet</th>
-  </tr>
-  `;
+    let table=document.getElementById("table");
 
-  for(let i=1;i<rows.length;i++){
-    let cols=rows[i].split(",");
+    // tabloyu resetle
+    table.innerHTML=`
+    <tr>
+      <th>İsim</th>
+      <th>Telefon</th>
+      <th>Hizmet</th>
+    </tr>
+    `;
 
-    if(cols.length>3){
-      let row=document.createElement("tr");
+    for(let i=1;i<rows.length;i++){
 
-      row.innerHTML=`
-        <td>${cols[1]}</td>
-        <td>${cols[2]}</td>
-        <td>${cols[3]}</td>
-      `;
+      let cols=rows[i].split(",");
 
-      table.appendChild(row);
+      if(cols.length>=3){
+
+        let tr=document.createElement("tr");
+
+        tr.innerHTML=`
+          <td>${cols[1] || "-"}</td>
+          <td>${cols[2] || "-"}</td>
+          <td>${cols[3] || "-"}</td>
+        `;
+
+        table.appendChild(tr);
+      }
     }
+
+    status.innerText="Veriler yüklendi ✔";
+
+  }catch(err){
+    status.innerText="Hata oluştu ❌";
+    console.log(err);
   }
 }
 
