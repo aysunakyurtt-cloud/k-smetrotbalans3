@@ -51,24 +51,30 @@ body{background:#eef1f6;}
 .section{display:none;}
 .section.active{display:block;}
 
-.hero{
-  height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#fff,#eaeaea);
-  border-radius:15px;
-  text-align:center;
-}
-
-.hero h1{font-size:50px;}
-
 .card{
   background:white;
   padding:20px;
-  margin:10px;
-  border-radius:15px;
+  margin:10px 0;
+  border-radius:12px;
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  background:#111;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
 }
 
 table{
@@ -85,36 +91,15 @@ th,td{
   border-bottom:1px solid #eee;
   text-align:left;
 }
-
-button{
-  padding:10px 15px;
-  border:none;
-  background:#111;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.wp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50px;
-  text-decoration:none;
-}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Canlı Randevu Sistemi</div>
+<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
-  <div class="menu" onclick="show('services',this)">Hizmet</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
   <div class="menu" onclick="show('admin',this)">Admin</div>
 </div>
@@ -123,55 +108,71 @@ button{
 
 <!-- HOME -->
 <div id="home" class="section active">
-  <div class="hero">
-    <div>
-      <h1>Kısmet Rot Balans</h1>
-      <p>Profesyonel Servis Sistemi</p>
-    </div>
+  <div class="card">
+    <h1>Kısmet Rot Balans</h1>
+    <p>Modern randevu sistemi</p>
   </div>
 </div>
 
-<!-- SERVICES -->
-<div id="services" class="section">
-  <h2>Hizmetler</h2>
-  <div class="card">Rot Ayarı - 700 TL</div>
-  <div class="card">Balans - 500 TL</div>
-  <div class="card">Yağ Değişimi - 200 TL</div>
-</div>
-
-<!-- APPOINTMENT -->
+<!-- RANDEVU -->
 <div id="randevu" class="section">
-  <h2>Randevu Al</h2>
+  <div class="card">
+    <h2>Randevu Al</h2>
 
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"
-    style="width:100%;height:500px;border:none;">
-  </iframe>
+    <input id="name" placeholder="İsim">
+    <input id="phone" placeholder="Telefon">
+    <input id="service" placeholder="Hizmet">
+
+    <button onclick="save()">Randevu Gönder</button>
+  </div>
 </div>
 
 <!-- ADMIN -->
 <div id="admin" class="section">
-  <h2>Canlı Randevular</h2>
+  <div class="card">
+    <h2>Admin Panel</h2>
+    <button onclick="loadData()">Verileri Yükle</button>
 
-  <button onclick="loadData()">Verileri Yükle</button>
-
-  <p id="status" style="margin-top:10px;color:#555;"></p>
-
-  <table id="table">
-    <tr>
-      <th>İsim</th>
-      <th>Telefon</th>
-      <th>Hizmet</th>
-    </tr>
-  </table>
+    <table id="table">
+      <tr>
+        <th>İsim</th>
+        <th>Telefon</th>
+        <th>Hizmet</th>
+      </tr>
+    </table>
+  </div>
 </div>
 
 </div>
 
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "XXX",
+  authDomain: "XXX",
+  projectId: "XXX",
+  storageBucket: "XXX",
+  messagingSenderId: "XXX",
+  appId: "XXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.db = db;
+window.addDoc = addDoc;
+window.collection = collection;
+window.getDocs = getDocs;
+
+</script>
 
 <script>
 
+// MENU
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -180,57 +181,61 @@ function show(id,el){
   el.classList.add('active');
 }
 
+// SAVE APPOINTMENT
+async function save(){
+
+  const name=document.getElementById("name").value;
+  const phone=document.getElementById("phone").value;
+  const service=document.getElementById("service").value;
+
+  if(!name || !phone || !service){
+    alert("Tüm alanları doldur");
+    return;
+  }
+
+  await addDoc(collection(db,"randevular"),{
+    name,phone,service,
+    time:new Date().toISOString()
+  });
+
+  alert("Randevu alındı ✔");
+
+  document.getElementById("name").value="";
+  document.getElementById("phone").value="";
+  document.getElementById("service").value="";
+}
+
+// LOAD ADMIN DATA
 async function loadData(){
 
-  const status=document.getElementById("status");
-  status.innerText="Yükleniyor...";
+  const snap = await getDocs(collection(db,"randevular"));
 
-  const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vTyMoSuPnG01scJudz6y0gq7iDc65YAgAH1xJFNgxPyhboEqkYUkcDBY_sLYI2mEjZ_9M5x5CRMyuHx/pub?output=csv";
+  let table=document.getElementById("table");
 
-  try{
-    let res=await fetch(url);
-    let data=await res.text();
-
-    let rows=data.trim().split("\n");
-
-    let table=document.getElementById("table");
-
-    // tabloyu resetle
-    table.innerHTML=`
+  table.innerHTML=`
     <tr>
       <th>İsim</th>
       <th>Telefon</th>
       <th>Hizmet</th>
     </tr>
+  `;
+
+  snap.forEach(doc=>{
+    let d=doc.data();
+
+    let tr=document.createElement("tr");
+
+    tr.innerHTML=`
+      <td>${d.name}</td>
+      <td>${d.phone}</td>
+      <td>${d.service}</td>
     `;
 
-    for(let i=1;i<rows.length;i++){
-
-      let cols=rows[i].split(",");
-
-      if(cols.length>=3){
-
-        let tr=document.createElement("tr");
-
-        tr.innerHTML=`
-          <td>${cols[1] || "-"}</td>
-          <td>${cols[2] || "-"}</td>
-          <td>${cols[3] || "-"}</td>
-        `;
-
-        table.appendChild(tr);
-      }
-    }
-
-    status.innerText="Veriler yüklendi ✔";
-
-  }catch(err){
-    status.innerText="Hata oluştu ❌";
-    console.log(err);
-  }
+    table.appendChild(tr);
+  });
 }
 
 </script>
 
 </body>
-</html>s
+</html>
