@@ -10,12 +10,12 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial;
+  font-family:system-ui;
 }
 
 body{
   display:flex;
-  background:#f3f5f9;
+  background:#eef1f6;
 }
 
 /* TOP BAR */
@@ -24,7 +24,7 @@ body{
   top:0;
   left:0;
   right:0;
-  background:#0f0f0f;
+  background:#0d0d0d;
   color:white;
   text-align:center;
   padding:10px;
@@ -34,7 +34,7 @@ body{
 
 /* SIDEBAR */
 .sidebar{
-  width:220px;
+  width:230px;
   height:100vh;
   background:#111;
   color:white;
@@ -43,17 +43,24 @@ body{
   padding-top:60px;
 }
 
+.logo{
+  font-size:20px;
+  margin-bottom:20px;
+  font-weight:bold;
+}
+
 .menu{
   padding:12px;
   margin-bottom:10px;
-  background:#222;
-  border-radius:8px;
+  background:#1f1f1f;
+  border-radius:10px;
   cursor:pointer;
   transition:0.2s;
 }
 
 .menu:hover{
   transform:translateX(5px);
+  background:#333;
 }
 
 .menu.active{
@@ -63,7 +70,7 @@ body{
 
 /* CONTENT */
 .content{
-  margin-left:220px;
+  margin-left:230px;
   width:100%;
   padding:20px;
   padding-top:60px;
@@ -72,7 +79,7 @@ body{
 /* SECTIONS */
 .section{
   display:none;
-  animation:fade 0.25s ease-in-out;
+  animation:fade 0.3s ease;
 }
 
 .section.active{
@@ -90,14 +97,14 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#ffffff,#eaeaea);
-  border-radius:15px;
+  background:linear-gradient(135deg,#ffffff,#e6e6e6);
+  border-radius:18px;
   text-align:center;
   padding:20px;
 }
 
 .hero h1{
-  font-size:48px;
+  font-size:52px;
 }
 
 .hero p{
@@ -115,20 +122,20 @@ body{
   background:white;
   padding:20px;
   margin:10px;
-  border-radius:15px;
+  border-radius:16px;
   width:220px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.08);
-  transition:0.2s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transition:0.25s;
 }
 
 .card:hover{
-  transform:scale(1.05);
+  transform:translateY(-6px);
 }
 
-/* MAP + FORM */
+/* IFRAME */
 iframe{
   width:100%;
-  height:500px;
+  height:520px;
   border:none;
   border-radius:12px;
   margin-top:10px;
@@ -155,15 +162,14 @@ iframe{
   color:white;
   padding:12px 14px;
   border-radius:50px;
-  text-decoration:none;
   font-size:13px;
+  text-decoration:none;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
-  padding:20px;
-  margin-top:40px;
+  padding:25px;
   color:#777;
   font-size:13px;
 }
@@ -180,15 +186,17 @@ footer{
 
 <body>
 
-<!-- TOP BAR -->
+<!-- TOP -->
 <div class="topbar">
-🚗 Kısmet Rot Balans | Hızlı Randevu | Uygun Fiyat
+🚗 Kısmet Rot Balans | Hızlı Servis | Uygun Fiyat Garantisi
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="menu active" onclick="show('home',this)">Ana</div>
-  <div class="menu" onclick="show('services',this)">Hizmet</div>
+  <div class="logo">KISMET</div>
+
+  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
+  <div class="menu" onclick="show('services',this)">Hizmetler</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
 </div>
 
@@ -217,23 +225,16 @@ footer{
     <div class="card">Rot Ayarı<br><b>700 TL</b></div>
     <div class="card">Balans<br><b>500 TL</b></div>
     <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
+    <div class="card">Genel Bakım<br><b>1000 TL</b></div>
   </div>
 
-  <div style="margin-top:20px;">
-    <h2>Neden Biz?</h2>
+  <h2 style="margin-top:20px;">Neden Biz?</h2>
 
-    <div class="cards">
-      <div class="card">✔ Uzman Ekip</div>
-      <div class="card">✔ Hızlı İşlem</div>
-      <div class="card">✔ Uygun Fiyat</div>
-      <div class="card">✔ Garantili İşçilik</div>
-    </div>
-  </div>
-
-  <div style="margin-top:20px;">
-    <h2>Konum</h2>
-
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18"></iframe>
+  <div class="cards">
+    <div class="card">✔ Uzman Ekip</div>
+    <div class="card">✔ Hızlı İşlem</div>
+    <div class="card">✔ Uygun Fiyat</div>
+    <div class="card">✔ Garantili İşçilik</div>
   </div>
 
 </div>
@@ -253,15 +254,9 @@ footer{
 
 </div>
 
-<!-- WHATSAPP -->
-<a class="wp" href="https://wa.me/905319724508" target="_blank">
-WhatsApp
-</a>
-
-<!-- CALL -->
-<a class="call" href="tel:+905319724508">
-📞 Ara
-</a>
+<!-- BUTTONS -->
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
+<a class="call" href="tel:+905319724508">📞 Ara</a>
 
 <script>
 function show(id,el){
@@ -270,8 +265,6 @@ function show(id,el){
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   el.classList.add('active');
-
-  location.hash=id;
 }
 </script>
 
