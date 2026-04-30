@@ -7,114 +7,135 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 
-body{background:#f1f5f9;}
-
-.top{
-  background:#0f172a;
+body{
+  background:#0b1220;
   color:white;
-  padding:15px;
-  text-align:center;
-  font-weight:bold;
 }
 
+/* TOP */
+.top{
+  background:#0f172a;
+  padding:18px;
+  text-align:center;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+/* LAYOUT */
 .container{
   display:flex;
 }
 
+/* SIDEBAR */
 .sidebar{
-  width:220px;
+  width:240px;
   height:100vh;
-  background:#0f172a;
-  color:white;
-  padding-top:20px;
-  position:fixed;
+  background:#111827;
+  padding:20px;
 }
 
 .menu{
   padding:12px;
-  margin:10px;
-  background:#1e293b;
-  border-radius:8px;
+  margin-bottom:10px;
+  background:#1f2937;
+  border-radius:10px;
   cursor:pointer;
+  transition:.2s;
 }
 
 .menu:hover{
-  background:white;
-  color:black;
+  background:#2563eb;
 }
 
+/* CONTENT */
 .content{
-  margin-left:240px;
-  padding:20px;
+  flex:1;
+  padding:25px;
 }
 
-/* sections */
+/* SECTIONS */
 .section{display:none;}
 .section.active{display:block;}
 
+/* CARD */
 .card{
-  background:white;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  background:#111827;
+  padding:20px;
+  margin:12px 0;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-input,textarea{
+/* INPUT */
+input{
   width:100%;
-  padding:10px;
-  margin:6px 0;
-  border:1px solid #ddd;
-  border-radius:8px;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  border-radius:10px;
+  background:#1f2937;
+  color:white;
 }
 
+/* BUTTON */
 button{
   width:100%;
-  padding:10px;
+  padding:12px;
   background:#2563eb;
   color:white;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
+  margin-top:8px;
 }
 
+/* TABLE */
 table{
   width:100%;
-  background:white;
-  margin-top:15px;
   border-collapse:collapse;
+  margin-top:15px;
+  background:#111827;
+  border-radius:12px;
+  overflow:hidden;
 }
 
-td,th{
-  padding:10px;
-  border-bottom:1px solid #eee;
+th,td{
+  padding:12px;
+  border-bottom:1px solid #1f2937;
+}
+
+th{
+  background:#1f2937;
+  text-align:left;
 }
 
 .del{
   background:red;
-  color:white;
   border:none;
-  padding:5px 10px;
+  color:white;
+  padding:6px 10px;
   border-radius:6px;
   cursor:pointer;
 }
 
+/* WHATSAPP */
 .wp{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#25D366;
   color:white;
-  padding:15px;
+  padding:14px 18px;
   border-radius:50px;
   text-decoration:none;
+  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">Kısmet Rot Balans | PRO Sistem</div>
+<div class="top">KISMET ROT BALANS | PRO PANEL</div>
 
 <div class="container">
 
@@ -122,9 +143,8 @@ td,th{
 
   <div class="menu" onclick="show('home')">Ana Sayfa</div>
   <div class="menu" onclick="show('services')">Hizmetler</div>
-  <div class="menu" onclick="show('randevu')">Randevu</div>
+  <div class="menu" onclick="show('randevu')">Kayıt</div>
   <div class="menu" onclick="show('admin')">Kayıtlar</div>
-  <div class="menu" onclick="show('contact')">İletişim</div>
 
 </div>
 
@@ -133,35 +153,33 @@ td,th{
 <!-- HOME -->
 <div id="home" class="section active">
   <div class="card">
-    <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel araç bakım ve servis sistemi</p>
+    <h2>Hoşgeldin 👋</h2>
+    <p>Profesyonel oto servis yönetim paneli</p>
   </div>
 
   <div class="card">
-    📍 Konum:<br>
-    <a target="_blank" href="https://maps.google.com">Google Maps Aç</a>
+    📍 Konum: İstanbul<br>
+    📞 0531 972 45 08
   </div>
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="section">
-  <div class="card">Rot Ayarı - 700 TL</div>
-  <div class="card">Balans - 500 TL</div>
-  <div class="card">Yağ Değişimi - 200 TL</div>
-  <div class="card">Fren Bakım - 600 TL</div>
+  <div class="card">🚗 Rot Ayarı - 700 TL</div>
+  <div class="card">⚙️ Balans - 500 TL</div>
+  <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
 </div>
 
-<!-- RANDEVU -->
+<!-- KAYIT -->
 <div id="randevu" class="section">
 
-  <h2>Yeni Kayıt</h2>
-
-  <input id="isim" placeholder="Ad Soyad">
-  <input id="tel" placeholder="Telefon">
-  <input id="hizmet" placeholder="Hizmet">
-  <input id="fiyat" placeholder="Fiyat">
-
-  <button onclick="ekle()">Kaydet</button>
+  <div class="card">
+    <input id="isim" placeholder="Müşteri Adı">
+    <input id="tel" placeholder="Telefon">
+    <input id="hizmet" placeholder="Hizmet">
+    <input id="fiyat" placeholder="Fiyat">
+    <button onclick="ekle()">Kaydet</button>
+  </div>
 
 </div>
 
@@ -180,15 +198,6 @@ td,th{
     <tbody id="list"></tbody>
   </table>
 
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="section">
-  <div class="card">
-    📞 0531 972 45 08<br><br>
-    📍 İstanbul<br><br>
-    💬 <a href="https://wa.me/905319724508">WhatsApp</a>
-  </div>
 </div>
 
 </div>
@@ -214,8 +223,9 @@ function ekle(){
   let hizmet=document.getElementById("hizmet").value;
   let fiyat=document.getElementById("fiyat").value;
 
-  data.push({isim,tel,hizmet,fiyat});
+  if(!isim || !hizmet) return;
 
+  data.push({isim,tel,hizmet,fiyat});
   render();
 }
 
