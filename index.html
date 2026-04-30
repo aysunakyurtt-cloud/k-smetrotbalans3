@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -30,9 +30,7 @@ body{
   cursor:pointer;
 }
 
-.menu:hover{
-  background:#333;
-}
+.menu:hover{background:#333;}
 
 /* CONTENT */
 .content{
@@ -49,14 +47,14 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-.hero{
-  background:linear-gradient(135deg,#fff,#ddd);
-  padding:50px;
-  border-radius:15px;
-  text-align:center;
+input,select{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
-/* BUTTON */
 button{
   padding:10px;
   background:#111;
@@ -66,15 +64,6 @@ button{
   cursor:pointer;
 }
 
-input,select{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-/* WHATSAPP */
 .wp{
   position:fixed;
   right:20px;
@@ -94,13 +83,11 @@ input,select{
 <div class="sidebar">
   <h3>Kısmet Rot</h3>
 
-  <div class="menu" onclick="show('home')">🏠 Ana Sayfa</div>
-  <div class="menu" onclick="show('services')">🔧 Hizmetler</div>
-  <div class="menu" onclick="show('prices')">💰 Fiyat Listesi</div>
-  <div class="menu" onclick="show('products')">🛞 Ürünler</div>
+  <div class="menu" onclick="show('home')">🏠 Ana</div>
+  <div class="menu" onclick="show('services')">🔧 Hizmet</div>
+  <div class="menu" onclick="show('prices')">💰 Fiyat</div>
   <div class="menu" onclick="show('appointment')">📅 Randevu</div>
   <div class="menu" onclick="show('location')">📍 Konum</div>
-  <div class="menu" onclick="show('contact')">📞 İletişim</div>
 </div>
 
 <!-- CONTENT -->
@@ -108,43 +95,28 @@ input,select{
 
 <!-- HOME -->
 <div id="home" class="page">
-  <div class="hero">
-    <h1>Kısmet Rot Balans</h1>
-    <p>Güvenli sürüş için profesyonel servis</p>
-  </div>
+  <h1>Hoşgeldiniz</h1>
+  <p>Kısmet Rot Balans</p>
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="page" style="display:none;">
   <h2>Hizmetler</h2>
-
-  <div class="card">🔧 Rot Ayarı</div>
-  <div class="card">⚖️ Balans Ayarı</div>
-  <div class="card">🛞 Lastik Değişimi</div>
-  <div class="card">🛠 Genel Bakım</div>
+  <div class="card">Rot Ayarı</div>
+  <div class="card">Balans</div>
+  <div class="card">Lastik Değişimi</div>
 </div>
 
 <!-- PRICES -->
 <div id="prices" class="page" style="display:none;">
-  <h2>Fiyat Listesi</h2>
-
-  <div class="card">Rot Ayarı: 700 TL</div>
+  <h2>Fiyatlar</h2>
+  <div class="card">Rot: 700 TL</div>
   <div class="card">Balans: 500 TL</div>
-  <div class="card">Lastik Değişimi: 200 TL</div>
-</div>
-
-<!-- PRODUCTS -->
-<div id="products" class="page" style="display:none;">
-  <h2>Ürünler</h2>
-
-  <div class="card">🚗 Lastik</div>
-  <div class="card">🔩 Jant</div>
-  <div class="card">🛢 Motor Yağı</div>
 </div>
 
 <!-- APPOINTMENT -->
 <div id="appointment" class="page" style="display:none;">
-  <h2>Randevu Al</h2>
+  <h2>Randevu</h2>
 
   <div class="card">
     <input placeholder="İsim">
@@ -158,7 +130,7 @@ input,select{
       <option>13:00</option>
     </select>
 
-    <button>Randevu Gönder</button>
+    <button>Gönder</button>
   </div>
 </div>
 
@@ -167,24 +139,17 @@ input,select{
   <h2>Konum</h2>
 
   <div class="card">
-    📍 Kısmet Rot Balans
+    📍 Özel Dayıoğlu Tip Merkezi
 
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18..."
-      width="100%" height="300"
-      style="border:0;border-radius:10px;">
+    <!-- 🔥 SENİN GERÇEK KONUMUN -->
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str"
+      width="100%" 
+      height="300"
+      style="border:0;border-radius:10px;"
+      loading="lazy">
     </iframe>
-  </div>
-</div>
 
-<!-- CONTACT -->
-<div id="contact" class="page" style="display:none;">
-  <h2>İletişim</h2>
-
-  <div class="card">
-    📞 0531 972 45 08 <br><br>
-    📞 0544 624 56 54 <br><br>
-    ✉️ aykutakyurt2@gmail.com
   </div>
 </div>
 
@@ -194,11 +159,9 @@ input,select{
 
 <script>
 function show(id){
-
   document.querySelectorAll(".page").forEach(p=>{
     p.style.display="none";
   });
-
   document.getElementById(id).style.display="block";
 }
 </script>
