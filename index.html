@@ -7,41 +7,39 @@
 
 <style>
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
+  font-family:system-ui;
 }
 
 body{
-  margin:0;
-  font-family:system-ui;
-  display:flex;
-  min-height:100vh;
   background:#f4f6f8;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:220px;
+/* TOP BAR (MOBİL MENÜ) */
+.topbar{
+  display:flex;
   background:#111;
   color:white;
-  padding:20px;
+  overflow-x:auto;
 }
 
-/* MENU */
-.menu{
-  padding:12px;
-  margin:8px 0;
-  background:#1f1f1f;
-  border-radius:8px;
+.topbar div{
+  flex:1;
+  text-align:center;
+  padding:14px;
   cursor:pointer;
+  white-space:nowrap;
 }
 
-.menu:hover{background:#333;}
+.topbar div:hover{
+  background:#333;
+}
 
 /* CONTENT */
 .content{
-  flex:1;
-  padding:20px;
-  overflow:auto;
+  padding:15px;
 }
 
 /* CARD */
@@ -53,7 +51,7 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* SERVICE */
+/* SERVICE ITEM */
 .service-item{
   display:flex;
   justify-content:space-between;
@@ -65,21 +63,31 @@ body{
   font-weight:bold;
 }
 
-/* MAP */
-iframe{
+/* INPUT */
+input,select{
   width:100%;
-  border:0;
-  border-radius:10px;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
 /* BUTTON */
 button{
+  width:100%;
   padding:10px;
   background:#111;
   color:white;
   border:none;
   border-radius:8px;
   cursor:pointer;
+}
+
+/* MAP */
+iframe{
+  width:100%;
+  border:0;
+  border-radius:10px;
 }
 
 /* WHATSAPP */
@@ -94,59 +102,39 @@ button{
   text-decoration:none;
 }
 
-/* 📱 MOBILE FIX */
-@media(max-width:768px){
-
-  body{
-    flex-direction:column;
-  }
-
-  .sidebar{
-    width:100%;
-    display:flex;
-    overflow-x:auto;
-    padding:10px;
-    gap:10px;
-  }
-
-  .menu{
-    flex:1;
-    text-align:center;
-    margin:0;
-    white-space:nowrap;
-  }
-
-  .content{
-    padding:10px;
-  }
-}
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;}
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="menu" onclick="show('home')">🏠 Ana</div>
-  <div class="menu" onclick="show('services')">🔧 Hizmet</div>
-  <div class="menu" onclick="show('prices')">💰 Fiyat</div>
-  <div class="menu" onclick="show('appointment')">📅 Randevu</div>
-  <div class="menu" onclick="show('location')">📍 Konum</div>
-  <div class="menu" onclick="show('contact')">📞 İletişim</div>
+<!-- TOP MENU (MOBİL UYUMLU) -->
+<div class="topbar">
+  <div onclick="show('home')">🏠</div>
+  <div onclick="show('services')">🔧</div>
+  <div onclick="show('prices')">💰</div>
+  <div onclick="show('appointment')">📅</div>
+  <div onclick="show('location')">📍</div>
+  <div onclick="show('contact')">📞</div>
 </div>
 
 <!-- CONTENT -->
 <div class="content">
 
-<div id="home" class="page">
-  <h1>Hoşgeldiniz</h1>
+<!-- HOME -->
+<div id="home" class="page active">
+  <h2>Hoşgeldiniz</h2>
 
   <div class="card">
-    Yolda güvenle ilerlemek istiyorsanız doğru yerdesiniz.
+    Yolda güvenle ilerlemek istiyorsanız doğru yerdesiniz.  
+    Rot balans ve araç bakım hizmetleri.
   </div>
 </div>
 
-<div id="services" class="page" style="display:none;">
+<!-- SERVICES -->
+<div id="services" class="page">
   <h2>Hizmetler</h2>
 
   <div class="card">
@@ -162,17 +150,18 @@ button{
 
     <div class="service-item">
       <span>Lastik Tamiri</span>
-      <span class="price">200 - 450 TL</span>
+      <span class="price">200-450 TL</span>
     </div>
 
     <div class="service-item">
-      <span>Bilgisayar Arıza Tespit</span>
+      <span>Bilgisayar Arıza</span>
       <span class="price">800 TL</span>
     </div>
   </div>
 </div>
 
-<div id="prices" class="page" style="display:none;">
+<!-- PRICES -->
+<div id="prices" class="page">
   <h2>Fiyat Listesi</h2>
 
   <div class="card">Ön Takım → 300 TL</div>
@@ -181,7 +170,8 @@ button{
   <div class="card">Arıza Tespit → 800 TL</div>
 </div>
 
-<div id="appointment" class="page" style="display:none;">
+<!-- APPOINTMENT -->
+<div id="appointment" class="page">
   <h2>Randevu</h2>
 
   <div class="card">
@@ -199,38 +189,41 @@ button{
   </div>
 </div>
 
-<div id="location" class="page" style="display:none;">
+<!-- LOCATION -->
+<div id="location" class="page">
   <h2>Konum</h2>
 
   <div class="card">
     <iframe 
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291"
-      height="300">
+      height="250">
     </iframe>
   </div>
 </div>
 
-<div id="contact" class="page" style="display:none;">
+<!-- CONTACT -->
+<div id="contact" class="page">
   <h2>İletişim</h2>
 
   <div class="card">
     📞 0531 972 45 08<br>
     📞 0544 624 56 54<br>
     📍 Başakşehir İstanbul<br>
-    ✉️ mail@gmail.com
+    ✉️ aykutakyurt2@gmail.com
   </div>
 </div>
 
 </div>
 
+<!-- WHATSAPP -->
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
 function show(id){
   document.querySelectorAll(".page").forEach(p=>{
-    p.style.display="none";
+    p.classList.remove("active");
   });
-  document.getElementById(id).style.display="block";
+  document.getElementById(id).classList.add("active");
 }
 </script>
 
