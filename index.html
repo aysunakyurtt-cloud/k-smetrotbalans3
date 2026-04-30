@@ -6,62 +6,130 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-body{font-family:system-ui;margin:0;background:#eef1f6;}
-.top{background:#111;color:#fff;padding:10px;text-align:center;position:fixed;top:0;left:0;right:0;}
-.container{display:flex;margin-top:50px;}
+body{margin:0;font-family:system-ui;background:#f4f6f8;}
+header{
+  background:#111;color:#fff;
+  padding:15px;text-align:center;
+  position:sticky;top:0;
+}
 
-.menu{width:200px;background:#111;color:#fff;height:100vh;padding:10px;}
-.menu div{padding:10px;margin:5px;background:#222;cursor:pointer;border-radius:8px;}
-.menu div.active{background:#fff;color:#000;}
+nav{
+  display:flex;justify-content:center;
+  gap:20px;background:#1c1c1c;
+  padding:10px;
+}
 
-.content{flex:1;padding:20px;}
+nav a{
+  color:white;text-decoration:none;
+  font-size:14px;
+}
 
-.card{background:#fff;padding:15px;border-radius:10px;margin-bottom:10px;}
+.hero{
+  padding:60px 20px;
+  text-align:center;
+  background:linear-gradient(135deg,#fff,#ddd);
+}
 
-input,select{
-  width:100%;padding:10px;margin:5px 0;
-  border-radius:8px;border:1px solid #ccc;
+.hero h1{font-size:40px;margin:0;}
+
+.section{
+  padding:40px 20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.card{
+  background:white;padding:20px;
+  border-radius:12px;
+  margin-bottom:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
 }
 
 button{
-  padding:10px;border:none;background:#111;color:#fff;
+  background:#111;color:#fff;
+  padding:10px 15px;border:none;
   border-radius:8px;cursor:pointer;
 }
 
-table{width:100%;background:#fff;border-collapse:collapse;margin-top:10px;}
-th,td{padding:10px;border-bottom:1px solid #eee;}
+input,select{
+  width:100%;padding:10px;
+  margin:5px 0;border-radius:8px;
+  border:1px solid #ccc;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  background:#111;
+  color:white;
+}
+
+.wp{
+  position:fixed;
+  bottom:20px;right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<div class="top">Kısmet Rot Balans - FINAL SYSTEM</div>
+<header>
+  <h2>Kısmet Rot Balans</h2>
+  <p>Profesyonel Oto Servis & Rot Balans</p>
+</header>
 
-<div class="container">
+<nav>
+  <a href="#hizmet">Hizmetler</a>
+  <a href="#fiyat">Fiyatlar</a>
+  <a href="#randevu">Randevu</a>
+  <a href="#konum">Konum</a>
+</nav>
 
-<!-- MENU -->
-<div class="menu">
-  <div class="active" onclick="show('home')">Ana</div>
-  <div onclick="show('randevu')">Randevu</div>
-  <div onclick="show('admin')">Admin</div>
+<!-- HERO -->
+<div class="hero">
+  <h1>Güvenli Sürüş İçin Doğru Adres</h1>
+  <p>Rot balans • Lastik • Yağ değişimi • Mekanik bakım</p>
 </div>
 
-<!-- CONTENT -->
-<div class="content">
+<!-- HİZMETLER -->
+<div class="section" id="hizmet">
+  <h2>Hizmetlerimiz</h2>
 
-<!-- HOME -->
-<div id="home">
-  <div class="card">
-    <h2>Hoşgeldin</h2>
-    <p>Firebase randevu sistemi hazır</p>
+  <div class="grid">
+    <div class="card">🔧 Rot Ayarı</div>
+    <div class="card">⚖️ Balans Ayarı</div>
+    <div class="card">🛞 Lastik Değişimi</div>
+    <div class="card">🛠 Genel Bakım</div>
   </div>
 </div>
 
-<!-- RANDEVU -->
-<div id="randevu" style="display:none">
-  <div class="card">
-    <h2>Randevu Al</h2>
+<!-- FİYAT -->
+<div class="section" id="fiyat">
+  <h2>Fiyat Listesi</h2>
 
+  <div class="card">Rot Ayarı: <b>700 TL</b></div>
+  <div class="card">Balans: <b>500 TL</b></div>
+  <div class="card">Lastik Değişimi: <b>200 TL</b></div>
+  <div class="card">Genel Bakım: <b>1500 TL</b></div>
+</div>
+
+<!-- RANDEVU -->
+<div class="section" id="randevu">
+  <h2>Randevu Al</h2>
+
+  <div class="card">
     <input id="name" placeholder="İsim">
     <input id="phone" placeholder="Telefon">
 
@@ -74,35 +142,32 @@ th,td{padding:10px;border-bottom:1px solid #eee;}
       <option>14:00</option>
     </select>
 
-    <button onclick="save()">Gönder</button>
-
+    <button onclick="save()">Randevu Gönder</button>
     <p id="msg"></p>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div id="admin" style="display:none">
+<!-- KONUM -->
+<div class="section" id="konum">
+  <h2>Konum</h2>
+
   <div class="card">
-    <h2>Admin Panel</h2>
+    <p>📍 Kısmet Rot Balans</p>
 
-    <input type="password" id="pass" placeholder="Şifre">
-    <button onclick="login()">Giriş</button>
-
-    <button onclick="load()">Yenile</button>
-
-    <table id="table">
-      <tr>
-        <th>İsim</th>
-        <th>Telefon</th>
-        <th>Saat</th>
-        <th>Sil</th>
-      </tr>
-    </table>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3..."
+      width="100%" height="300"
+      style="border:0;border-radius:10px;"
+      loading="lazy">
+    </iframe>
   </div>
 </div>
 
-</div>
-</div>
+<footer>
+  © Kısmet Rot Balans - Tüm hakları saklıdır
+</footer>
+
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <!-- FIREBASE -->
 <script type="module">
@@ -114,12 +179,9 @@ import {
   addDoc,
   getDocs,
   query,
-  where,
-  deleteDoc,
-  doc
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// 🔥 SENİN CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
   authDomain: "kismet-rot-balans.firebaseapp.com",
@@ -138,25 +200,12 @@ window.collection=collection;
 window.getDocs=getDocs;
 window.query=query;
 window.where=where;
-window.deleteDoc=deleteDoc;
-window.doc=doc;
 
 </script>
 
 <script>
 
-let logged=false;
-
-// MENU
-function show(id){
-  document.getElementById("home").style.display="none";
-  document.getElementById("randevu").style.display="none";
-  document.getElementById("admin").style.display="none";
-
-  document.getElementById(id).style.display="block";
-}
-
-// SAVE
+// RANDEVU
 async function save(){
 
   const name=document.getElementById("name").value;
@@ -168,7 +217,6 @@ async function save(){
     return;
   }
 
-  // saat kontrol
   const q=query(collection(db,"randevular"),where("time","==",time));
   const snap=await getDocs(q);
 
@@ -181,62 +229,11 @@ async function save(){
     name,phone,time
   });
 
-  msg("Randevu alındı ✔");
+  msg("Randevu alındı ✔ WhatsApp'tan onay gelecek");
 }
 
-// MSG
 function msg(t){
   document.getElementById("msg").innerText=t;
-}
-
-// LOGIN
-function login(){
-  if(document.getElementById("pass").value==="1234"){
-    logged=true;
-    alert("Giriş başarılı");
-  }else alert("Hatalı şifre");
-}
-
-// LOAD
-async function load(){
-
-  if(!logged){
-    alert("Önce giriş yap");
-    return;
-  }
-
-  const snap=await getDocs(collection(db,"randevular"));
-
-  let table=document.getElementById("table");
-
-  table.innerHTML=`
-  <tr>
-    <th>İsim</th>
-    <th>Telefon</th>
-    <th>Saat</th>
-    <th>Sil</th>
-  </tr>`;
-
-  snap.forEach(d=>{
-    let data=d.data();
-
-    let tr=document.createElement("tr");
-
-    tr.innerHTML=`
-      <td>${data.name}</td>
-      <td>${data.phone}</td>
-      <td>${data.time}</td>
-      <td><button onclick="del('${d.id}')">Sil</button></td>
-    `;
-
-    table.appendChild(tr);
-  });
-}
-
-// DELETE
-async function del(id){
-  await deleteDoc(doc(db,"randevular",id));
-  load();
 }
 
 </script>
