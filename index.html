@@ -6,10 +6,11 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-body{margin:0;font-family:system-ui;background:#f4f6f8;}
+body{margin:0;font-family:system-ui;background:#f5f6f8;}
+
 header{
-  background:#111;color:#fff;
-  padding:15px;text-align:center;
+  background:#111;color:white;
+  text-align:center;padding:15px;
   position:sticky;top:0;
 }
 
@@ -19,66 +20,62 @@ nav{
   padding:10px;
 }
 
-nav a{
-  color:white;text-decoration:none;
-  font-size:14px;
-}
+nav a{color:white;text-decoration:none;font-size:14px;}
 
 .hero{
-  padding:60px 20px;
+  padding:50px 20px;
   text-align:center;
-  background:linear-gradient(135deg,#fff,#ddd);
+  background:linear-gradient(135deg,#fff,#e5e5e5);
 }
 
-.hero h1{font-size:40px;margin:0;}
+.hero h1{font-size:40px;}
 
 .section{
-  padding:40px 20px;
   max-width:1000px;
   margin:auto;
+  padding:40px 20px;
 }
 
 .card{
-  background:white;padding:20px;
-  border-radius:12px;
-  margin-bottom:15px;
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
-}
-
-button{
-  background:#111;color:#fff;
-  padding:10px 15px;border:none;
-  border-radius:8px;cursor:pointer;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:10px;
 }
 
 input,select{
-  width:100%;padding:10px;
-  margin:5px 0;border-radius:8px;
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
   border:1px solid #ccc;
 }
 
-footer{
-  text-align:center;
-  padding:20px;
+button{
+  padding:10px;
   background:#111;
   color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 .wp{
   position:fixed;
-  bottom:20px;right:20px;
+  right:20px;
+  bottom:20px;
   background:#25D366;
   color:white;
   padding:15px;
   border-radius:50px;
   text-decoration:none;
-  font-weight:bold;
 }
 </style>
 </head>
@@ -87,7 +84,7 @@ footer{
 
 <header>
   <h2>Kısmet Rot Balans</h2>
-  <p>Profesyonel Oto Servis & Rot Balans</p>
+  <p>Oto Servis & Rot Balans</p>
 </header>
 
 <nav>
@@ -97,21 +94,20 @@ footer{
   <a href="#konum">Konum</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <h1>Güvenli Sürüş İçin Doğru Adres</h1>
-  <p>Rot balans • Lastik • Yağ değişimi • Mekanik bakım</p>
+  <p>Rot balans • Lastik • Bakım • Mekanik</p>
 </div>
 
-<!-- HİZMETLER -->
+<!-- HİZMET -->
 <div class="section" id="hizmet">
-  <h2>Hizmetlerimiz</h2>
+  <h2>Hizmetler</h2>
 
   <div class="grid">
     <div class="card">🔧 Rot Ayarı</div>
-    <div class="card">⚖️ Balans Ayarı</div>
-    <div class="card">🛞 Lastik Değişimi</div>
-    <div class="card">🛠 Genel Bakım</div>
+    <div class="card">⚖️ Balans</div>
+    <div class="card">🛞 Lastik</div>
+    <div class="card">🛠 Bakım</div>
   </div>
 </div>
 
@@ -119,10 +115,9 @@ footer{
 <div class="section" id="fiyat">
   <h2>Fiyat Listesi</h2>
 
-  <div class="card">Rot Ayarı: <b>700 TL</b></div>
-  <div class="card">Balans: <b>500 TL</b></div>
-  <div class="card">Lastik Değişimi: <b>200 TL</b></div>
-  <div class="card">Genel Bakım: <b>1500 TL</b></div>
+  <div class="card">Rot Ayarı: 700 TL</div>
+  <div class="card">Balans: 500 TL</div>
+  <div class="card">Lastik: 200 TL</div>
 </div>
 
 <!-- RANDEVU -->
@@ -155,17 +150,12 @@ footer{
     <p>📍 Kısmet Rot Balans</p>
 
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3..."
+      src="https://www.google.com/maps/embed?pb=!1m18..."
       width="100%" height="300"
-      style="border:0;border-radius:10px;"
-      loading="lazy">
+      style="border:0;border-radius:10px;">
     </iframe>
   </div>
 </div>
-
-<footer>
-  © Kısmet Rot Balans - Tüm hakları saklıdır
-</footer>
 
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
@@ -186,7 +176,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
   authDomain: "kismet-rot-balans.firebaseapp.com",
   projectId: "kismet-rot-balans",
-  storageBucket: "kismet-rot-balans.firebasestorage.app",
+  storageBucket: "kismet-rot-balans.appspot.com",
   messagingSenderId: "350629465784",
   appId: "1:350629465784:web:33f91cad2a724e0f45ee4d"
 };
@@ -217,19 +207,26 @@ async function save(){
     return;
   }
 
-  const q=query(collection(db,"randevular"),where("time","==",time));
-  const snap=await getDocs(q);
+  try{
 
-  if(!snap.empty){
-    msg("Bu saat dolu ❌");
-    return;
+    const q=query(collection(db,"randevular"),where("time","==",time));
+    const snap=await getDocs(q);
+
+    if(!snap.empty){
+      msg("Bu saat dolu ❌");
+      return;
+    }
+
+    await addDoc(collection(db,"randevular"),{
+      name,phone,time
+    });
+
+    msg("Randevu alındı ✔ WhatsApp'tan dönüş yapılacak");
+
+  }catch(e){
+    console.log(e);
+    msg("Hata oluştu ❌ Firestore rules kontrol et");
   }
-
-  await addDoc(collection(db,"randevular"),{
-    name,phone,time
-  });
-
-  msg("Randevu alındı ✔ WhatsApp'tan onay gelecek");
 }
 
 function msg(t){
