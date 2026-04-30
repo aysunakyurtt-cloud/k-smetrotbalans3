@@ -14,33 +14,37 @@
 }
 
 body{
+  display:flex;
+  height:100vh;
   background:#f4f6f8;
 }
 
-/* TOP MENU */
-.topbar{
-  display:flex;
+/* SIDEBAR (PC + MOBİL AYNI) */
+.sidebar{
+  width:220px;
   background:#111;
   color:white;
+  padding:15px;
+  flex-shrink:0;
 }
 
-.topbar div{
-  flex:1;
-  text-align:center;
-  padding:14px 5px;
+.menu{
+  padding:12px;
+  margin:8px 0;
+  background:#1f1f1f;
+  border-radius:8px;
   cursor:pointer;
-  font-size:14px;
 }
 
-.topbar div:hover{
+.menu:hover{
   background:#333;
 }
 
 /* CONTENT */
 .content{
-  padding:12px;
-  max-width:900px;
-  margin:auto;
+  flex:1;
+  padding:20px;
+  overflow:auto;
 }
 
 /* CARD */
@@ -64,13 +68,18 @@ body{
   font-weight:bold;
 }
 
-/* INPUT */
-input,select{
+/* MAP FIX */
+.map-box{
   width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
+  height:300px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.map-box iframe{
+  width:100%;
+  height:100%;
+  border:0;
 }
 
 /* BUTTON */
@@ -81,20 +90,6 @@ button{
   color:white;
   border:none;
   border-radius:8px;
-}
-
-/* MAP FIX (ÖNEMLİ KISIM) */
-.map-container{
-  width:100%;
-  height:300px;
-  overflow:hidden;
-  border-radius:10px;
-}
-
-.map-container iframe{
-  width:100%;
-  height:100%;
-  border:0;
 }
 
 /* WHATSAPP */
@@ -109,37 +104,51 @@ button{
   text-decoration:none;
 }
 
-/* PAGE SYSTEM */
-.page{display:none;}
-.page.active{display:block;}
+/* 📱 MOBİLDE DE AYNI YAN MENÜ (KÜÇÜLÜR AMA YOK OLMAZ) */
+@media(max-width:768px){
+  .sidebar{
+    width:70px;
+    padding:10px;
+  }
+
+  .menu{
+    font-size:12px;
+    text-align:center;
+    padding:10px 5px;
+  }
+
+  .menu span{
+    display:none;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- MENU -->
-<div class="topbar">
-  <div onclick="show('home')">🏠</div>
-  <div onclick="show('services')">🔧</div>
-  <div onclick="show('prices')">💰</div>
-  <div onclick="show('appointment')">📅</div>
-  <div onclick="show('location')">📍</div>
-  <div onclick="show('contact')">📞</div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="menu" onclick="show('home')">🏠 Ana</div>
+  <div class="menu" onclick="show('services')">🔧 Hizmet</div>
+  <div class="menu" onclick="show('prices')">💰 Fiyat</div>
+  <div class="menu" onclick="show('appointment')">📅 Randevu</div>
+  <div class="menu" onclick="show('location')">📍 Konum</div>
+  <div class="menu" onclick="show('contact')">📞 İletişim</div>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
 
-<!-- HOME -->
-<div id="home" class="page active">
+<div id="home" class="page">
   <h2>Hoşgeldiniz</h2>
   <div class="card">
     Rot balans ve araç bakım hizmetleri.
   </div>
 </div>
 
-<!-- SERVICES -->
-<div id="services" class="page">
+<div id="services" class="page" style="display:none;">
   <h2>Hizmetler</h2>
+
   <div class="card">
     <div class="service-item"><span>Ön Takım Kontrolü</span><span class="price">300 TL</span></div>
     <div class="service-item"><span>Balata Değişimi</span><span class="price">800 TL</span></div>
@@ -148,18 +157,18 @@ button{
   </div>
 </div>
 
-<!-- PRICES -->
-<div id="prices" class="page">
-  <h2>Fiyatlar</h2>
+<div id="prices" class="page" style="display:none;">
+  <h2>Fiyat Listesi</h2>
+
   <div class="card">Ön Takım → 300 TL</div>
   <div class="card">Balata → 800 TL</div>
   <div class="card">Lastik → 200-450 TL</div>
   <div class="card">Arıza → 800 TL</div>
 </div>
 
-<!-- APPOINTMENT -->
-<div id="appointment" class="page">
+<div id="appointment" class="page" style="display:none;">
   <h2>Randevu</h2>
+
   <div class="card">
     <input placeholder="İsim">
     <input placeholder="Telefon">
@@ -175,22 +184,22 @@ button{
   </div>
 </div>
 
-<!-- LOCATION (FIXED) -->
-<div id="location" class="page">
+<!-- LOCATION FIXED -->
+<div id="location" class="page" style="display:none;">
   <h2>Konum</h2>
 
   <div class="card">
-    <div class="map-container">
+    <div class="map-box">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str">
+        src="https://www.google.com/maps?q=Başakşehir+İstanbul&output=embed">
       </iframe>
     </div>
   </div>
 </div>
 
-<!-- CONTACT -->
-<div id="contact" class="page">
+<div id="contact" class="page" style="display:none;">
   <h2>İletişim</h2>
+
   <div class="card">
     📞 0531 972 45 08<br>
     📞 0544 624 56 54<br>
@@ -206,9 +215,9 @@ button{
 <script>
 function show(id){
   document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
+    p.style.display="none";
   });
-  document.getElementById(id).classList.add("active");
+  document.getElementById(id).style.display="block";
 }
 </script>
 
