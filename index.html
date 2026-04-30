@@ -3,91 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans ULTRA PRO</title>
+<title>Randevu Sistemi</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-body{background:#eef1f6;}
+body{font-family:system-ui;margin:0;background:#eef1f6;}
+.top{background:#111;color:#fff;padding:10px;text-align:center;position:fixed;top:0;left:0;right:0;}
+.container{margin-top:60px;display:flex;}
 
-.topbar{
-  position:fixed;top:0;left:0;right:0;
-  background:#111;color:white;
-  text-align:center;padding:10px;z-index:1000;
-}
+.menu{width:200px;background:#111;color:#fff;height:100vh;padding:10px;}
+.menu div{padding:10px;margin:5px;background:#222;cursor:pointer;border-radius:8px;}
+.menu div.active{background:#fff;color:#000;}
 
-.sidebar{
-  width:220px;height:100vh;
-  background:#111;color:white;
-  position:fixed;padding:20px;padding-top:60px;
-}
+.content{flex:1;padding:20px;}
 
-.menu{
-  padding:12px;margin-bottom:10px;
-  background:#1f1f1f;border-radius:10px;
-  cursor:pointer;
-}
-
-.menu.active{background:white;color:black;}
-
-.content{
-  margin-left:220px;
-  padding:20px;padding-top:60px;
-}
-
-.section{display:none;}
-.section.active{display:block;}
-
-.card{
-  background:white;padding:20px;
-  margin:10px 0;border-radius:12px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.08);
-}
+.card{background:#fff;padding:15px;border-radius:10px;margin-bottom:10px;}
 
 input,select{
   width:100%;padding:10px;margin:5px 0;
-  border-radius:8px;border:1px solid #ccc;
+  border:1px solid #ccc;border-radius:8px;
 }
 
 button{
-  padding:10px 15px;border:none;
-  background:#111;color:white;
+  padding:10px;border:none;background:#111;color:#fff;
   border-radius:8px;cursor:pointer;
-  margin-top:10px;
 }
 
-table{
-  width:100%;margin-top:20px;
-  border-collapse:collapse;background:white;
-  border-radius:10px;overflow:hidden;
-}
-
-th,td{
-  padding:10px;border-bottom:1px solid #eee;
-  text-align:left;
-}
+table{width:100%;background:#fff;border-collapse:collapse;margin-top:10px;}
+th,td{padding:10px;border-bottom:1px solid #eee;}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans ULTRA PRO</div>
+<div class="top">Randevu Sistemi</div>
 
-<div class="sidebar">
-  <div class="menu active" onclick="show('home',this)">Ana</div>
-  <div class="menu" onclick="show('randevu',this)">Randevu</div>
-  <div class="menu" onclick="show('admin',this)">Admin</div>
+<div class="container">
+
+<!-- MENU -->
+<div class="menu">
+  <div onclick="show('home')" class="active">Ana</div>
+  <div onclick="show('randevu')">Randevu</div>
+  <div onclick="show('admin')">Admin</div>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
 
-<div id="home" class="section active">
+<!-- HOME -->
+<div id="home" class="page">
   <div class="card">
-    <h1>ULTRA PRO Sistem</h1>
-    <p>Gerçek randevu yönetimi</p>
+    <h2>Hoşgeldin</h2>
+    <p>Basit Firebase randevu sistemi</p>
   </div>
 </div>
 
-<div id="randevu" class="section">
+<!-- RANDEVU -->
+<div id="randevu" class="page" style="display:none">
   <div class="card">
     <h2>Randevu Al</h2>
 
@@ -104,19 +75,21 @@ th,td{
       <option>15:00</option>
     </select>
 
-    <button onclick="save()">Randevu Oluştur</button>
+    <button onclick="save()">Gönder</button>
 
     <p id="msg"></p>
   </div>
 </div>
 
-<div id="admin" class="section">
+<!-- ADMIN -->
+<div id="admin" class="page" style="display:none">
   <div class="card">
     <h2>Admin Panel</h2>
 
-    <p id="count"></p>
+    <input type="password" id="pass" placeholder="Şifre">
+    <button onclick="login()">Giriş</button>
 
-    <button onclick="loadData()">Yenile</button>
+    <button onclick="load()">Yenile</button>
 
     <table id="table">
       <tr>
@@ -130,19 +103,15 @@ th,td{
 </div>
 
 </div>
+</div>
 
+<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-  doc
+getFirestore, collection, addDoc, getDocs,
+query, where, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -170,34 +139,32 @@ window.doc=doc;
 
 <script>
 
-// MENU
-function show(id,el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+let logged=false;
 
-  document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  el.classList.add('active');
+// MENU
+function show(id){
+  document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
 }
 
-// SAVE RANDEVU
+// SAVE
 async function save(){
 
   const name=document.getElementById("name").value;
   const phone=document.getElementById("phone").value;
   const time=document.getElementById("time").value;
-  const msg=document.getElementById("msg");
 
-  if(!name || !phone || !time){
-    msg.innerText="Boş alan bırakma ❌";
+  if(!name||!phone||!time){
+    msg("Boş bırakma ❌");
     return;
   }
 
-  // saat çakışma kontrolü
+  // saat kontrol
   const q=query(collection(db,"randevular"),where("time","==",time));
   const snap=await getDocs(q);
 
   if(!snap.empty){
-    msg.innerText="Bu saat dolu ❌";
+    msg("Bu saat dolu ❌");
     return;
   }
 
@@ -205,30 +172,43 @@ async function save(){
     name,phone,time
   });
 
-  msg.innerText="Randevu alındı ✔";
+  msg("Randevu alındı ✔");
 }
 
-// LOAD ADMIN
-async function loadData(){
+function msg(t){
+  document.getElementById("msg").innerText=t;
+}
+
+// ADMIN LOGIN
+function login(){
+  if(document.getElementById("pass").value==="1234"){
+    logged=true;
+    alert("Giriş başarılı");
+  }else alert("Hatalı şifre");
+}
+
+// LOAD
+async function load(){
+
+  if(!logged){
+    alert("Önce giriş yap");
+    return;
+  }
 
   const snap=await getDocs(collection(db,"randevular"));
 
   let table=document.getElementById("table");
 
   table.innerHTML=`
-    <tr>
-      <th>İsim</th>
-      <th>Telefon</th>
-      <th>Saat</th>
-      <th>Sil</th>
-    </tr>
-  `;
-
-  let count=0;
+  <tr>
+    <th>İsim</th>
+    <th>Telefon</th>
+    <th>Saat</th>
+    <th>Sil</th>
+  </tr>`;
 
   snap.forEach(d=>{
     let data=d.data();
-    count++;
 
     let tr=document.createElement("tr");
 
@@ -236,19 +216,17 @@ async function loadData(){
       <td>${data.name}</td>
       <td>${data.phone}</td>
       <td>${data.time}</td>
-      <td><button onclick="del('${d.id}')">X</button></td>
+      <td><button onclick="del('${d.id}')">Sil</button></td>
     `;
 
     table.appendChild(tr);
   });
-
-  document.getElementById("count").innerText="Toplam randevu: "+count;
 }
 
 // DELETE
 async function del(id){
   await deleteDoc(doc(db,"randevular",id));
-  loadData();
+  load();
 }
 
 </script>
