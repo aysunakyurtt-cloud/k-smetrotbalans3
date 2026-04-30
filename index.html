@@ -10,33 +10,28 @@
   --dark:#0f172a;
   --primary:#2563eb;
   --bg:#f1f5f9;
-  --card:#ffffff;
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:system-ui,-apple-system;
+  font-family:system-ui;
 }
 
 body{
   background:var(--bg);
-  color:#111;
 }
 
-/* TOPBAR */
+/* TOP */
 .topbar{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
+  top:0;left:0;right:0;
   background:var(--dark);
   color:white;
   padding:14px;
   text-align:center;
   font-weight:600;
-  z-index:1000;
 }
 
 /* SIDEBAR */
@@ -45,23 +40,16 @@ body{
   height:100vh;
   background:var(--dark);
   position:fixed;
-  top:0;
-  left:0;
   padding-top:70px;
 }
 
 .menu{
   margin:10px;
   padding:12px;
-  border-radius:10px;
   color:white;
+  border-radius:10px;
   cursor:pointer;
-  transition:.2s;
-  background:rgba(255,255,255,0.05);
-}
-
-.menu:hover{
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.06);
 }
 
 .menu.active{
@@ -72,21 +60,16 @@ body{
 /* CONTENT */
 .content{
   margin-left:240px;
-  padding:80px 25px 25px;
+  padding:80px 20px;
 }
 
 /* HERO */
 .hero{
-  background:linear-gradient(135deg,#fff,#e2e8f0);
-  padding:80px 20px;
+  background:white;
+  padding:70px;
   border-radius:20px;
   text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.05);
-}
-
-.hero h1{
-  font-size:42px;
-  margin-bottom:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
 /* SECTION */
@@ -95,47 +78,31 @@ body{
 
 /* CARD */
 .card{
-  background:var(--card);
-  padding:18px;
+  background:white;
+  padding:15px;
   margin:10px 0;
-  border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.06);
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-2px);
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.06);
 }
 
 /* INPUT */
 input{
   width:100%;
   padding:12px;
-  margin:8px 0;
+  margin:6px 0;
   border:1px solid #ddd;
   border-radius:10px;
-  outline:none;
-}
-
-input:focus{
-  border-color:var(--primary);
 }
 
 /* BUTTON */
 button{
   width:100%;
   padding:12px;
-  border:none;
   background:var(--primary);
   color:white;
+  border:none;
   border-radius:10px;
   cursor:pointer;
-  font-weight:600;
-  margin-top:10px;
-}
-
-button:hover{
-  opacity:0.9;
 }
 
 /* TABLE */
@@ -148,39 +115,43 @@ table{
 }
 
 th,td{
-  padding:12px;
-  text-align:left;
+  padding:10px;
   border-bottom:1px solid #eee;
 }
 
-th{
-  background:#f8fafc;
+/* DELETE */
+.del{
+  background:red;
+  padding:6px 10px;
+  border:none;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* WHATSAPP */
-.wp{
+/* TOAST */
+#toast{
   position:fixed;
-  bottom:20px;
+  top:20px;
   right:20px;
-  background:#25D366;
+  background:#22c55e;
   color:white;
-  padding:14px 16px;
-  border-radius:50px;
-  text-decoration:none;
-  font-weight:600;
+  padding:12px 18px;
+  border-radius:10px;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Yönetim Paneli</div>
+<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
   <div class="menu" onclick="show('services',this)">Hizmetler</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
-  <div class="menu" onclick="show('admin',this)">Admin</div>
+  <div class="menu" onclick="show('admin',this)">Randevular</div>
 </div>
 
 <div class="content">
@@ -189,14 +160,12 @@ th{
 <div id="home" class="section active">
   <div class="hero">
     <h1>Kısmet Rot Balans</h1>
-    <p>Profesyonel Oto Servis & Randevu Sistemi</p>
+    <p>Profesyonel Oto Servis Sistemi</p>
   </div>
 </div>
 
 <!-- SERVICES -->
 <div id="services" class="section">
-  <h2>Hizmetler</h2>
-
   <div class="card">🚗 Rot Ayarı - 700 TL</div>
   <div class="card">⚙️ Balans - 500 TL</div>
   <div class="card">🛢️ Yağ Değişimi - 200 TL</div>
@@ -209,13 +178,15 @@ th{
   <input id="isim" placeholder="Ad Soyad">
   <input id="tel" placeholder="Telefon">
   <input id="hizmet" placeholder="Hizmet">
+  <input id="tarih" type="date">
+  <input id="saat" type="time">
 
   <button onclick="ekle()">Randevu Oluştur</button>
 </div>
 
 <!-- ADMIN -->
 <div id="admin" class="section">
-  <h2>Gelen Randevular</h2>
+  <h2>Randevular</h2>
 
   <table>
     <thead>
@@ -223,6 +194,9 @@ th{
         <th>İsim</th>
         <th>Telefon</th>
         <th>Hizmet</th>
+        <th>Tarih</th>
+        <th>Saat</th>
+        <th>Sil</th>
       </tr>
     </thead>
     <tbody id="list"></tbody>
@@ -231,7 +205,7 @@ th{
 
 </div>
 
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
+<div id="toast"></div>
 
 <script>
 
@@ -248,23 +222,28 @@ function show(id,el){
 }
 
 function ekle(){
-  let isim = document.getElementById("isim").value;
-  let tel = document.getElementById("tel").value;
-  let hizmet = document.getElementById("hizmet").value;
 
-  if(!isim || !tel || !hizmet){
-    alert("Lütfen tüm alanları doldur.");
+  let isim=document.getElementById("isim").value;
+  let tel=document.getElementById("tel").value;
+  let hizmet=document.getElementById("hizmet").value;
+  let tarih=document.getElementById("tarih").value;
+  let saat=document.getElementById("saat").value;
+
+  if(!isim || !tel || !hizmet || !tarih || !saat){
+    alert("Tüm alanları doldur");
     return;
   }
 
-  data.push({isim,tel,hizmet});
+  data.push({isim,tel,hizmet,tarih,saat});
   localStorage.setItem("randevular",JSON.stringify(data));
 
-  alert("Randevu başarıyla oluşturuldu");
+  toast("Randevu eklendi");
 
   document.getElementById("isim").value="";
   document.getElementById("tel").value="";
   document.getElementById("hizmet").value="";
+  document.getElementById("tarih").value="";
+  document.getElementById("saat").value="";
 
   render();
 }
@@ -273,15 +252,35 @@ function render(){
   let list=document.getElementById("list");
   list.innerHTML="";
 
-  data.forEach(d=>{
+  data.forEach((d,i)=>{
     list.innerHTML+=`
       <tr>
         <td>${d.isim}</td>
         <td>${d.tel}</td>
         <td>${d.hizmet}</td>
+        <td>${d.tarih}</td>
+        <td>${d.saat}</td>
+        <td><button class="del" onclick="sil(${i})">X</button></td>
       </tr>
     `;
   });
+}
+
+function sil(i){
+  data.splice(i,1);
+  localStorage.setItem("randevular",JSON.stringify(data));
+  render();
+  toast("Randevu silindi");
+}
+
+function toast(msg){
+  let t=document.getElementById("toast");
+  t.innerText=msg;
+  t.style.display="block";
+
+  setTimeout(()=>{
+    t.style.display="none";
+  },2000);
 }
 
 render();
@@ -289,4 +288,4 @@ render();
 </script>
 
 </body>
-</html>s
+</html>
