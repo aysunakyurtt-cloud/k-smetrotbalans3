@@ -6,64 +6,249 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0d0d0d;
-  color: #fff;
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+
+body{background:#eef1f6;}
+
+/* TOP */
+.topbar{
+  position:fixed;
+  top:0;left:0;right:0;
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:10px;
+  z-index:1000;
 }
 
-/* Basit üst alan */
-.header {
-  padding: 20px;
-  text-align: center;
-  background: #111;
-  border-bottom: 1px solid #222;
+/* SIDEBAR */
+.sidebar{
+  width:220px;
+  height:100vh;
+  background:#111;
+  color:white;
+  position:fixed;
+  padding:20px;
+  padding-top:60px;
 }
 
-.header h1 {
-  margin: 0;
-  color: #ff2b2b;
+.menu{
+  padding:12px;
+  margin-bottom:10px;
+  background:#1f1f1f;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-/* Orta içerik alanı */
-.container {
-  padding: 60px 20px;
-  text-align: center;
+.menu.active{
+  background:white;
+  color:black;
 }
 
-/* Footer */
-.footer {
-  background: #111;
-  color: #bbb;
-  text-align: center;
-  padding: 20px;
-  border-top: 1px solid #222;
+/* CONTENT */
+.content{
+  margin-left:220px;
+  padding:20px;
+  padding-top:60px;
 }
 
-.footer a {
-  color: #ff2b2b;
-  text-decoration: none;
+/* SECTIONS */
+.section{display:none;}
+.section.active{display:block;}
+
+/* HERO */
+.hero{
+  height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#fff,#eaeaea);
+  border-radius:15px;
+  text-align:center;
+}
+
+.hero h1{font-size:50px;}
+
+/* CARDS */
+.card{
+  background:white;
+  padding:20px;
+  margin:10px;
+  border-radius:15px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* FORM */
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+
+button{
+  padding:10px;
+  width:100%;
+  background:black;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  margin-top:20px;
+  background:white;
+  border-collapse:collapse;
+}
+
+td,th{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+
+/* FLOAT */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="header">
-  <h1>Kısmet Rot Balans</h1>
+<div class="topbar">Kısmet Rot Balans | V30 Sistem</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="menu active" onclick="show('home',this)">Ana</div>
+  <div class="menu" onclick="show('services',this)">Hizmet</div>
+  <div class="menu" onclick="show('randevu',this)">Randevu</div>
+  <div class="menu" onclick="show('admin',this)">Admin</div>
 </div>
 
-<div class="container">
-  <h2>Hoş Geldiniz</h2>
-  <p>Randevu ve servis sistemi aktif.</p>
+<div class="content">
+
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="hero">
+    <div>
+      <h1>Kısmet Rot Balans</h1>
+      <p>Profesyonel Oto Servis Sistemi</p>
+    </div>
+  </div>
 </div>
 
-<div class="footer">
-  © 2026 Kısmet Rot Balans - Tüm Hakları Saklıdır |
-  <a href="mailto:aykutakyurt2@gmail.com">İletişim</a>
+<!-- SERVICES -->
+<div id="services" class="section">
+
+  <h2>Hizmetler</h2>
+
+  <div class="card">Rot Ayarı - 700 TL</div>
+  <div class="card">Balans - 500 TL</div>
+  <div class="card">Yağ Değişimi - 200 TL</div>
+
 </div>
+
+<!-- RANDEVU -->
+<div id="randevu" class="section">
+
+  <h2>Randevu Al</h2>
+
+  <input id="isim" placeholder="İsim">
+  <input id="tel" placeholder="Telefon">
+  <input id="hizmet" placeholder="Hizmet">
+
+  <button onclick="ekle()">Randevu Gönder</button>
+
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="section">
+
+  <h2>Randevular</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>İsim</th>
+        <th>Telefon</th>
+        <th>Hizmet</th>
+      </tr>
+    </thead>
+    <tbody id="list"></tbody>
+  </table>
+
+</div>
+
+</div>
+
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("randevular") || "[]");
+
+function show(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+
+  render();
+}
+
+/* RANDEVU EKLE */
+function ekle(){
+
+  let isim=document.getElementById("isim").value;
+  let tel=document.getElementById("tel").value;
+  let hizmet=document.getElementById("hizmet").value;
+
+  if(!isim || !tel || !hizmet){
+    alert("Boş bırakma");
+    return;
+  }
+
+  data.push({isim,tel,hizmet});
+
+  localStorage.setItem("randevular",JSON.stringify(data));
+
+  alert("Randevu alındı");
+
+  document.getElementById("isim").value="";
+  document.getElementById("tel").value="";
+  document.getElementById("hizmet").value="";
+}
+
+/* TABLO */
+function render(){
+
+  let list=document.getElementById("list");
+  list.innerHTML="";
+
+  data.forEach(d=>{
+    list.innerHTML+=`
+      <tr>
+        <td>${d.isim}</td>
+        <td>${d.tel}</td>
+        <td>${d.hizmet}</td>
+      </tr>
+    `;
+  });
+
+}
+
+render();
+
+</script>
 
 </body>
 </html>
