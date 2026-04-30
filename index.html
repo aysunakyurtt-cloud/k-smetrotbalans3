@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -47,12 +47,15 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-input,select{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
+/* CONTACT BOX */
+.contact-box{
+  line-height:1.8;
+}
+
+/* MAP */
+iframe{
+  border:0;
+  border-radius:10px;
 }
 
 button{
@@ -88,6 +91,7 @@ button{
   <div class="menu" onclick="show('prices')">💰 Fiyat</div>
   <div class="menu" onclick="show('appointment')">📅 Randevu</div>
   <div class="menu" onclick="show('location')">📍 Konum</div>
+  <div class="menu" onclick="show('contact')">📞 İletişim</div>
 </div>
 
 <!-- CONTENT -->
@@ -104,7 +108,6 @@ button{
   <h2>Hizmetler</h2>
   <div class="card">Rot Ayarı</div>
   <div class="card">Balans</div>
-  <div class="card">Lastik Değişimi</div>
 </div>
 
 <!-- PRICES -->
@@ -127,7 +130,6 @@ button{
       <option>09:00</option>
       <option>10:00</option>
       <option>11:00</option>
-      <option>13:00</option>
     </select>
 
     <button>Gönder</button>
@@ -139,17 +141,29 @@ button{
   <h2>Konum</h2>
 
   <div class="card">
-    📍 Özel Dayıoğlu Tip Merkezi
+    📍 İşletme Konumu
 
-    <!-- 🔥 SENİN GERÇEK KONUMUN -->
     <iframe 
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str"
       width="100%" 
-      height="300"
-      style="border:0;border-radius:10px;"
-      loading="lazy">
+      height="300">
     </iframe>
 
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page" style="display:none;">
+  <h2>İletişim</h2>
+
+  <div class="card contact-box">
+    📞 Telefon: <b>0531 972 45 08</b><br>
+    📍 Adres: Kısmet Rot Balans<br>
+    ✉️ Mail: info@kismetrot.com<br><br>
+
+    <a href="https://wa.me/905319724508">
+      <button>WhatsApp Yaz</button>
+    </a>
   </div>
 </div>
 
