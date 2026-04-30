@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans PRO</title>
+<title>Kısmet Rot Balans ULTRA PRO</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
@@ -43,7 +43,7 @@ body{background:#eef1f6;}
   box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
-input{
+input,select{
   width:100%;padding:10px;margin:5px 0;
   border-radius:8px;border:1px solid #ccc;
 }
@@ -65,23 +65,12 @@ th,td{
   padding:10px;border-bottom:1px solid #eee;
   text-align:left;
 }
-
-#adminLogin{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.8);
-  display:flex;align-items:center;justify-content:center;
-}
-
-.loginBox{
-  background:white;padding:20px;border-radius:12px;
-  width:300px;
-}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans PRO</div>
+<div class="topbar">Kısmet Rot Balans ULTRA PRO</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
@@ -93,8 +82,8 @@ th,td{
 
 <div id="home" class="section active">
   <div class="card">
-    <h1>Kısmet Rot Balans</h1>
-    <p>PRO Firebase Randevu Sistemi</p>
+    <h1>ULTRA PRO Sistem</h1>
+    <p>Gerçek randevu yönetimi</p>
   </div>
 </div>
 
@@ -104,9 +93,18 @@ th,td{
 
     <input id="name" placeholder="İsim">
     <input id="phone" placeholder="Telefon">
-    <input id="service" placeholder="Hizmet">
 
-    <button onclick="save()">Randevu Gönder</button>
+    <select id="time">
+      <option value="">Saat seç</option>
+      <option>09:00</option>
+      <option>10:00</option>
+      <option>11:00</option>
+      <option>13:00</option>
+      <option>14:00</option>
+      <option>15:00</option>
+    </select>
+
+    <button onclick="save()">Randevu Oluştur</button>
 
     <p id="msg"></p>
   </div>
@@ -115,13 +113,17 @@ th,td{
 <div id="admin" class="section">
   <div class="card">
     <h2>Admin Panel</h2>
-    <button onclick="loadData()">Verileri Yükle</button>
+
+    <p id="count"></p>
+
+    <button onclick="loadData()">Yenile</button>
 
     <table id="table">
       <tr>
         <th>İsim</th>
         <th>Telefon</th>
-        <th>Hizmet</th>
+        <th>Saat</th>
+        <th>Sil</th>
       </tr>
     </table>
   </div>
@@ -129,19 +131,19 @@ th,td{
 
 </div>
 
-<!-- ADMIN LOGIN -->
-<div id="adminLogin">
-  <div class="loginBox">
-    <h3>Admin Giriş</h3>
-    <input type="password" id="pass" placeholder="Şifre">
-    <button onclick="login()">Giriş</button>
-  </div>
-</div>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
@@ -161,6 +163,8 @@ window.collection=collection;
 window.getDocs=getDocs;
 window.query=query;
 window.where=where;
+window.deleteDoc=deleteDoc;
+window.doc=doc;
 
 </script>
 
@@ -175,51 +179,36 @@ function show(id,el){
   el.classList.add('active');
 }
 
-// SAVE
+// SAVE RANDEVU
 async function save(){
 
   const name=document.getElementById("name").value;
   const phone=document.getElementById("phone").value;
-  const service=document.getElementById("service").value;
+  const time=document.getElementById("time").value;
   const msg=document.getElementById("msg");
 
-  if(!name || !phone || !service){
-    msg.innerText="Tüm alanları doldur ❌";
+  if(!name || !phone || !time){
+    msg.innerText="Boş alan bırakma ❌";
     return;
   }
 
-  msg.innerText="Kaydediliyor...";
-
-  // duplicate kontrol (telefon)
-  const q=query(collection(db,"randevular"),where("phone","==",phone));
+  // saat çakışma kontrolü
+  const q=query(collection(db,"randevular"),where("time","==",time));
   const snap=await getDocs(q);
 
   if(!snap.empty){
-    msg.innerText="Bu telefon zaten kayıtlı ❌";
+    msg.innerText="Bu saat dolu ❌";
     return;
   }
 
   await addDoc(collection(db,"randevular"),{
-    name,phone,service,
-    time:new Date().toISOString()
+    name,phone,time
   });
 
   msg.innerText="Randevu alındı ✔";
-
 }
 
-// ADMIN LOGIN
-function login(){
-  let pass=document.getElementById("pass").value;
-
-  if(pass==="1234"){
-    document.getElementById("adminLogin").style.display="none";
-  }else{
-    alert("Hatalı şifre");
-  }
-}
-
-// LOAD
+// LOAD ADMIN
 async function loadData(){
 
   const snap=await getDocs(collection(db,"randevular"));
@@ -230,23 +219,36 @@ async function loadData(){
     <tr>
       <th>İsim</th>
       <th>Telefon</th>
-      <th>Hizmet</th>
+      <th>Saat</th>
+      <th>Sil</th>
     </tr>
   `;
 
-  snap.forEach(doc=>{
-    let d=doc.data();
+  let count=0;
+
+  snap.forEach(d=>{
+    let data=d.data();
+    count++;
 
     let tr=document.createElement("tr");
 
     tr.innerHTML=`
-      <td>${d.name}</td>
-      <td>${d.phone}</td>
-      <td>${d.service}</td>
+      <td>${data.name}</td>
+      <td>${data.phone}</td>
+      <td>${data.time}</td>
+      <td><button onclick="del('${d.id}')">X</button></td>
     `;
 
     table.appendChild(tr);
   });
+
+  document.getElementById("count").innerText="Toplam randevu: "+count;
+}
+
+// DELETE
+async function del(id){
+  await deleteDoc(doc(db,"randevular",id));
+  loadData();
 }
 
 </script>
