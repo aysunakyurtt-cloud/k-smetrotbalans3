@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Oto Servis PRO V2</title>
+<title>Oto Servis PRO V3</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
@@ -12,7 +12,6 @@ body{
   color:white;
 }
 
-/* TOP */
 .top{
   background:#0f172a;
   padding:16px;
@@ -20,7 +19,6 @@ body{
   font-weight:700;
 }
 
-/* LAYOUT */
 .container{display:flex;}
 
 /* SIDEBAR */
@@ -39,31 +37,23 @@ body{
   cursor:pointer;
 }
 
-.menu:hover{
-  background:#2563eb;
-}
+.menu:hover{background:#2563eb;}
 
-/* CONTENT */
-.content{
-  flex:1;
-  padding:20px;
-}
+.content{flex:1;padding:20px;}
 
-/* SECTIONS */
 .section{display:none;}
 .section.active{display:block;}
 
-/* CARDS */
+/* CARD */
 .card{
   background:#111827;
   padding:18px;
-  margin:12px 0;
+  margin:10px 0;
   border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 /* INPUT */
-input,textarea{
+input,select{
   width:100%;
   padding:12px;
   margin:6px 0;
@@ -87,8 +77,8 @@ button{
 /* TABLE */
 table{
   width:100%;
-  margin-top:15px;
   border-collapse:collapse;
+  margin-top:15px;
   background:#111827;
   border-radius:10px;
   overflow:hidden;
@@ -97,50 +87,42 @@ table{
 th,td{
   padding:12px;
   border-bottom:1px solid #1f2937;
+  text-align:left;
 }
 
-th{
-  background:#1f2937;
-}
+th{background:#1f2937;}
 
 .del{
   background:red;
   border:none;
   padding:6px 10px;
-  color:white;
   border-radius:6px;
+  color:white;
   cursor:pointer;
 }
 
 /* DASH */
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
 }
 
 .small{
-  font-size:20px;
+  font-size:22px;
   font-weight:bold;
 }
 
-/* WHATSAPP */
-.wp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  padding:14px;
-  border-radius:50px;
-  color:white;
-  text-decoration:none;
+/* SEARCH */
+.search{
+  margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">OTO SERVİS PRO V2</div>
+<div class="top">OTO SERVİS CRM PRO V3</div>
 
 <div class="container">
 
@@ -160,13 +142,18 @@ th{
   <div class="grid">
 
     <div class="card">
-      Toplam Kayıt<br>
+      Toplam İşlem<br>
       <div class="small" id="total">0</div>
     </div>
 
     <div class="card">
       Toplam Gelir<br>
       <div class="small" id="income">0 TL</div>
+    </div>
+
+    <div class="card">
+      Ortalama<br>
+      <div class="small" id="avg">0 TL</div>
     </div>
 
   </div>
@@ -180,9 +167,15 @@ th{
 
     <input id="isim" placeholder="Müşteri">
     <input id="tel" placeholder="Telefon">
-    <input id="hizmet" placeholder="Hizmet">
+
+    <select id="hizmet">
+      <option>Rot Ayarı</option>
+      <option>Balans</option>
+      <option>Yağ Değişimi</option>
+      <option>Fren Bakım</option>
+    </select>
+
     <input id="fiyat" placeholder="Fiyat">
-    <textarea id="not" placeholder="Not"></textarea>
 
     <button onclick="ekle()">Kaydet</button>
 
@@ -193,12 +186,15 @@ th{
 <!-- LIST -->
 <div id="list" class="section">
 
+  <input class="search" id="search" placeholder="Ara..." oninput="render()">
+
   <table>
     <thead>
       <tr>
         <th>İsim</th>
         <th>Hizmet</th>
         <th>Fiyat</th>
+        <th>Tarih</th>
         <th>Sil</th>
       </tr>
     </thead>
@@ -211,11 +207,9 @@ th{
 
 </div>
 
-<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
-
 <script>
 
-let data = JSON.parse(localStorage.getItem("pro_v2") || "[]");
+let data = JSON.parse(localStorage.getItem("pro_v3") || "[]");
 
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -226,14 +220,21 @@ function show(id){
 function ekle(){
 
   let isim=document.getElementById("isim").value;
+  let tel=document.getElementById("tel").value;
   let hizmet=document.getElementById("hizmet").value;
   let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
 
   if(!isim || !hizmet) return;
 
-  data.push({isim,hizmet,fiyat});
+  data.push({
+    isim,
+    tel,
+    hizmet,
+    fiyat,
+    tarih:new Date().toLocaleDateString()
+  });
 
-  localStorage.setItem("pro_v2",JSON.stringify(data));
+  localStorage.setItem("pro_v3",JSON.stringify(data));
 
   render();
 }
@@ -243,29 +244,40 @@ function render(){
   let table=document.getElementById("table");
   table.innerHTML="";
 
-  let totalIncome=0;
+  let search=document.getElementById("search")?.value?.toLowerCase() || "";
 
-  data.forEach((d,i)=>{
-    totalIncome+=d.fiyat;
+  let total=0;
+
+  let filtered=data.filter(d=>{
+    return d.isim.toLowerCase().includes(search) ||
+           d.hizmet.toLowerCase().includes(search);
+  });
+
+  filtered.forEach((d,i)=>{
+
+    total+=d.fiyat;
 
     table.innerHTML+=`
       <tr>
         <td>${d.isim}</td>
         <td>${d.hizmet}</td>
         <td>${d.fiyat} TL</td>
+        <td>${d.tarih}</td>
         <td><button class="del" onclick="sil(${i})">X</button></td>
       </tr>
     `;
   });
 
   document.getElementById("total").innerText=data.length;
-  document.getElementById("income").innerText=totalIncome + " TL";
+  document.getElementById("income").innerText=total+" TL";
 
+  let avg = data.length ? (total / data.length).toFixed(1) : 0;
+  document.getElementById("avg").innerText=avg+" TL";
 }
 
 function sil(i){
   data.splice(i,1);
-  localStorage.setItem("pro_v2",JSON.stringify(data));
+  localStorage.setItem("pro_v3",JSON.stringify(data));
   render();
 }
 
