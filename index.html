@@ -4,7 +4,8 @@
 
 <input id="email" placeholder="email">
 <input id="pass" type="password" placeholder="pass">
-<button onclick="login()">Giriş</button>
+
+<button id="loginBtn">Giriş</button>
 
 <div id="panel" style="display:none;">
   GİRİŞ BAŞARILI 🎉
@@ -25,19 +26,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.login = async function(){
+// ✅ BUTONA DOĞRU BAĞLANTI
+document.getElementById("loginBtn").addEventListener("click", async ()=>{
 
   try {
-    await signInWithEmailAndPassword(auth,email.value,pass.value);
+    await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value,
+      document.getElementById("pass").value
+    );
 
     document.getElementById("panel").style.display="block";
 
     alert("Giriş başarılı");
 
   } catch(e){
-    alert("HATA: "+e.message);
+    alert("HATA: " + e.message);
   }
-}
+
+});
 
 </script>
 
