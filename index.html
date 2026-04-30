@@ -6,182 +6,200 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-body{margin:0;font-family:system-ui;background:#f4f6f8;}
-
-header{
-  background:#111;color:#fff;
-  text-align:center;padding:15px;
+body{
+  margin:0;
+  font-family:system-ui;
+  display:flex;
+  height:100vh;
+  background:#f4f6f8;
 }
 
-.section{max-width:900px;margin:auto;padding:20px;}
+/* SIDEBAR */
+.sidebar{
+  width:220px;
+  background:#111;
+  color:white;
+  padding:20px;
+}
+
+.menu{
+  padding:12px;
+  margin:8px 0;
+  background:#1f1f1f;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.menu:hover{
+  background:#333;
+}
+
+/* CONTENT */
+.content{
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
 
 .card{
-  background:#fff;padding:15px;
-  border-radius:10px;margin:10px 0;
+  background:white;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-input,select{
-  width:100%;padding:10px;margin:5px 0;
-  border-radius:8px;border:1px solid #ccc;
+.hero{
+  background:linear-gradient(135deg,#fff,#ddd);
+  padding:50px;
+  border-radius:15px;
+  text-align:center;
 }
 
+/* BUTTON */
 button{
-  padding:10px;background:#111;color:#fff;
-  border:none;border-radius:8px;cursor:pointer;
+  padding:10px;
+  background:#111;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.badge{
-  display:inline-block;
-  padding:5px 10px;
-  background:#eee;
+input,select{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
   border-radius:8px;
-  margin-left:10px;
+  border:1px solid #ccc;
+}
+
+/* WHATSAPP */
+.wp{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h2>Kısmet Rot Balans</h2>
-  <p>Randevu Sistemi V2</p>
-</header>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>Kısmet Rot</h3>
 
-<!-- RANDEVU -->
-<div class="section">
+  <div class="menu" onclick="show('home')">🏠 Ana Sayfa</div>
+  <div class="menu" onclick="show('services')">🔧 Hizmetler</div>
+  <div class="menu" onclick="show('prices')">💰 Fiyat Listesi</div>
+  <div class="menu" onclick="show('products')">🛞 Ürünler</div>
+  <div class="menu" onclick="show('appointment')">📅 Randevu</div>
+  <div class="menu" onclick="show('location')">📍 Konum</div>
+  <div class="menu" onclick="show('contact')">📞 İletişim</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- HOME -->
+<div id="home" class="page">
+  <div class="hero">
+    <h1>Kısmet Rot Balans</h1>
+    <p>Güvenli sürüş için profesyonel servis</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="page" style="display:none;">
+  <h2>Hizmetler</h2>
+
+  <div class="card">🔧 Rot Ayarı</div>
+  <div class="card">⚖️ Balans Ayarı</div>
+  <div class="card">🛞 Lastik Değişimi</div>
+  <div class="card">🛠 Genel Bakım</div>
+</div>
+
+<!-- PRICES -->
+<div id="prices" class="page" style="display:none;">
+  <h2>Fiyat Listesi</h2>
+
+  <div class="card">Rot Ayarı: 700 TL</div>
+  <div class="card">Balans: 500 TL</div>
+  <div class="card">Lastik Değişimi: 200 TL</div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" class="page" style="display:none;">
+  <h2>Ürünler</h2>
+
+  <div class="card">🚗 Lastik</div>
+  <div class="card">🔩 Jant</div>
+  <div class="card">🛢 Motor Yağı</div>
+</div>
+
+<!-- APPOINTMENT -->
+<div id="appointment" class="page" style="display:none;">
   <h2>Randevu Al</h2>
 
   <div class="card">
-    <input id="name" placeholder="İsim">
-    <input id="phone" placeholder="Telefon">
+    <input placeholder="İsim">
+    <input placeholder="Telefon">
 
-    <select id="time">
-      <option value="">Saat seç</option>
+    <select>
+      <option>Saat seç</option>
       <option>09:00</option>
       <option>10:00</option>
       <option>11:00</option>
       <option>13:00</option>
-      <option>14:00</option>
     </select>
 
-    <button onclick="save()">Gönder</button>
-    <p id="msg"></p>
+    <button>Randevu Gönder</button>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div class="section">
-  <h2>Admin Panel</h2>
+<!-- LOCATION -->
+<div id="location" class="page" style="display:none;">
+  <h2>Konum</h2>
 
   <div class="card">
-    <input type="password" id="pass" placeholder="Şifre">
-    <button onclick="login()">Giriş</button>
-  </div>
+    📍 Kısmet Rot Balans
 
-  <div id="panel" style="display:none;">
-
-    <div class="card">
-      <button onclick="load()">Yenile</button>
-      <span id="count" class="badge"></span>
-    </div>
-
-    <div id="list"></div>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18..."
+      width="100%" height="300"
+      style="border:0;border-radius:10px;">
+    </iframe>
   </div>
 </div>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!-- CONTACT -->
+<div id="contact" class="page" style="display:none;">
+  <h2>İletişim</h2>
+
+  <div class="card">
+    📞 0531 972 45 08 <br><br>
+    ✉️ info@kismetrot.com
+  </div>
+</div>
+
+</div>
+
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBkBB4w03UMQ2dFKY-B_1dgOZGnk-J5dLg",
-  authDomain: "kismet-rot-balans.firebaseapp.com",
-  projectId: "kismet-rot-balans",
-  storageBucket: "kismet-rot-balans.appspot.com",
-  messagingSenderId: "350629465784",
-  appId: "1:350629465784:web:33f91cad2a724e0f45ee4d"
-};
+function show(id){
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-</script>
-
-<script>
-
-// SAVE
-async function save(){
-
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-  const time=document.getElementById("time").value;
-  const msg=document.getElementById("msg");
-
-  if(!name || !phone || !time){
-    msg.innerText="Boş bırakma ❌";
-    return;
-  }
-
-  const check = await db.collection("randevular")
-    .where("time","==",time)
-    .get();
-
-  if(!check.empty){
-    msg.innerText="Bu saat dolu ❌";
-    return;
-  }
-
-  await db.collection("randevular").add({
-    name, phone, time,
-    date: new Date().toLocaleDateString()
+  document.querySelectorAll(".page").forEach(p=>{
+    p.style.display="none";
   });
 
-  msg.innerText="Randevu alındı ✔";
+  document.getElementById(id).style.display="block";
 }
-
-// LOGIN
-function login(){
-  const pass=document.getElementById("pass").value;
-
-  if(pass==="1234"){
-    document.getElementById("panel").style.display="block";
-  }else alert("Hatalı şifre");
-}
-
-// LOAD
-async function load(){
-
-  const snap = await db.collection("randevular").get();
-
-  let html="";
-  let count=0;
-
-  snap.forEach(doc=>{
-    let d=doc.data();
-    count++;
-
-    html += `
-      <div class="card">
-        <b>${d.name}</b><br>
-        📞 ${d.phone}<br>
-        ⏰ ${d.time}<br>
-        📅 ${d.date || "-"}<br><br>
-        <button onclick="del('${doc.id}')">Sil</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("list").innerHTML=html;
-  document.getElementById("count").innerText="Toplam: " + count;
-}
-
-// DELETE
-async function del(id){
-  await db.collection("randevular").doc(id).delete();
-  load();
-}
-
 </script>
 
 </body>
