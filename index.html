@@ -19,7 +19,7 @@ body{
   background:#f4f6f8;
 }
 
-/* SIDEBAR (SABİT SOL MENÜ) */
+/* SIDEBAR */
 .sidebar{
   width:220px;
   background:#111;
@@ -33,10 +33,6 @@ body{
   background:#1f1f1f;
   border-radius:8px;
   cursor:pointer;
-}
-
-.menu:hover{
-  background:#333;
 }
 
 /* CONTENT */
@@ -55,40 +51,12 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* SERVICE */
-.service-item{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  border-bottom:1px solid #eee;
+/* PAGE SYSTEM (ÖNEMLİ FIX) */
+.page{
+  display:none;
 }
-
-.price{
-  font-weight:bold;
-}
-
-/* MAP */
-.map{
-  width:100%;
-  height:300px;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.map iframe{
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-/* BUTTON */
-button{
-  width:100%;
-  padding:10px;
-  background:#111;
-  color:white;
-  border:none;
-  border-radius:8px;
+.page.active{
+  display:block;
 }
 
 /* WHATSAPP */
@@ -103,16 +71,11 @@ button{
   text-decoration:none;
 }
 
-/* 📱 MOBİL UYUMLU */
+/* MOBILE */
 @media(max-width:768px){
   .sidebar{
-    width:70px;
+    width:80px;
     padding:10px;
-  }
-
-  .menu{
-    font-size:12px;
-    text-align:center;
   }
 }
 </style>
@@ -133,71 +96,21 @@ button{
 <!-- CONTENT -->
 <div class="content">
 
-<div id="home" class="page">
-  <h2>Hoşgeldiniz</h2>
+<!-- HOME -->
+<div id="home" class="page active">
   <div class="card">
-    Rot balans ve araç bakım hizmetleri.
+    Hoşgeldiniz
   </div>
 </div>
 
-<div id="services" class="page" style="display:none;">
-  <h2>Hizmetler</h2>
-
-  <div class="card">
-    <div class="service-item"><span>Ön Takım Kontrolü</span><span class="price">300 TL</span></div>
-    <div class="service-item"><span>Balata Değişimi</span><span class="price">800 TL</span></div>
-    <div class="service-item"><span>Lastik Tamiri</span><span class="price">200-450 TL</span></div>
-    <div class="service-item"><span>Bilgisayar Arıza</span><span class="price">800 TL</span></div>
-  </div>
-</div>
-
-<div id="prices" class="page" style="display:none;">
-  <h2>Fiyat Listesi</h2>
-
-  <div class="card">Ön Takım → 300 TL</div>
-  <div class="card">Balata → 800 TL</div>
-  <div class="card">Lastik → 200-450 TL</div>
-  <div class="card">Arıza Tespit → 800 TL</div>
-</div>
-
-<div id="appointment" class="page" style="display:none;">
-  <h2>Randevu</h2>
-
-  <div class="card">
-    <input placeholder="İsim">
-    <input placeholder="Telefon">
-
-    <select>
-      <option>Saat seç</option>
-      <option>09:00</option>
-      <option>10:00</option>
-      <option>11:00</option>
-    </select>
-
-    <button>Gönder</button>
-  </div>
-</div>
-
-<!-- 📍 SENİN ORİJİNAL HARİTA KODUN (DEĞİŞTİRİLMEDİ) -->
-<div id="location" class="page" style="display:none;">
-  <h2>Konum</h2>
-
-  <div class="card">
-    <div class="map">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str">
-      </iframe>
-    </div>
-  </div>
-</div>
-
-<div id="contact" class="page" style="display:none;">
+<!-- CONTACT (FIXED) -->
+<div id="contact" class="page">
   <h2>İletişim</h2>
 
   <div class="card">
-    📞 0531 972 45 08<br>
-    📞 0544 624 56 54<br>
-    📍 Başakşehir İstanbul<br>
+    📞 0531 972 45 08<br><br>
+    📞 0544 624 56 54<br><br>
+    📍 Başakşehir İstanbul<br><br>
     ✉️ aykutakyurt2@gmail.com
   </div>
 </div>
@@ -209,9 +122,9 @@ button{
 <script>
 function show(id){
   document.querySelectorAll(".page").forEach(p=>{
-    p.style.display="none";
+    p.classList.remove("active");
   });
-  document.getElementById(id).style.display="block";
+  document.getElementById(id).classList.add("active");
 }
 </script>
 
