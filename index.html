@@ -14,7 +14,6 @@
 }
 
 body{
-  display:flex;
   background:#eef1f6;
 }
 
@@ -24,29 +23,22 @@ body{
   top:0;
   left:0;
   right:0;
-  background:#0d0d0d;
+  background:#111;
   color:white;
   text-align:center;
   padding:10px;
-  font-size:14px;
   z-index:1000;
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:230px;
+  width:220px;
   height:100vh;
   background:#111;
   color:white;
-  padding:20px;
   position:fixed;
+  padding:20px;
   padding-top:60px;
-}
-
-.logo{
-  font-size:20px;
-  margin-bottom:20px;
-  font-weight:bold;
 }
 
 .menu{
@@ -55,12 +47,6 @@ body{
   background:#1f1f1f;
   border-radius:10px;
   cursor:pointer;
-  transition:0.2s;
-}
-
-.menu:hover{
-  transform:translateX(5px);
-  background:#333;
 }
 
 .menu.active{
@@ -70,8 +56,7 @@ body{
 
 /* CONTENT */
 .content{
-  margin-left:230px;
-  width:100%;
+  margin-left:220px;
   padding:20px;
   padding-top:60px;
 }
@@ -79,16 +64,10 @@ body{
 /* SECTIONS */
 .section{
   display:none;
-  animation:fade 0.3s ease;
 }
 
 .section.active{
   display:block;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
 }
 
 /* HERO */
@@ -97,20 +76,13 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#ffffff,#e6e6e6);
-  border-radius:18px;
+  background:linear-gradient(135deg,#fff,#eaeaea);
+  border-radius:15px;
   text-align:center;
-  padding:20px;
 }
 
-.hero h1{
-  font-size:52px;
-}
-
-.hero p{
-  margin-top:10px;
-  color:#666;
-}
+.hero h1{font-size:50px;}
+.hero p{color:#666;margin-top:10px;}
 
 /* CARDS */
 .cards{
@@ -122,82 +94,78 @@ body{
   background:white;
   padding:20px;
   margin:10px;
-  border-radius:16px;
+  border-radius:15px;
   width:220px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  transition:0.25s;
-}
-
-.card:hover{
-  transform:translateY(-6px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
 /* IFRAME */
 iframe{
   width:100%;
-  height:520px;
+  height:500px;
   border:none;
   border-radius:12px;
-  margin-top:10px;
 }
 
-/* FLOAT BUTTONS */
+/* ADMIN */
+.admin{
+  display:none;
+  padding:20px;
+}
+
+.login-box{
+  max-width:300px;
+  margin:auto;
+  margin-top:100px;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:black;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+/* FLOAT */
 .wp{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#25D366;
   color:white;
-  padding:15px 18px;
+  padding:15px;
   border-radius:50px;
   text-decoration:none;
-  font-weight:bold;
 }
 
-.call{
-  position:fixed;
-  bottom:80px;
-  right:20px;
-  background:#000;
-  color:white;
-  padding:12px 14px;
-  border-radius:50px;
-  font-size:13px;
-  text-decoration:none;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:25px;
-  color:#777;
-  font-size:13px;
-}
-
-/* MOBILE */
 @media(max-width:768px){
   .sidebar{width:70px;}
   .content{margin-left:70px;}
-  .menu{font-size:12px;}
-  .hero h1{font-size:30px;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOP -->
-<div class="topbar">
-🚗 Kısmet Rot Balans | Hızlı Servis | Uygun Fiyat Garantisi
-</div>
+<div class="topbar">Kısmet Rot Balans | Sistem V28</div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="logo">KISMET</div>
-
-  <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
-  <div class="menu" onclick="show('services',this)">Hizmetler</div>
+  <div class="menu active" onclick="show('home',this)">Ana</div>
+  <div class="menu" onclick="show('services',this)">Hizmet</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
+  <div class="menu" onclick="show('admin',this)">Admin</div>
 </div>
 
 <!-- CONTENT -->
@@ -205,15 +173,12 @@ footer{
 
 <!-- HOME -->
 <div id="home" class="section active">
-
   <div class="hero">
     <div>
       <h1>Kısmet Rot Balans</h1>
-      <p>İstanbul’un Güvenilir Oto Servisi</p>
-      <p>Rot • Balans • Yağ Değişimi • Bakım</p>
+      <p>Profesyonel Oto Servis Sistemi</p>
     </div>
   </div>
-
 </div>
 
 <!-- SERVICES -->
@@ -225,16 +190,6 @@ footer{
     <div class="card">Rot Ayarı<br><b>700 TL</b></div>
     <div class="card">Balans<br><b>500 TL</b></div>
     <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
-    <div class="card">Genel Bakım<br><b>1000 TL</b></div>
-  </div>
-
-  <h2 style="margin-top:20px;">Neden Biz?</h2>
-
-  <div class="cards">
-    <div class="card">✔ Uzman Ekip</div>
-    <div class="card">✔ Hızlı İşlem</div>
-    <div class="card">✔ Uygun Fiyat</div>
-    <div class="card">✔ Garantili İşçilik</div>
   </div>
 
 </div>
@@ -248,15 +203,27 @@ footer{
 
 </div>
 
-<footer>
-© 2026 Kısmet Rot Balans - Tüm Hakları Saklıdır
-</footer>
+<!-- ADMIN -->
+<div id="admin" class="section">
+
+  <div id="login" class="login-box">
+    <h3>Admin Giriş</h3>
+    <input type="password" id="pass" placeholder="Şifre">
+    <button onclick="login()">Giriş</button>
+  </div>
+
+  <div id="panel" style="display:none;">
+    <h2>Randevu Paneli</h2>
+
+    <p>Buraya sonra Google Sheet bağlanacak</p>
+
+  </div>
 
 </div>
 
-<!-- BUTTONS -->
+</div>
+
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
-<a class="call" href="tel:+905319724508">📞 Ara</a>
 
 <script>
 function show(id,el){
@@ -265,6 +232,18 @@ function show(id,el){
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   el.classList.add('active');
+}
+
+/* ADMIN LOGIN */
+function login(){
+  let pass=document.getElementById('pass').value;
+
+  if(pass=="1234"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("panel").style.display="block";
+  }else{
+    alert("Hatalı şifre");
+  }
 }
 </script>
 
