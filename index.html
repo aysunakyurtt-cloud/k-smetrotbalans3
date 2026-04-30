@@ -19,13 +19,12 @@ body{
   background:#f4f6f8;
 }
 
-/* SIDEBAR (PC + MOBİL AYNI) */
+/* SIDEBAR (SABİT SOL MENÜ) */
 .sidebar{
   width:220px;
   background:#111;
   color:white;
   padding:15px;
-  flex-shrink:0;
 }
 
 .menu{
@@ -68,15 +67,15 @@ body{
   font-weight:bold;
 }
 
-/* MAP FIX */
-.map-box{
+/* MAP */
+.map{
   width:100%;
   height:300px;
   border-radius:10px;
   overflow:hidden;
 }
 
-.map-box iframe{
+.map iframe{
   width:100%;
   height:100%;
   border:0;
@@ -104,7 +103,7 @@ button{
   text-decoration:none;
 }
 
-/* 📱 MOBİLDE DE AYNI YAN MENÜ (KÜÇÜLÜR AMA YOK OLMAZ) */
+/* 📱 MOBİL UYUMLU */
 @media(max-width:768px){
   .sidebar{
     width:70px;
@@ -114,11 +113,6 @@ button{
   .menu{
     font-size:12px;
     text-align:center;
-    padding:10px 5px;
-  }
-
-  .menu span{
-    display:none;
   }
 }
 </style>
@@ -163,7 +157,7 @@ button{
   <div class="card">Ön Takım → 300 TL</div>
   <div class="card">Balata → 800 TL</div>
   <div class="card">Lastik → 200-450 TL</div>
-  <div class="card">Arıza → 800 TL</div>
+  <div class="card">Arıza Tespit → 800 TL</div>
 </div>
 
 <div id="appointment" class="page" style="display:none;">
@@ -184,14 +178,14 @@ button{
   </div>
 </div>
 
-<!-- LOCATION FIXED -->
+<!-- 📍 SENİN ORİJİNAL HARİTA KODUN (DEĞİŞTİRİLMEDİ) -->
 <div id="location" class="page" style="display:none;">
   <h2>Konum</h2>
 
   <div class="card">
-    <div class="map-box">
-      <iframe
-        src="https://www.google.com/maps?q=Başakşehir+İstanbul&output=embed">
+    <div class="map">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.2688179220972!2d28.743977275861408!3d41.06311627134291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa666db77665b%3A0xa3126deb0757b8f9!2zw5Z6ZWwgRGF5xLFvxJ9sdSBUxLFwIE1lcmtlemk!5e0!3m2!1str!2str!4v1777538557399!5m2!1str!2str">
       </iframe>
     </div>
   </div>
@@ -204,7 +198,7 @@ button{
     📞 0531 972 45 08<br>
     📞 0544 624 56 54<br>
     📍 Başakşehir İstanbul<br>
-    ✉️ mail@gmail.com
+    ✉️ aykutakyurt2@gmail.com
   </div>
 </div>
 
