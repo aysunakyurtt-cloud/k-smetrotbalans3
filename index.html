@@ -2,47 +2,60 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>SAAS CRM SYSTEM</title>
+<title>OtoServis SaaS</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
 <style>
-body{font-family:system-ui;background:#f1f5f9;margin:0;}
+body{font-family:system-ui;margin:0;background:#f1f5f9;}
 .top{background:#0f172a;color:white;padding:15px;text-align:center;}
-.box{max-width:400px;margin:50px auto;background:white;padding:20px;border-radius:10px;}
-input{width:100%;padding:10px;margin:5px 0;}
-button{width:100%;padding:10px;background:#2563eb;color:white;border:none;}
-.hidden{display:none;}
-.card{background:white;margin:10px;padding:10px;border-radius:10px;}
+
+.box{max-width:420px;margin:40px auto;background:white;padding:20px;border-radius:12px;}
+input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;}
+button{width:100%;padding:10px;background:#2563eb;color:white;border:none;border-radius:8px;}
+
+.panel{display:none;padding:20px;}
+.card{background:white;padding:10px;margin:10px;border-radius:10px;}
+.row{display:flex;gap:10px;}
+.small{width:50%;}
+.logout{background:red;margin-top:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="top">SAAS CRM SYSTEM</div>
+<div class="top">Oto Servis SaaS ÜRÜN v1</div>
 
-<!-- LOGIN -->
-<div id="login" class="box">
-  <h3>Giriş</h3>
+<!-- AUTH -->
+<div id="auth" class="box">
+
+  <h3>Giriş / Kayıt</h3>
+
   <input id="email" placeholder="Email">
   <input id="pass" type="password" placeholder="Şifre">
-  <button onclick="login()">Giriş Yap</button>
+
+  <button onclick="login()">Giriş</button>
   <button onclick="register()">Kayıt Ol</button>
+
 </div>
 
 <!-- PANEL -->
-<div id="panel" class="hidden">
+<div id="panel" class="panel">
 
   <div class="box">
-    <h3>Yeni Kayıt</h3>
-    <input id="isim" placeholder="İsim">
+
+    <h3>Yeni Servis</h3>
+
+    <input id="isim" placeholder="Müşteri">
     <input id="plaka" placeholder="Plaka">
     <input id="hizmet" placeholder="Hizmet">
     <input id="fiyat" placeholder="Fiyat">
+
     <button onclick="ekle()">Kaydet</button>
-    <button onclick="logout()">Çıkış</button>
+    <button class="logout" onclick="logout()">Çıkış</button>
+
   </div>
 
   <div id="list"></div>
@@ -65,19 +78,13 @@ const db = firebase.firestore();
 
 // LOGIN
 function login(){
-  let email=document.getElementById("email").value;
-  let pass=document.getElementById("pass").value;
-
-  auth.signInWithEmailAndPassword(email,pass)
+  auth.signInWithEmailAndPassword(email.value,pass.value)
   .then(()=>showPanel());
 }
 
 // REGISTER
 function register(){
-  let email=document.getElementById("email").value;
-  let pass=document.getElementById("pass").value;
-
-  auth.createUserWithEmailAndPassword(email,pass);
+  auth.createUserWithEmailAndPassword(email.value,pass.value);
 }
 
 // LOGOUT
@@ -92,14 +99,14 @@ auth.onAuthStateChanged(user=>{
   }
 });
 
-// PANEL SHOW
+// PANEL
 function showPanel(){
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("panel").classList.remove("hidden");
+  document.getElementById("auth").style.display="none";
+  document.getElementById("panel").style.display="block";
   load();
 }
 
-// ADD DATA
+// ADD
 function ekle(){
 
   let user=auth.currentUser;
@@ -110,13 +117,13 @@ function ekle(){
     plaka:plaka.value,
     hizmet:hizmet.value,
     fiyat:fiyat.value,
-    date:new Date()
+    time:new Date()
   });
 
   load();
 }
 
-// LOAD DATA
+// LOAD
 async function load(){
 
   let user=auth.currentUser;
@@ -132,8 +139,9 @@ async function load(){
 
     list.innerHTML+=`
       <div class="card">
-        ${d.isim} - ${d.plaka}<br>
-        ${d.hizmet} - ${d.fiyat} TL
+        <b>${d.isim}</b><br>
+        ${d.plaka} - ${d.hizmet}<br>
+        ${d.fiyat} TL
       </div>
     `;
   });
