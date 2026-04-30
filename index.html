@@ -9,112 +9,118 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 body{background:#eef1f6;}
 
-/* TOP */
 .topbar{
   position:fixed;
   top:0;left:0;right:0;
-  background:#111;color:white;
-  text-align:center;padding:10px;
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:10px;
   z-index:1000;
 }
 
-/* SIDEBAR */
 .sidebar{
-  width:220px;height:100vh;
-  background:#111;color:white;
-  position:fixed;padding:20px;padding-top:60px;
+  width:220px;
+  height:100vh;
+  background:#111;
+  color:white;
+  position:fixed;
+  padding:20px;
+  padding-top:60px;
 }
 
 .menu{
-  padding:12px;margin-bottom:10px;
-  background:#1f1f1f;border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  background:#1f1f1f;
+  border-radius:10px;
   cursor:pointer;
 }
-.menu.active{background:white;color:black;}
 
-/* CONTENT */
-.content{
-  margin-left:220px;
-  padding:20px;padding-top:60px;
+.menu.active{
+  background:white;
+  color:black;
 }
 
-/* SECTION */
+.content{
+  margin-left:220px;
+  padding:20px;
+  padding-top:60px;
+}
+
 .section{display:none;}
 .section.active{display:block;}
 
-/* HERO */
 .hero{
-  height:60vh;display:flex;
-  align-items:center;justify-content:center;
+  height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background:linear-gradient(135deg,#fff,#eaeaea);
-  border-radius:15px;text-align:center;
-}
-.hero h1{font-size:50px;}
-
-/* CARD */
-.card{
-  background:white;padding:20px;
-  margin:10px;border-radius:15px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.08);
-}
-
-/* TABLE */
-table{
-  width:100%;margin-top:20px;
-  border-collapse:collapse;background:white;
-  border-radius:10px;overflow:hidden;
-}
-th,td{
-  padding:10px;border-bottom:1px solid #eee;
-}
-
-/* BUTTON */
-button{
-  padding:10px 15px;border:none;
-  background:#111;color:white;
-  border-radius:8px;cursor:pointer;
-}
-
-/* LOGIN */
-.loginBox{
-  max-width:300px;
-  margin:100px auto;
-  background:white;
-  padding:20px;
   border-radius:15px;
   text-align:center;
 }
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
+
+.hero h1{font-size:50px;}
+
+.card{
+  background:white;
+  padding:20px;
+  margin:10px;
+  border-radius:15px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* WP */
+table{
+  width:100%;
+  margin-top:20px;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  background:#111;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
 .wp{
   position:fixed;
-  bottom:20px;right:20px;
-  background:#25D366;color:white;
-  padding:15px;border-radius:50px;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Randevu Sistemi</div>
+<div class="topbar">Kısmet Rot Balans | Canlı Randevu Sistemi</div>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
   <div class="menu" onclick="show('services',this)">Hizmet</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
-  <div class="menu" onclick="showAdmin(this)">Admin</div>
+  <div class="menu" onclick="show('admin',this)">Admin</div>
 </div>
 
 <div class="content">
 
-<!-- HOME -->
 <div id="home" class="section active">
   <div class="hero">
     <div>
@@ -124,7 +130,6 @@ input{
   </div>
 </div>
 
-<!-- SERVICES -->
 <div id="services" class="section">
   <h2>Hizmetler</h2>
   <div class="card">Rot Ayarı - 700 TL</div>
@@ -132,7 +137,6 @@ input{
   <div class="card">Yağ Değişimi - 200 TL</div>
 </div>
 
-<!-- RANDEVU -->
 <div id="randevu" class="section">
   <h2>Randevu Al</h2>
 
@@ -140,18 +144,9 @@ input{
   style="width:100%;height:500px;border:none;"></iframe>
 </div>
 
-<!-- ADMIN LOGIN -->
-<div id="login" class="section">
-  <div class="loginBox">
-    <h3>Admin Giriş</h3>
-    <input type="password" id="pass" placeholder="Şifre">
-    <button onclick="login()">Giriş Yap</button>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
 <div id="admin" class="section">
   <h2>Canlı Randevular</h2>
+
   <button onclick="loadData()">Verileri Yükle</button>
 
   <table id="table">
@@ -169,35 +164,17 @@ input{
 
 <script>
 
-/* SAYFA GEÇİŞ */
 function show(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
-  if(el) el.classList.add('active');
+  el.classList.add('active');
 }
 
-/* ADMIN BUTON */
-function showAdmin(el){
-  show('login',el);
-}
-
-/* ŞİFRE */
-function login(){
-  let p=document.getElementById("pass").value;
-
-  if(p==="1234"){ // 🔴 BURAYI DEĞİŞTİR
-    show('admin');
-  }else{
-    alert("Hatalı şifre");
-  }
-}
-
-/* SHEET VERİ ÇEK */
 async function loadData(){
 
-  let url="BURAYA_CSV_LINK"; // 🔴 BURAYI DEĞİŞTİR
+  let url="https://docs.google.com/spreadsheets/d/e/2PACX-1vTyMoSuPnG01scJudz6y0gq7iDc65YAgAH1xJFNgxPyhboEqkYUkcDBY_sLYI2mEjZ_9M5x5CRMyuHx/pub?output=csv";
 
   let res=await fetch(url);
   let data=await res.text();
@@ -215,7 +192,7 @@ async function loadData(){
   `;
 
   for(let i=1;i<rows.length;i++){
-    let cols=rows[i].split(/,|;/);
+    let cols=rows[i].split(",");
 
     if(cols.length>3){
       let row=document.createElement("tr");
@@ -234,4 +211,4 @@ async function loadData(){
 </script>
 
 </body>
-</html>
+</html>s
