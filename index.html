@@ -6,9 +6,19 @@
 <title>Kısmet Rot Balans</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-body{display:flex;background:#f5f6fa;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
 
+body{
+  display:flex;
+  background:#f5f6fa;
+}
+
+/* SIDEBAR */
 .sidebar{
   width:220px;
   height:100vh;
@@ -24,6 +34,11 @@ body{display:flex;background:#f5f6fa;}
   background:#222;
   border-radius:8px;
   cursor:pointer;
+  transition:0.2s;
+}
+
+.menu:hover{
+  transform:translateX(5px);
 }
 
 .menu.active{
@@ -31,35 +46,65 @@ body{display:flex;background:#f5f6fa;}
   color:black;
 }
 
+/* CONTENT */
 .content{
   margin-left:220px;
-  padding:20px;
   width:100%;
+  padding:20px;
 }
 
-.section{display:none;}
-.section.active{display:block;}
+/* SECTIONS */
+.section{
+  display:none;
+}
 
+.section.active{
+  display:block;
+}
+
+/* HERO */
 .hero{
   height:60vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:white;
-  border-radius:12px;
+  background:linear-gradient(135deg,#ffffff,#eaeaea);
+  border-radius:15px;
   text-align:center;
+  padding:20px;
 }
 
-.hero h1{font-size:50px;}
+.hero h1{
+  font-size:50px;
+}
+
+.hero p{
+  font-size:18px;
+  margin-top:10px;
+  color:#555;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+}
 
 .card{
   background:white;
-  padding:15px;
+  padding:20px;
   margin:10px;
-  border-radius:10px;
-  display:inline-block;
+  border-radius:15px;
+  width:200px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.2s;
 }
 
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* IFRAME */
 iframe{
   width:100%;
   height:600px;
@@ -67,47 +112,93 @@ iframe{
   border-radius:10px;
 }
 
+/* WHATSAPP */
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px 18px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* MOBILE */
 @media(max-width:768px){
-  .sidebar{width:70px;}
-  .content{margin-left:70px;}
-  .menu{font-size:12px;}
+  .sidebar{
+    width:70px;
+  }
+
+  .content{
+    margin-left:70px;
+  }
+
+  .menu{
+    font-size:12px;
+  }
+
+  .hero h1{
+    font-size:32px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana</div>
   <div class="menu" onclick="show('services',this)">Hizmet</div>
   <div class="menu" onclick="show('randevu',this)">Randevu</div>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
 
+<!-- HOME -->
 <div id="home" class="section active">
+
   <div class="hero">
     <div>
       <h1>Kısmet Rot Balans</h1>
-      <p>Profesyonel oto servis</p>
+      <p>Güvenilir | Hızlı | Profesyonel Servis</p>
     </div>
   </div>
+
 </div>
 
+<!-- SERVICES -->
 <div id="services" class="section">
+
   <h2>Hizmetler</h2>
-  <div class="card">Rot Ayarı - 700 TL</div>
-  <div class="card">Balans - 500 TL</div>
-  <div class="card">Yağ Değişimi - 200 TL</div>
+
+  <div class="cards">
+    <div class="card">Rot Ayarı<br><b>700 TL</b></div>
+    <div class="card">Balans<br><b>500 TL</b></div>
+    <div class="card">Yağ Değişimi<br><b>200 TL</b></div>
+  </div>
+
 </div>
 
+<!-- RANDEVU -->
 <div id="randevu" class="section">
+
   <h2>Randevu Al</h2>
 
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe28-lt5KYCn39-JuJoA60aitTXqajL1VlUNX5b2LQk8HB0dQ/viewform?embedded=true"></iframe>
+
 </div>
 
 </div>
+
+<!-- WHATSAPP -->
+<a class="wp" href="https://wa.me/905319724508" target="_blank">
+WhatsApp
+</a>
 
 <script>
 function show(id,el){
@@ -116,6 +207,8 @@ function show(id,el){
 
   document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
   el.classList.add('active');
+
+  location.hash=id;
 }
 </script>
 
