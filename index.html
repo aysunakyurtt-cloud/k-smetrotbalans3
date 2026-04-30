@@ -1,50 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kısmet Rot Balans PRO</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+
+body{background:#f1f5f9;}
+
+.top{
+  background:#0f172a;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.container{
+  display:flex;
+}
+
+.sidebar{
+  width:220px;
+  height:100vh;
+  background:#0f172a;
+  color:white;
+  padding-top:20px;
+  position:fixed;
+}
+
+.menu{
+  padding:12px;
+  margin:10px;
+  background:#1e293b;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.menu:hover{
+  background:white;
+  color:black;
+}
+
+.content{
+  margin-left:240px;
+  padding:20px;
+}
+
+/* sections */
+.section{display:none;}
+.section.active{display:block;}
+
+.card{
+  background:white;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+table{
+  width:100%;
+  background:white;
+  margin-top:15px;
+  border-collapse:collapse;
+}
+
+td,th{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+
+.del{
+  background:red;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.wp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50px;
+  text-decoration:none;
+}
+</style>
+</head>
+
 <body>
 
-<input id="email" placeholder="email">
-<input id="pass" type="password" placeholder="pass">
+<div class="top">Kısmet Rot Balans | PRO Sistem</div>
 
-<button id="loginBtn">Giriş</button>
+<div class="container">
 
-<div id="panel" style="display:none;">
-  GİRİŞ BAŞARILI 🎉
+<div class="sidebar">
+
+  <div class="menu" onclick="show('home')">Ana Sayfa</div>
+  <div class="menu" onclick="show('services')">Hizmetler</div>
+  <div class="menu" onclick="show('randevu')">Randevu</div>
+  <div class="menu" onclick="show('admin')">Kayıtlar</div>
+  <div class="menu" onclick="show('contact')">İletişim</div>
+
 </div>
 
-<script type="module">
+<div class="content">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="card">
+    <h1>Kısmet Rot Balans</h1>
+    <p>Profesyonel araç bakım ve servis sistemi</p>
+  </div>
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT"
-};
+  <div class="card">
+    📍 Konum:<br>
+    <a target="_blank" href="https://maps.google.com">Google Maps Aç</a>
+  </div>
+</div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+<!-- SERVICES -->
+<div id="services" class="section">
+  <div class="card">Rot Ayarı - 700 TL</div>
+  <div class="card">Balans - 500 TL</div>
+  <div class="card">Yağ Değişimi - 200 TL</div>
+  <div class="card">Fren Bakım - 600 TL</div>
+</div>
 
-// ✅ BUTONA DOĞRU BAĞLANTI
-document.getElementById("loginBtn").addEventListener("click", async ()=>{
+<!-- RANDEVU -->
+<div id="randevu" class="section">
 
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      document.getElementById("email").value,
-      document.getElementById("pass").value
-    );
+  <h2>Yeni Kayıt</h2>
 
-    document.getElementById("panel").style.display="block";
+  <input id="isim" placeholder="Ad Soyad">
+  <input id="tel" placeholder="Telefon">
+  <input id="hizmet" placeholder="Hizmet">
+  <input id="fiyat" placeholder="Fiyat">
 
-    alert("Giriş başarılı");
+  <button onclick="ekle()">Kaydet</button>
 
-  } catch(e){
-    alert("HATA: " + e.message);
-  }
+</div>
 
-});
+<!-- ADMIN -->
+<div id="admin" class="section">
+
+  <table>
+    <thead>
+      <tr>
+        <th>İsim</th>
+        <th>Telefon</th>
+        <th>Hizmet</th>
+        <th>Sil</th>
+      </tr>
+    </thead>
+    <tbody id="list"></tbody>
+  </table>
+
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section">
+  <div class="card">
+    📞 0531 972 45 08<br><br>
+    📍 İstanbul<br><br>
+    💬 <a href="https://wa.me/905319724508">WhatsApp</a>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
+
+<script>
+
+let data=[];
+
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  render();
+}
+
+function ekle(){
+
+  let isim=document.getElementById("isim").value;
+  let tel=document.getElementById("tel").value;
+  let hizmet=document.getElementById("hizmet").value;
+  let fiyat=document.getElementById("fiyat").value;
+
+  data.push({isim,tel,hizmet,fiyat});
+
+  render();
+}
+
+function render(){
+
+  let list=document.getElementById("list");
+  list.innerHTML="";
+
+  data.forEach((d,i)=>{
+    list.innerHTML+=`
+      <tr>
+        <td>${d.isim}</td>
+        <td>${d.tel}</td>
+        <td>${d.hizmet}</td>
+        <td><button class="del" onclick="sil(${i})">X</button></td>
+      </tr>
+    `;
+  });
+
+}
+
+function sil(i){
+  data.splice(i,1);
+  render();
+}
+
+render();
 
 </script>
 
