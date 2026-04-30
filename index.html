@@ -9,8 +9,8 @@
 body{margin:0;font-family:system-ui;background:#f4f6f8;}
 
 header{
-  background:#111;color:#fff;
-  padding:15px;text-align:center;
+  background:#111;color:white;
+  text-align:center;padding:15px;
 }
 
 nav{
@@ -19,15 +19,7 @@ nav{
   padding:10px;
 }
 
-nav a{color:white;text-decoration:none;font-size:14px;}
-
-.hero{
-  text-align:center;
-  padding:50px 20px;
-  background:linear-gradient(135deg,#fff,#ddd);
-}
-
-.hero h1{font-size:40px;margin:0;}
+nav a{color:white;text-decoration:none;}
 
 .section{
   max-width:900px;
@@ -36,7 +28,7 @@ nav a{color:white;text-decoration:none;font-size:14px;}
 }
 
 .card{
-  background:#fff;
+  background:white;
   padding:15px;
   border-radius:10px;
   margin-bottom:10px;
@@ -60,7 +52,7 @@ input,select{
 button{
   padding:10px;
   background:#111;
-  color:#fff;
+  color:white;
   border:none;
   border-radius:8px;
   cursor:pointer;
@@ -71,7 +63,7 @@ button{
   right:20px;
   bottom:20px;
   background:#25D366;
-  color:#fff;
+  color:white;
   padding:15px;
   border-radius:50px;
   text-decoration:none;
@@ -83,19 +75,16 @@ button{
 
 <header>
   <h2>Kısmet Rot Balans</h2>
-  <p>Oto Servis & Rot Balans</p>
+  <p>Oto Servis & Randevu Sistemi</p>
 </header>
 
 <nav>
   <a href="#hizmet">Hizmetler</a>
   <a href="#fiyat">Fiyatlar</a>
   <a href="#randevu">Randevu</a>
+  <a href="#admin">Admin</a>
   <a href="#konum">Konum</a>
 </nav>
-
-<div class="hero">
-  <h1>Güvenli Sürüş İçin Doğru Adres</h1>
-</div>
 
 <!-- HİZMET -->
 <div class="section" id="hizmet">
@@ -104,7 +93,7 @@ button{
   <div class="grid">
     <div class="card">🔧 Rot Ayarı</div>
     <div class="card">⚖️ Balans</div>
-    <div class="card">🛞 Lastik Değişimi</div>
+    <div class="card">🛞 Lastik</div>
     <div class="card">🛠 Bakım</div>
   </div>
 </div>
@@ -113,7 +102,7 @@ button{
 <div class="section" id="fiyat">
   <h2>Fiyat Listesi</h2>
 
-  <div class="card">Rot Ayarı: 700 TL</div>
+  <div class="card">Rot: 700 TL</div>
   <div class="card">Balans: 500 TL</div>
   <div class="card">Lastik: 200 TL</div>
 </div>
@@ -135,9 +124,18 @@ button{
       <option>14:00</option>
     </select>
 
-    <button onclick="save()">Randevu Gönder</button>
+    <button onclick="save()">Gönder</button>
     <p id="msg"></p>
   </div>
+</div>
+
+<!-- ADMIN -->
+<div class="section" id="admin">
+  <h2>Admin Panel</h2>
+
+  <button onclick="load()">Randevuları Getir</button>
+
+  <div id="list"></div>
 </div>
 
 <!-- KONUM -->
@@ -145,8 +143,7 @@ button{
   <h2>Konum</h2>
 
   <div class="card">
-    <p>📍 Kısmet Rot Balans</p>
-
+    📍 Kısmet Rot Balans
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18..."
       width="100%" height="300"
@@ -157,7 +154,7 @@ button{
 
 <a class="wp" href="https://wa.me/905319724508">WhatsApp</a>
 
-<!-- FIREBASE (STABİL VERSİYON) -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
@@ -177,11 +174,13 @@ const db = firebase.firestore();
 
 <script>
 
+// RANDEVU KAYDET
 async function save(){
 
   const name=document.getElementById("name").value;
   const phone=document.getElementById("phone").value;
   const time=document.getElementById("time").value;
+
   const msg=document.getElementById("msg");
 
   if(!name || !phone || !time){
@@ -189,27 +188,49 @@ async function save(){
     return;
   }
 
-  try{
+  const check = await db.collection("randevular")
+    .where("time","==",time)
+    .get();
 
-    const check = await db.collection("randevular")
-      .where("time","==",time)
-      .get();
-
-    if(!check.empty){
-      msg.innerText="Bu saat dolu ❌";
-      return;
-    }
-
-    await db.collection("randevular").add({
-      name, phone, time
-    });
-
-    msg.innerText="Randevu alındı ✔";
-
-  }catch(e){
-    console.log(e);
-    msg.innerText="Hata ❌ (Rules kontrol et)";
+  if(!check.empty){
+    msg.innerText="Bu saat dolu ❌";
+    return;
   }
+
+  await db.collection("randevular").add({
+    name, phone, time
+  });
+
+  msg.innerText="Randevu alındı ✔";
+}
+
+// ADMIN LIST
+async function load(){
+
+  const snap = await db.collection("randevular").get();
+
+  let html="";
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+
+    html += `
+      <div class="card">
+        <b>${d.name}</b><br>
+        ${d.phone}<br>
+        ${d.time}<br><br>
+        <button onclick="del('${doc.id}')">Sil</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
+
+// DELETE
+async function del(id){
+  await db.collection("randevular").doc(id).delete();
+  load();
 }
 
 </script>
