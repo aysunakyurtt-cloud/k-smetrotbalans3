@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kısmet Rot Balans</title>
+<title>Kısmet Rot Balans | İşletme Sistemi</title>
 
 <style>
 :root{
@@ -32,7 +32,7 @@ body{
   padding:14px;
   text-align:center;
   font-weight:600;
-  z-index:10;
+  z-index:1000;
 }
 
 /* SIDEBAR */
@@ -64,7 +64,7 @@ body{
   padding:80px 20px;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section{display:none;}
 .section.active{display:block;}
 
@@ -129,7 +129,7 @@ th,td{
 
 <body>
 
-<div class="topbar">Kısmet Rot Balans | Profesyonel Servis Sistemi</div>
+<div class="topbar">Kısmet Rot Balans | Profesyonel İşletme Sistemi</div>
 
 <div class="sidebar">
   <div class="menu active" onclick="show('home',this)">Ana Sayfa</div>
@@ -143,15 +143,17 @@ th,td{
 
 <!-- HOME -->
 <div id="home" class="section active">
+
   <div class="card">
     <h1>Kısmet Rot Balans</h1>
-    <p>Rot, balans, bakım ve servis hizmetleri</p>
+    <p>Profesyonel oto servis ve bakım hizmetleri</p>
   </div>
 
   <div class="card">
-    📍 Konum:  
-    <a href="https://www.google.com/maps" target="_blank">Haritada Aç</a>
+    📍 Konum:<br>
+    <a target="_blank" href="https://maps.google.com">Google Maps'te Aç</a>
   </div>
+
 </div>
 
 <!-- SERVICES -->
@@ -164,10 +166,10 @@ th,td{
 
 </div>
 
-<!-- RANDEVU / KAYIT -->
+<!-- KAYIT -->
 <div id="randevu" class="section">
 
-  <h2>Servis Kaydı</h2>
+  <h2>Yeni Kayıt</h2>
 
   <input id="isim" placeholder="Ad Soyad">
   <input id="tel" placeholder="Telefon">
@@ -182,7 +184,7 @@ th,td{
 <!-- ADMIN -->
 <div id="admin" class="section">
 
-  <input id="search" placeholder="Ara (isim/hizmet)" oninput="render()">
+  <input id="search" placeholder="Ara..." oninput="render()">
 
   <table>
     <thead>
@@ -204,10 +206,11 @@ th,td{
 
   <div class="card">
     <h2>İletişim</h2>
-    📞 Telefon: 0531 972 45 08<br><br>
-    📍 Adres: İstanbul / Türkiye<br><br>
-    💬 WhatsApp:
-    <a href="https://wa.me/905319724508" target="_blank">Mesaj Gönder</a>
+
+    📞 0531 972 45 08<br>
+    📍 İstanbul / Türkiye<br><br>
+
+    <a href="https://wa.me/905319724508" target="_blank">WhatsApp'tan Yaz</a>
   </div>
 
 </div>
@@ -218,9 +221,10 @@ th,td{
 
 <script>
 
-let data = JSON.parse(localStorage.getItem("servis_full") || "[]");
+let data = JSON.parse(localStorage.getItem("biz") || "[]");
 
 function show(id,el){
+
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
@@ -235,7 +239,7 @@ function ekle(){
   let isim=document.getElementById("isim").value;
   let tel=document.getElementById("tel").value;
   let hizmet=document.getElementById("hizmet").value;
-  let fiyat=parseFloat(document.getElementById("fiyat").value)||0;
+  let fiyat=document.getElementById("fiyat").value;
   let not=document.getElementById("not").value;
 
   if(!isim || !hizmet){
@@ -244,7 +248,8 @@ function ekle(){
   }
 
   data.push({isim,tel,hizmet,fiyat,not});
-  localStorage.setItem("servis_full",JSON.stringify(data));
+
+  localStorage.setItem("biz",JSON.stringify(data));
 
   clear();
   render();
@@ -288,7 +293,7 @@ function render(){
 
 function sil(i){
   data.splice(i,1);
-  localStorage.setItem("servis_full",JSON.stringify(data));
+  localStorage.setItem("biz",JSON.stringify(data));
   render();
 }
 
